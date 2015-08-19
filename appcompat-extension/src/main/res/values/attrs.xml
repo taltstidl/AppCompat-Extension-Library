@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AccountHeaderView -->
+    <declare-styleable name="AccountHeaderView">
+        <attr name="accountHeaderAddEnabled" format="boolean" />
+        <attr name="accountHeaderManageEnabled" format="boolean" />
+    </declare-styleable>
+
+    <!-- CirlceImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="placeholderCircleColor" format="color" />
+        <attr name="placeholderTextSize" format="dimension" />
+        <attr name="placeholderTextColor" format="color" />
+    </declare-styleable>
+
+    <!-- FloatingActionMenu -->
+    <declare-styleable name="FloatingActionMenu">
+        <attr name="fabMenuExpandDirection" format="enum">
+            <enum name="up" value="0" />
+            <enum name="down" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+        </attr>
+        <attr name="fabMenuLabelPosition" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+        <attr name="fabMenuLabelStyle" format="reference" />
+        <attr name="fabMenuCloseIconSrc" format="reference" />
+        <attr name="fabMenuCloseIconAngle" format="float" />
+    </declare-styleable>
+</resources>

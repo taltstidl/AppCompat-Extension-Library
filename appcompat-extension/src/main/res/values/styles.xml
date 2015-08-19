@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AccountHeaderView">
+        <item name="android:minHeight">@dimen/account_header_height</item>
+        <item name="android:maxHeight">@dimen/account_header_height</item>
+        <item name="android:paddingTop">@dimen/account_header_padding_top</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="label_style_dark">
+        <item name="android:background">@drawable/fab_label_background_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="label_style_light">
+        <item name="android:background">@drawable/fab_label_background_light</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+</resources>

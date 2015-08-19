@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AppCompat Extension</string>
+
+    <!-- Account list -->
+    <string name="account_header_list_item_add_account">Add account</string>
+    <string name="account_header_list_item_manage_accounts">Manage accounts</string>
+</resources>

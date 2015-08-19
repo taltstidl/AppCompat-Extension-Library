@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AppCompat Extension</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Navigation Drawer items -->
+    <string name="nav_drawer_inbox">Inbox</string>
+    <string name="nav_drawer_starred">Starred</string>
+    <string name="nav_drawer_sent">Sent Mail</string>
+    <string name="nav_drawer_drafts">Drafts</string>
+    <string name="nav_drawer_all">All Mail</string>
+    <string name="nav_drawer_trash">Trash</string>
+    <string name="nav_drawer_spam">Spam</string>
+    <string name="nav_drawer_subheader">Subheader</string>
+
+    <!-- Floating Action Menut items -->
+    <string name="fam_presentation">Presentation</string>
+    <string name="fam_spreadsheet">Spreadsheet</string>
+    <string name="fam_document">Text Document</string>
+</resources>
