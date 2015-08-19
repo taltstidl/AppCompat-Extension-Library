@@ -1,9 +1,9 @@
 # AppCompat-Extension-Library
 The AppCompat Design Libray provides some awesome components for your development and design needs. For some applications though those just aren't enough. This library tries to fill the gap and provides additional common components building on the official AppCompat Design Library. If you have any additional features you'd like to see as part of this ongoing effort feel free to open a new issue.
 ##### Currently there are the following components:
-* [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#AccountHeaderView)
-* [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#FloatingActionMenu)
-* [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#CircleImageView)
+* [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
+* [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
+* [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#circleimageview)
 
 ## AccountHeaderView
 The `AccountHeaderView` provides an account header layout that can be easily used with the design library's `NavigationView`.
@@ -77,8 +77,8 @@ For additional information and customization options check out the FloatingActio
 The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides the ability to set circular images as well as placeholders. Instead of the default `ImageView` use the following in your layouts:
 ```xml
 <com.tr4android.support.extension.widget.CircleImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+    android:layout_width="40dp"
+    android:layout_height="40dp" />
 ```
 Then use `setCircleImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
