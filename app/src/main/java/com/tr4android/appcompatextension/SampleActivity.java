@@ -39,24 +39,21 @@ public class SampleActivity extends AppCompatActivity {
                 new Account().setName("Account Name").setEmail("accountemail@example.de"));
         accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListener() {
             @Override
-            public boolean onAccountSelected(Account account) {
+            public void onAccountSelected(Account account) {
                 Snackbar.make(findViewById(R.id.main_layout), account.getEmail(), Snackbar.LENGTH_LONG).show();
                 drawerLayout.closeDrawers();
-                return true;
             }
 
             @Override
-            public boolean onAccountAddSelected() {
+            public void onAccountAddSelected() {
                 Snackbar.make(findViewById(R.id.main_layout), "Aha! So you want to add an account!", Snackbar.LENGTH_LONG).show();
                 drawerLayout.closeDrawers();
-                return false;
             }
 
             @Override
-            public boolean onAccountManageSelected() {
+            public void onAccountManageSelected() {
                 Snackbar.make(findViewById(R.id.main_layout), "Yes! Management is everything!", Snackbar.LENGTH_LONG).show();
                 drawerLayout.closeDrawers();
-                return false;
             }
         });
     }

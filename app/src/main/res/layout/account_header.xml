@@ -6,6 +6,4 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/account_header_height"
     app:accountHeaderManageEnabled="true"
-    app:accountHeaderAddEnabled="true" >
-
-</com.tr4android.support.extension.widget.AccountHeaderView>
+    app:accountHeaderAddEnabled="true" />

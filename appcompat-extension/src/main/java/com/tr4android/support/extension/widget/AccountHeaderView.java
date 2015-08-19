@@ -266,16 +266,16 @@ public class AccountHeaderView extends RelativeLayout {
          *
          * @param account The selected item
          */
-        public boolean onAccountSelected(Account account);
+        void onAccountSelected(Account account);
 
         /**
          * Called when the "Add account" item is selected.
          */
-        public boolean onAccountAddSelected();
+        void onAccountAddSelected();
 
         /**
          * Called when the "Manage accounts" item is selected.
          */
-        public boolean onAccountManageSelected();
+        void onAccountManageSelected();
     }
 }
