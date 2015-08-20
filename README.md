@@ -39,7 +39,7 @@ accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSele
 });
 ```
 
-For additional information and customization options check out the AccountHeaderView wiki.
+For additional information and customization options check out the [AccountHeaderView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/AccountHeaderView).
 
 ## FloatingActionMenu
 The `FloatingActionMenu` is a wrapper for multiple `FloatingActionButton`s that takes the first `FloatingActionButton` as the main button that stays on screen and flings out all other `FloatingActionButton`s. A simple layout would look like this:
@@ -71,7 +71,7 @@ The `FloatingActionMenu` is a wrapper for multiple `FloatingActionButton`s that 
 </com.tr4android.support.extension.widget.FloatingActionMenu>
 ```
 
-For additional information and customization options check out the FloatingActionMenu wiki.
+For additional information and customization options check out the [FloatingActionMenu wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/FloatingActionMenu).
 
 ## CircleImageView
 The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides the ability to set circular images as well as placeholders. Instead of the default `ImageView` use the following in your layouts:
@@ -82,4 +82,4 @@ The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides th
 ```
 Then use `setCircleImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
-For additional information and customization options check out the CircleImageView wiki.
+For additional information and customization options check out the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).
