@@ -29,8 +29,11 @@ public class CircleImageView extends ImageView {
     // whether an image or a placeholder is displayed
     private boolean mIsPlaceholder = true;
 
-    // whether an image uri is being resolced
+    // whether an image drawable is being resolved
     private boolean mIsResolvingDrawable;
+
+    // default color for circle paint
+    private int mPlaceholderCircleDefaultColor;
 
     // paint used for drawing the colored circle
     private Paint mCirclePaint;
@@ -56,13 +59,13 @@ public class CircleImageView extends ImageView {
         super(context, attrs, defStyleAttr);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0);
-        int mPlaceholderCircleColor = a.getColor(R.styleable.CircleImageView_placeholderCircleColor, ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorAccent));
+        mPlaceholderCircleDefaultColor = a.getColor(R.styleable.CircleImageView_placeholderCircleColor, ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorAccent));
         int mPlaceholderTextSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderTextSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderTextSize));
         int mPlaceholderTextColor = a.getColor(R.styleable.CircleImageView_placeholderTextColor, ThemeUtils.getThemeAttrColor(getContext(), android.R.attr.textColorPrimaryInverse));
         a.recycle();
 
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mCirclePaint.setColor(mPlaceholderCircleColor);
+        mCirclePaint.setColor(mPlaceholderCircleDefaultColor);
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTextSize(mPlaceholderTextSize);
@@ -117,7 +120,7 @@ public class CircleImageView extends ImageView {
     }
 
     /**
-     * Set a placeholder with a text. This will use the default or last circle color.
+     * Set a placeholder with a text. This will use the default circle color.
      * <p/>
      * Note: This usually should be the first letter of a name. You can use the helper {@link #retrieveLetter(String)}
      * to extract the first letter of a given {@link String}.
@@ -127,6 +130,7 @@ public class CircleImageView extends ImageView {
     public void setPlaceholder(String placeholderText) {
         mIsPlaceholder = true;
         mText = placeholderText;
+        mCirclePaint.setColor(mPlaceholderCircleDefaultColor);
         setImageDrawable(null);
     }
 

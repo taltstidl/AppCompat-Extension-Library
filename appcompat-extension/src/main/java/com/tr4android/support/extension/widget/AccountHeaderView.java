@@ -123,14 +123,18 @@ public class AccountHeaderView extends RelativeLayout {
         mSecondaryFirstIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchPrimaryAccount(mAccountListAdapter.getItem(1));
+                Account selectedAccount = mAccountListAdapter.getItem(1);
+                switchPrimaryAccount(selectedAccount);
+                if (mListener != null) mListener.onAccountSelected(selectedAccount);
             }
         });
         mSecondarySecondIconView = (CircleImageView) findViewById(R.id.account_header_icon_secondary_second);
         mSecondarySecondIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchPrimaryAccount(mAccountListAdapter.getItem(2));
+                Account selectedAccount = mAccountListAdapter.getItem(2);
+                switchPrimaryAccount(selectedAccount);
+                if (mListener != null) mListener.onAccountSelected(selectedAccount);
             }
         });
 
