@@ -1,9 +1,25 @@
+[![Latest Release](https://img.shields.io/github/release/TR4Android/AppCompat-Extension-Library.svg?label=JitPack)](https://jitpack.io/#TR4Android/AppCompat-Extension-Library)
+
 # AppCompat-Extension-Library
 The AppCompat Design Libray provides some awesome components for your development and design needs. For some applications though those just aren't enough. This library tries to fill the gap and provides additional common components building on the official AppCompat Design Library. If you have any additional features you'd like to see as part of this ongoing effort feel free to open a new issue.
 ##### Currently there are the following components:
 * [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
 * [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
 * [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#circleimageview)
+
+There are wikis for every component that explain the setup in more depth, so be sure to check them out. Here's a link to the [Wiki Home Page](https://github.com/TR4Android/AppCompat-Extension-Library/wiki)
+
+#### Importing the library
+This library is available as a gradle dependency via [JitPack.io](https://github.com/jitpack/jitpack.io). Just add the following lines to your app module `build.gradle`:
+``` gradle
+repositories { 
+    maven { url "https://jitpack.io" }
+}
+dependencies {
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.0'
+}
+```
+The latest Release is [Release 0.1.0 (Initial Release)](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.0/sample.apk) with this release.
 
 ## AccountHeaderView
 The `AccountHeaderView` provides an account header layout that can be easily used with the design library's `NavigationView`.
@@ -83,3 +99,33 @@ The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides th
 Then use `setCircleImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
 For additional information and customization options check out the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).
+
+## License
+
+Copyright 2015 Thomas Robert Altstidl
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+**The library uses the AppCompat Design Library with the following license:**
+
+Copyright 2015 The Android Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
