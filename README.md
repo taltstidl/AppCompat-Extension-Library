@@ -24,75 +24,72 @@ dependencies {
 The latest Release is [Release 0.1.0 (Initial Release)](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.0/sample.apk) with this release.
 
 ## AccountHeaderView
-The `AccountHeaderView` provides an account header layout that can be easily used with the design library's `NavigationView`.
-Just use the following layout as your `app:headerLayout`:
+The `AccountHeaderView` is a component that allows easy switching between accounts in the navigation drawer by clicking on the avatars on the header or by choosing from the dropdown list.
+
+##### Main features:
+* Works seamlessly with the AppCompat Design Library's `NavigationView` so you have full access to its features and can easily switch to an official account header implementation as soon as Google releases it.
+* Includes a dropdown list of accounts (and optionally account addition and managment items) by hooking up to the internal `ListView` of the AppCompat Design Library's `NavigationView` in an almost magical way!
+* Automatically creates placeholder avatars with the name's initials when an image is not set to an `Account` (see Google's Gmail).
+
+##### Basic setup:
+Use the following layout as the `app:headerLayout` of the AppCompat Design Library's `NavigationView`:
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
 <com.tr4android.support.extension.widget.AccountHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/account_header"
-    android:background="@drawable/account_drawer_cover_background"
+    android:background="@drawable/account_header_cover_background"
     android:layout_width="match_parent"
     android:layout_height="@dimen/account_header_height" />
 ```
-Then add your accounts to the `AccountHeaderView` and add a listener for account selections. That's all there is to it.
+Then add your accounts to the `AccountHeaderView` and add a listener for account selections:
 ```java
 AccountHeaderView accountHeaderView = (AccountHeaderView) findViewById(R.id.account_header);
 accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android), ...);
 accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListener() {
     @Override
-    public void onAccountSelected(Account account) {
-        // Called when an account is selected
-    }
+    public void onAccountSelected(Account account) {   }
 
     @Override
-    public void onAccountAddSelected() {
-        // Called when the "Add account" item is clicked
-    }
+    public void onAccountAddSelected() {   }
 
     @Override
-    public void onAccountManageSelected() {
-        // Called when the "Manage accounts" item is clicked
-    }
+    public void onAccountManageSelected() {   }
 });
 ```
 
-For additional information and customization options check out the [AccountHeaderView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/AccountHeaderView).
+*For the full documentation and customization options head over to the [AccountHeaderView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/AccountHeaderView).*
 
 ## FloatingActionMenu
-The `FloatingActionMenu` is a wrapper for multiple `FloatingActionButton`s that takes the first `FloatingActionButton` as the main button that stays on screen and flings out all other `FloatingActionButton`s. A simple layout would look like this:
+The `FloatingActionMenu` is a wrapper for multiple `FloatingActionButton`s that takes the first `FloatingActionButton` as the main button that stays on screen and flings out all other `FloatingActionButton`s in speed dial fashion.
+
+##### Main features:
+* Uses the AppCompat Design Library `FloatingActionButton` and thus has native elevation on Lollipop and above devices and even a shadow animation on pre-Lollipop devices!
+* Allows easy configuration of you main `FloatingActionButton`'s icon animation: apply any rotation and optionally an alpha transition to a second icon (see Google's Inbox).
+* Works on all devices back to API level 7 just like the AppCompat Design Library!
+
+##### Basic setup
 ```xml
 <com.tr4android.support.extension.widget.FloatingActionMenu
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom" >
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_white_24dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_insert_drive_file_white_24dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_grid_on_white_24dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_insert_chart_white_24dp" />
+    
+    <!-- Floating Action Buttons -->
+    
 </com.tr4android.support.extension.widget.FloatingActionMenu>
 ```
 
-For additional information and customization options check out the [FloatingActionMenu wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/FloatingActionMenu).
+*For the full documentation and customization options head over to the [FloatingActionMenu wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/FloatingActionMenu).*
 
 ## CircleImageView
-The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides the ability to set circular images as well as placeholders. Instead of the default `ImageView` use the following in your layouts:
+The `CircleImageView` is a supercharged `ImageView` that provides the ability to set circular images as well as placeholders. 
+
+##### Main features:
+* Creates circular images using the AppCompat Support Library's `RoundedBitmapDrawable` which provides the best performance possible by using Romain Guys techniques!
+* Allows easy creation of placeholders with a colored circle and a letter (or letters) if an image should not available (see Google's Gmail email avatars)
+
+##### Basic setup:
+Instead of the default `ImageView` use the following in your layouts:
 ```xml
 <com.tr4android.support.extension.widget.CircleImageView
     android:layout_width="40dp"
@@ -100,7 +97,7 @@ The `CircleImageView` is a by-product of the `AccountHeaderView`. It provides th
 ```
 Then use `setCircleImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
-For additional information and customization options check out the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).
+*For the full documentation and customization options head over to the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).*
 
 ## License
 
