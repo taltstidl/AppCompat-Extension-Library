@@ -1,7 +1,9 @@
 [![Latest Release](https://img.shields.io/github/release/TR4Android/AppCompat-Extension-Library.svg?label=JitPack)](https://jitpack.io/#TR4Android/AppCompat-Extension-Library)
 
 # AppCompat-Extension-Library
-The AppCompat Design Libray provides some awesome components for your development and design needs. For some applications though those just aren't enough. This library tries to fill the gap and provides additional common components building on the official AppCompat Design Library. If you have any additional features you'd like to see as part of this ongoing effort feel free to open a new issue.
+![Header Graphics for the AppCompat Extension Library](https://raw.githubusercontent.com/TR4Android/AppCompat-Extension-Library/master/promo-images/Header.png)
+
+Google's AppCompat Design Library provides some awesome components for your development and design needs. For some applications though those just aren't enough. This library tries to fill the gap and provides additional common components building on the official AppCompat Design Library. If you have any additional features you'd like to see as part of this ongoing effort feel free to open a new issue.
 ##### Currently there are the following components:
 * [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
 * [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
