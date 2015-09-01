@@ -90,14 +90,15 @@ public class Account {
     }
 
     public void applyAccountIcon(CircleImageView iv) {
+        iv.setCircleImageEnabled(true);
         if (mIconBitmap != null) {
-            iv.setCircleImageBitmap(mIconBitmap);
+            iv.setImageBitmap(mIconBitmap);
         } else if (mIconResource != 0) {
-            iv.setCircleImageResource(mIconResource);
+            iv.setImageResource(mIconResource);
         } else if (mIconDrawable != null) {
-            iv.setCircleImageDrawable(mIconDrawable);
+            iv.setImageDrawable(mIconDrawable);
         } else if (mIconUri != null) {
-            iv.setCircleImageURI(mIconUri);
+            iv.setImageURI(mIconUri);
         } else {
             iv.setPlaceholder(CircleImageView.retrieveLetter(mName));
         }

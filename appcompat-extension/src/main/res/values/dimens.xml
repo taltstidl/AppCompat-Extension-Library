@@ -3,6 +3,7 @@
 
     <!-- CircleImageView -->
     <dimen name="defaultPlaceholderTextSize">24sp</dimen>
+    <dimen name="defaultPlaceholderImageSize">24dp</dimen>
 
     <!-- AccountHeaderView -->
     <dimen name="account_header_height">148dp</dimen>

@@ -8,9 +8,11 @@
 
     <!-- CirlceImageView -->
     <declare-styleable name="CircleImageView">
+        <attr name="circleImageEnabled" format="boolean" />
         <attr name="placeholderCircleColor" format="color" />
         <attr name="placeholderTextSize" format="dimension" />
         <attr name="placeholderTextColor" format="color" />
+        <attr name="placeholderIconSize" format="dimension" />
     </declare-styleable>
 
     <!-- FloatingActionMenu -->

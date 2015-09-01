@@ -52,10 +52,12 @@ public class AccountAdapter extends ArrayAdapter<Account> {
             account.applyAccountEmail(accountViewHolder.nameView);
         } else if (position == getCount() && mShowAccountManage) {
             // Manage accounts item
+            accountViewHolder.iconView.setCircleImageEnabled(false);
             accountViewHolder.iconView.setImageResource(R.drawable.ic_settings_grey600_24dp);
             accountViewHolder.nameView.setText(R.string.account_header_list_item_manage_accounts);
         } else {
             // Add account item
+            accountViewHolder.iconView.setCircleImageEnabled(false);
             accountViewHolder.iconView.setImageResource(R.drawable.ic_add_grey600_24dp);
             accountViewHolder.nameView.setText(R.string.account_header_list_item_add_account);
         }
