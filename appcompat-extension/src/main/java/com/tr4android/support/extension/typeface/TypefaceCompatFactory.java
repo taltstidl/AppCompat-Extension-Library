@@ -31,11 +31,11 @@ import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
 
-public class FactoryTypefaceCompat implements LayoutInflaterFactory {
+public class TypefaceCompatFactory implements LayoutInflaterFactory {
 
     private LayoutInflaterFactory mBaseFactory;
 
-    private FactoryTypefaceCompat(Context context) {
+    private TypefaceCompatFactory(Context context) {
         try {
             this.mBaseFactory = (LayoutInflaterFactory) ((AppCompatActivity) context).getDelegate();
         } catch (ClassCastException e) {
@@ -45,7 +45,7 @@ public class FactoryTypefaceCompat implements LayoutInflaterFactory {
 
     public static void installViewFactory(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            LayoutInflaterCompat.setFactory(LayoutInflater.from(context), new FactoryTypefaceCompat(context));
+            LayoutInflaterCompat.setFactory(LayoutInflater.from(context), new TypefaceCompatFactory(context));
         }
     }
 

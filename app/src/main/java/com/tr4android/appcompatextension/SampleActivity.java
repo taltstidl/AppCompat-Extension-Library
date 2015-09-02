@@ -1,16 +1,28 @@
 package com.tr4android.appcompatextension;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tr4android.support.extension.internal.Account;
+import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
+import com.tr4android.support.extension.widget.FloatingActionMenu;
 
 
 public class SampleActivity extends AppCompatActivity {
@@ -19,8 +31,17 @@ public class SampleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // install typeface factory before(!) onCreate()
+        TypefaceCompatFactory.installViewFactory(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitle(getString(R.string.sample_title));
 
         // Setup DrawerLayout so we can close it later
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,6 +79,15 @@ public class SampleActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
             }
         });
+
+        // Setup the dimming of FloatingActionMenu
+        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        floatingActionMenu.setupWithDimmingView(findViewById(R.id.dimming_view), Color.parseColor("#99000000"));
+
+        // Setup the sample adapter
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new FileAdapter(this));
     }
 
     @Override
@@ -69,14 +99,26 @@ public class SampleActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.dialog_title)
+                        .setMessage(R.string.dialog_message)
+                        .setNeutralButton(R.string.dialog_neutral_button, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String url = "https://github.com/TR4Android/Swipeable-RecyclerView";
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(url));
+                                startActivity(i);
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_negative_button, null)
+                        .show();
+                return true;
+            case R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

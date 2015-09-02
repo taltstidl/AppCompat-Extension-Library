@@ -67,4 +67,19 @@ public interface FloatingActionMenuAnimator {
      * @param expanded the state used in layout
      */
     void prepareDrawable(FloatingActionButton button, float angle, boolean expanded);
+
+    /**
+     * Called to add an animation for dimming
+     * @param dimmingView the view for which to animate the dimming
+     * @param dimmingColor the color to use for dimming
+     */
+    void buildAnimationForDimming(View dimmingView, int dimmingColor);
+
+    /**
+     * Called to prepare the dimming
+     * @param dimmingView the view for which to prepare the dimming
+     * @param dimmingColor the color to use for dimming
+     * @param expanded the state used in layout
+     */
+    void prepareDimming(View dimmingView, int dimmingColor, boolean expanded);
 }

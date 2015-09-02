@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">AppCompat Extension</string>
+    <string name="sample_title">My Files</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+
+    <!-- Info Dialog -->
+    <string name="dialog_title">AppCompat Extension Library</string>
+    <string name="dialog_message">A library that builds on the AppCompat Design Library and provides additional common components such as AccountHeaderView, FloatingActionMenu and CircleImageView.</string>
+    <string name="dialog_neutral_button">View on Github</string>
+    <string name="dialog_negative_button">Dismiss</string>
 
     <!-- Navigation Drawer items -->
     <string name="nav_drawer_inbox">Inbox</string>
@@ -14,7 +21,7 @@
     <string name="nav_drawer_spam">Spam</string>
     <string name="nav_drawer_subheader">Subheader</string>
 
-    <!-- Floating Action Menut items -->
+    <!-- Floating Action Menu items -->
     <string name="fam_presentation">Presentation</string>
     <string name="fam_spreadsheet">Spreadsheet</string>
     <string name="fam_document">Text Document</string>

@@ -1,8 +1,10 @@
 package com.tr4android.support.extension.internal;
 
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
@@ -104,5 +106,21 @@ public class FloatingActionMenuAnimatorHoneycomb implements FloatingActionMenuAn
         if (mRotatingDrawable != null) {
             mRotatingDrawable.setRotation(expanded ? angle : 0f);
         }
+    }
+
+    @Override
+    public void buildAnimationForDimming(View dimmingView, int dimmingColor) {
+        ObjectAnimator mExpandBackgroundColor = ObjectAnimator.ofInt(dimmingView, "backgroundColor", Color.TRANSPARENT, dimmingColor);
+        mExpandBackgroundColor.setEvaluator(new ArgbEvaluator());
+        ObjectAnimator mCollapseBackgroundColor = ObjectAnimator.ofInt(dimmingView, "backgroundColor", dimmingColor, Color.TRANSPARENT);
+        mCollapseBackgroundColor.setEvaluator(new ArgbEvaluator());
+
+        mExpandAnimation.play(mExpandBackgroundColor);
+        mCollapseAnimation.play(mCollapseBackgroundColor);
+    }
+
+    @Override
+    public void prepareDimming(View dimmingView, int dimmingColor, boolean expanded) {
+        dimmingView.setBackgroundColor(expanded ? dimmingColor : Color.TRANSPARENT);
     }
 }

@@ -12,9 +12,11 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -37,9 +39,6 @@ public class FloatingActionMenu extends ViewGroup {
 
     public static final int LABELS_ON_LEFT_SIDE = 0;
     public static final int LABELS_ON_RIGHT_SIDE = 1;
-
-    private static final float COLLAPSED_PLUS_ROTATION = 0f;
-    private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
 
     // Platform dependent animator for menu animations
     private FloatingActionMenuAnimator mAnimator;
@@ -68,7 +67,9 @@ public class FloatingActionMenu extends ViewGroup {
     private Drawable mCloseDrawable;
     private float mCloseAngle;
 
-    //private TouchDelegateGroup mTouchDelegateGroup;
+    // View and color used for dimming
+    private View mDimmingView;
+    private int mDimmingColor;
 
     private OnFloatingActionsMenuUpdateListener mListener;
 
@@ -423,6 +424,20 @@ public class FloatingActionMenu extends ViewGroup {
     /* Start Public API methods */
 
     /**
+     * Method to easily setup a dimming for the specified view with the specified color
+     * @param dimmingView the view to use for dimming (the background color will be animated)
+     * @param dimmingColor the color to use for dimming (in expanded state)
+     */
+    public void setupWithDimmingView(View dimmingView, @ColorInt int dimmingColor) {
+        mDimmingView = dimmingView;
+        mDimmingColor = dimmingColor;
+        mAnimator.buildAnimationForDimming(mDimmingView, mDimmingColor);
+        // apply the appbar elevation so the dim gets rendered over it
+        ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.fab_elevation));
+        ViewCompat.setElevation(mDimmingView, getContext().getResources().getDimensionPixelSize(R.dimen.dim_elevation));
+    }
+
+    /**
      * Collapse the FloatingActionMenu with an animation
      */
     public void collapse() {
@@ -542,6 +557,7 @@ public class FloatingActionMenu extends ViewGroup {
             mExpanded = savedState.mExpanded;
 
             mAnimator.prepareDrawable(mMainButton, mCloseAngle, mExpanded);
+            mAnimator.prepareDimming(mDimmingView, mDimmingColor, mExpanded);
 
             super.onRestoreInstanceState(savedState.getSuperState());
         } else {
