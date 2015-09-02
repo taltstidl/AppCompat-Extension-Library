@@ -23,7 +23,7 @@
     <string name="font_family_headline_material" translatable="false">sans-serif</string>
     <string name="font_family_title_material" translatable="false">sans-serif-medium</string>
     <string name="font_family_subhead_material" translatable="false">sans-serif</string>
-    <string name="font_family_menu_material" translatable="false">sans-serif</string>
+    <string name="font_family_menu_material" translatable="false">sans-serif-medium</string>
     <string name="font_family_body_2_material" translatable="false">sans-serif-medium</string>
     <string name="font_family_body_1_material" translatable="false">sans-serif</string>
     <string name="font_family_caption_material" translatable="false">sans-serif</string>
