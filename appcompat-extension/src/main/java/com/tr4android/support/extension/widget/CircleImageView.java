@@ -210,9 +210,6 @@ public class CircleImageView extends ImageView {
     public void setPlaceholder(Drawable drawable, @ColorInt int circleColor) {
         mIsPlaceholder = true;
         mPlaceholderImage = drawable;
-        int horizontalPadding = (getWidth() - mPlaceholderImageSize)/2;
-        int verticalPadding = (getHeight() - mPlaceholderImageSize)/2;
-        mPlaceholderImage.setBounds(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
         mPlaceholderText = "";
         mPlaceholderCirclePaint.setColor(circleColor);
         setImageDrawable(null);
@@ -233,16 +230,20 @@ public class CircleImageView extends ImageView {
         if (mIsResolvingDrawable) return;
         super.onDraw(canvas);
         if (mIsPlaceholder) {
+            // draw placeholder circle
+            float radius = Math.min(canvas.getWidth(), canvas.getHeight()) / 2;
+            int xPos = (canvas.getWidth() / 2);
+            canvas.drawCircle(xPos, canvas.getHeight() / 2, radius, mPlaceholderCirclePaint);
             if (mPlaceholderImage == null) {
-                // draw placeholder with text
-                float radius = Math.min(canvas.getWidth(), canvas.getHeight()) / 2;
-                int xPos = (canvas.getWidth() / 2);
-                canvas.drawCircle(xPos, canvas.getHeight() / 2, radius, mPlaceholderCirclePaint);
+                // draw placeholder text
                 int yPos = (int) ((canvas.getHeight() / 2) -
                         ((mPlaceholderTextPaint.descent() + mPlaceholderTextPaint.ascent()) / 2));
                 canvas.drawText(mPlaceholderText, xPos, yPos, mPlaceholderTextPaint);
             } else {
-                // draw placeholder with image
+                // draw placeholder image
+                int horizontalPadding = (canvas.getWidth() - mPlaceholderImageSize)/2;
+                int verticalPadding = (canvas.getHeight() - mPlaceholderImageSize)/2;
+                mPlaceholderImage.setBounds(horizontalPadding, verticalPadding, horizontalPadding + mPlaceholderImageSize, verticalPadding + mPlaceholderImageSize);
                 mPlaceholderImage.draw(canvas);
             }
         }

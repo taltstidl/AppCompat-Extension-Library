@@ -3,9 +3,11 @@ package com.tr4android.support.extension.internal;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.widget.TextView;
 
+import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.CircleImageView;
 
@@ -24,6 +26,10 @@ public class Account {
     
     // Email address
     private String mEmail;
+
+    // Placeholder
+    private boolean mPlaceholderIconEnabled;
+    private int mPlaceholderCircleColor = -1;
 
     public Account() {}
 
@@ -57,6 +63,16 @@ public class Account {
         return this;
     }
 
+    public Account setPlaceholderIconEnabled(boolean mPlaceholderIconEnabled) {
+        this.mPlaceholderIconEnabled = mPlaceholderIconEnabled;
+        return this;
+    }
+
+    public Account setPlaceholderCircleColor(@ColorInt int mPlaceholderCircleColor) {
+        this.mPlaceholderCircleColor = mPlaceholderCircleColor;
+        return this;
+    }
+
     public Bitmap getIconBitmap() {
         return mIconBitmap;
     }
@@ -81,6 +97,14 @@ public class Account {
         return mEmail;
     }
 
+    public boolean getPlaceholderIconEnabled() {
+        return mPlaceholderIconEnabled;
+    }
+
+    public int getPlaceholderCircleColor() {
+        return mPlaceholderCircleColor;
+    }
+
     public void applyAccountName(TextView tv) {
         tv.setText(mName);
     }
@@ -99,8 +123,18 @@ public class Account {
             iv.setImageDrawable(mIconDrawable);
         } else if (mIconUri != null) {
             iv.setImageURI(mIconUri);
+        } else if (mPlaceholderIconEnabled) {
+            if (mPlaceholderCircleColor == -1) {
+                iv.setPlaceholder(R.drawable.ic_person_white_24dp);
+            } else {
+                iv.setPlaceholder(R.drawable.ic_person_white_24dp, mPlaceholderCircleColor);
+            }
         } else {
-            iv.setPlaceholder(CircleImageView.retrieveLetter(mName));
+            if (mPlaceholderCircleColor == -1) {
+                iv.setPlaceholder(CircleImageView.retrieveLetter(mName));
+            } else {
+                iv.setPlaceholder(CircleImageView.retrieveLetter(mName), mPlaceholderCircleColor);
+            }
         }
     }
 }

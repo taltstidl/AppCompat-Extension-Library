@@ -1,5 +1,6 @@
 package com.tr4android.appcompatextension;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -36,7 +37,8 @@ public class SampleActivity extends AppCompatActivity {
         AccountHeaderView accountHeaderView = (AccountHeaderView) findViewById(R.id.account_header);
         accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android),
                 new Account().setName("Fountain Geyser").setEmail("fountaingeyser@example.com").setIconResource(R.drawable.account_drawer_profile_image_fountaingeyser),
-                new Account().setName("Account Name").setEmail("accountemail@example.de"));
+                new Account().setName("Alpha Account").setEmail("alpha.account@example.de"),
+                new Account().setName("Beta Account").setEmail("beta.account@example.de").setPlaceholderIconEnabled(true).setPlaceholderCircleColor(Color.parseColor("#2196f3")));
         accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListener() {
             @Override
             public void onAccountSelected(Account account) {
