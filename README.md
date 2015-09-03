@@ -99,7 +99,7 @@ Then use `setImage...()` to set a circular image or `setPlaceholder()` to set a 
 *For the full documentation and customization options head over to the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).*
 
 ## TypefaceCompat
-The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color and line spacing for the styles specified in the guidelines.
+The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color, line spacing *and typeface* for the styles specified in the guidelines.
 
 ##### Main features:
 * Easily setup with one line of code in your `Activity`.
@@ -119,13 +119,13 @@ public class SampleActivity extends AppCompatActivity {
     }
 }
 ```
-Then use `android:textAppearance="@style/TextAppearance.AppCompat.xxx"` for your `TextView`s.
+Then use one of the `TextAppearance.AppCompat.xxx` styles via `android:textAppearance="@style/TextAppearance.AppCompat.xxx"` on your `TextView`s.
 
 *For the full documentation and customization options head over to the [TypefaceCompat wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/TypefaceCompat).*
 
 ## License
 
-Copyright 2015 Thomas Robert Altstidl
+Copyright 2015 Thomas Robert Altstidl & fountaingeyser
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
