@@ -8,6 +8,7 @@ Google's AppCompat Design Library provides some awesome components for your deve
 * [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
 * [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
 * [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#circleimageview)
+* [TypefaceCompat](https://github.com/TR4Android/AppCompat-Extension-Library#typefacecompat)
 
 There are wikis for every component that explain the setup in more depth, so be sure to check them out. Here's a link to the [Wiki Home Page](https://github.com/TR4Android/AppCompat-Extension-Library/wiki)
 
@@ -18,10 +19,10 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.0'
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.1'
 }
 ```
-The latest Release is [Release 0.1.0 (Initial Release)](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.0/sample.apk) with this release.
+The latest Release is [Release 0.1.1](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.1). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.1/sample.apk) with this release.
 
 ## AccountHeaderView
 The `AccountHeaderView` is a component that allows easy switching between accounts in the navigation drawer by clicking on the avatars on the header or by choosing from the dropdown list.
@@ -36,14 +37,12 @@ Use the following layout as the `app:headerLayout` of the AppCompat Design Libra
 ```xml
 <com.tr4android.support.extension.widget.AccountHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/account_header"
     android:background="@drawable/account_header_cover_background"
     android:layout_width="match_parent"
     android:layout_height="@dimen/account_header_height" />
 ```
 Then add your accounts to the `AccountHeaderView` and add a listener for account selections:
 ```java
-AccountHeaderView accountHeaderView = (AccountHeaderView) findViewById(R.id.account_header);
 accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android), ...);
 accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListener() {
     @Override
@@ -86,7 +85,7 @@ The `CircleImageView` is a supercharged `ImageView` that provides the ability to
 
 ##### Main features:
 * Creates circular images using the AppCompat Support Library's `RoundedBitmapDrawable` which provides the best performance possible by using Romain Guys techniques!
-* Allows easy creation of placeholders with a colored circle and a letter (or letters) if an image should not available (see Google's Gmail email avatars)
+* Allows easy creation of placeholders with a colored circle and a letter (or letters) or an icon if an image should not available (see Google's Gmail email avatars).
 
 ##### Basic setup:
 Instead of the default `ImageView` use the following in your layouts:
@@ -95,9 +94,34 @@ Instead of the default `ImageView` use the following in your layouts:
     android:layout_width="40dp"
     android:layout_height="40dp" />
 ```
-Then use `setCircleImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
+Then use `setImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
 *For the full documentation and customization options head over to the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).*
+
+## TypefaceCompat
+The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color and line spacing for the styles specified in the guidelines.
+
+##### Main features:
+* Easily setup with one line of code in your `Activity`.
+* Use one of the `TextAppearance.AppCompat.xxx` styles or use your own styles!
+* Automatically sets textSize, textColor and lineSpacing for the `TextAppearance.AppCompat.xxx` styles and loads the new Roboto typeface on pre-Lollipop devices using a cache!
+
+##### Basic setup:
+In your `Activity` (for ease of use in your `BaseActivity`, if you have one) add the following line *before* `super.onCreate()`:
+```java
+public class SampleActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        TypefaceCompatFactory.installViewFactory(this);
+        super.onCreate(savedInstanceState);
+        ...
+    }
+}
+```
+Then use `android:textAppearance="@style/TextAppearance.AppCompat.xxx"` for your `TextView`s.
+
+*For the full documentation and customization options head over to the [TypefaceCompat wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/TypefaceCompat).*
 
 ## License
 
@@ -115,16 +139,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-**The library uses the AppCompat Design Library with the following license:**
-
-Copyright 2015 The Android Open Source Project
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*For the licenses of the dependencies check out the [Licenses wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/Licenses).*
