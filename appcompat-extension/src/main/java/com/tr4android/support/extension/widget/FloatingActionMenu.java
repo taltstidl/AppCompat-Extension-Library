@@ -12,12 +12,16 @@ import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.KeyEventCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -37,9 +41,6 @@ public class FloatingActionMenu extends ViewGroup {
 
     public static final int LABELS_ON_LEFT_SIDE = 0;
     public static final int LABELS_ON_RIGHT_SIDE = 1;
-
-    private static final float COLLAPSED_PLUS_ROTATION = 0f;
-    private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
 
     // Platform dependent animator for menu animations
     private FloatingActionMenuAnimator mAnimator;
@@ -68,7 +69,9 @@ public class FloatingActionMenu extends ViewGroup {
     private Drawable mCloseDrawable;
     private float mCloseAngle;
 
-    //private TouchDelegateGroup mTouchDelegateGroup;
+    // View and color used for dimming
+    private View mDimmingView;
+    private int mDimmingColor;
 
     private OnFloatingActionsMenuUpdateListener mListener;
 
@@ -114,6 +117,9 @@ public class FloatingActionMenu extends ViewGroup {
         if (mLabelsStyle != 0 && expandsHorizontally()) {
             throw new IllegalStateException("Action labels in horizontal expand orientation is not supported.");
         }
+
+        // So we can catch the back button
+        setFocusableInTouchMode(true);
     }
 
     public void setOnFloatingActionsMenuUpdateListener(OnFloatingActionsMenuUpdateListener listener) {
@@ -420,7 +426,47 @@ public class FloatingActionMenu extends ViewGroup {
         mMainButton.setEnabled(enabled);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mExpanded) {
+            KeyEventCompat.startTracking(event);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mExpanded) {
+            collapse();
+            return true;
+        }
+        return false;
+    }
+
     /* Start Public API methods */
+
+    /**
+     * Method to easily setup a dimming for the specified view with the specified color
+     * @param dimmingView the view to use for dimming (the background color will be animated)
+     * @param dimmingColor the color to use for dimming (in expanded state)
+     */
+    public void setupWithDimmingView(View dimmingView, @ColorInt int dimmingColor) {
+        mDimmingView = dimmingView;
+        mDimmingColor = dimmingColor;
+        mAnimator.buildAnimationForDimming(mDimmingView, mDimmingColor);
+        // apply the appbar elevation so the dim gets rendered over it
+        ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.fab_elevation));
+        ViewCompat.setElevation(mDimmingView, getContext().getResources().getDimensionPixelSize(R.dimen.dim_elevation));
+        // set click listener and disable clicks
+        mDimmingView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                collapse();
+            }
+        });
+        mDimmingView.setClickable(false);
+    }
 
     /**
      * Collapse the FloatingActionMenu with an animation
@@ -447,6 +493,12 @@ public class FloatingActionMenu extends ViewGroup {
 
             if (mListener != null) {
                 mListener.onMenuCollapsed();
+            }
+
+            // So we don't catch the back button anymore
+            clearFocus();
+            if (mDimmingView != null) {
+                mDimmingView.setClickable(false);
             }
         }
     }
@@ -476,6 +528,12 @@ public class FloatingActionMenu extends ViewGroup {
 
             if (mListener != null) {
                 mListener.onMenuExpanded();
+            }
+
+            // So we can catch the back button
+            requestFocus();
+            if (mDimmingView != null) {
+                mDimmingView.setClickable(true);
             }
         }
     }
@@ -542,6 +600,7 @@ public class FloatingActionMenu extends ViewGroup {
             mExpanded = savedState.mExpanded;
 
             mAnimator.prepareDrawable(mMainButton, mCloseAngle, mExpanded);
+            mAnimator.prepareDimming(mDimmingView, mDimmingColor, mExpanded);
 
             super.onRestoreInstanceState(savedState.getSuperState());
         } else {

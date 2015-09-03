@@ -1,6 +1,9 @@
 package com.tr4android.support.extension.internal;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +31,12 @@ public class FloatingActionMenuAnimatorEclair implements FloatingActionMenuAnima
     // The rotation transition drawable
     private RotationTransitionDrawable mRotationTransitionDrawable;
 
+    // The transition drawable used for dimming;
+    private TransitionDrawable mDimmingTransitionDrawable;
+
     @Override
     public void startExpandAnimation(boolean animate) {
+        mDimmingTransitionDrawable.startTransition(ANIMATION_DURATION);
         mRotationTransitionDrawable.setRotation(mRotationTransitionDrawable.getMaxRotation());
         for (HashMap.Entry<View, Animation> entry : mExpandAnimation.entrySet()) {
             View view = entry.getKey();
@@ -42,6 +49,7 @@ public class FloatingActionMenuAnimatorEclair implements FloatingActionMenuAnima
 
     @Override
     public void startCollapseAnimation(boolean animate) {
+        mDimmingTransitionDrawable.reverseTransition(ANIMATION_DURATION);
         mRotationTransitionDrawable.setRotation(0f);
         for (HashMap.Entry<View, Animation> entry : mCollapseAnimation.entrySet()) {
             View view = entry.getKey();
@@ -119,6 +127,22 @@ public class FloatingActionMenuAnimatorEclair implements FloatingActionMenuAnima
     public void prepareDrawable(FloatingActionButton button, float angle, boolean expanded) {
         if (mRotationTransitionDrawable != null) {
             mRotationTransitionDrawable.setRotation(expanded ? angle : 0f);
+        }
+    }
+
+    @Override
+    public void buildAnimationForDimming(View dimmingView, int dimmingColor) {
+        mDimmingTransitionDrawable = new TransitionDrawable(new Drawable[]{new ColorDrawable(Color.TRANSPARENT), new ColorDrawable(dimmingColor)});
+        mDimmingTransitionDrawable.setCrossFadeEnabled(true);
+        dimmingView.setBackgroundDrawable(mDimmingTransitionDrawable);
+    }
+
+    @Override
+    public void prepareDimming(View dimmingView, int dimmingColor, boolean expanded) {
+        if (expanded) {
+            mDimmingTransitionDrawable.startTransition(0);
+        } else {
+            mDimmingTransitionDrawable.reverseTransition(0);
         }
     }
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2006 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<resources>
+    <declare-styleable name="TextAppearance">
+        <!-- Text color. -->
+        <attr name="android:textColor" />
+        <!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
+        <attr name="android:textSize" />
+        <!-- Style (bold, italic, bolditalic) for the text. -->
+        <attr name="android:textStyle" />
+        <!-- Typeface (normal, sans, serif, monospace) for the text. -->
+        <attr name="android:typeface" />
+        <!-- Font family (named by string) for the text. -->
+        <attr name="android:fontFamily" />
+        <!-- Color of the text selection highlight. -->
+        <attr name="android:textColorHighlight" />
+        <!-- Color of the hint text. -->
+        <attr name="android:textColorHint" />
+        <!-- Color of the links. -->
+        <attr name="android:textColorLink" />
+    </declare-styleable>
+    <declare-styleable name="TextViewAppearance">
+        <!-- Base text color, typeface, size, and style. -->
+        <attr name="android:textAppearance" />
+    </declare-styleable>
+</resources>
