@@ -7,7 +7,7 @@
 
     <!-- Info Dialog -->
     <string name="dialog_title">AppCompat Extension Library</string>
-    <string name="dialog_message">A library that builds on the AppCompat Design Library and provides additional common components such as AccountHeaderView, FloatingActionMenu and CircleImageView.</string>
+    <string name="dialog_message">A library that builds on the official AppCompat Design Library and provides additional common components:\n &#8226; AccountHeaderView\n &#8226; FloatingActionMenu\n &#8226; CircleImageView</string>
     <string name="dialog_neutral_button">View on Github</string>
     <string name="dialog_negative_button">Dismiss</string>
 

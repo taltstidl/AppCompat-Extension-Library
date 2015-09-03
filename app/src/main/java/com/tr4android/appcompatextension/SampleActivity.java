@@ -100,6 +100,9 @@ public class SampleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
             case R.id.action_about:
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.dialog_title)
@@ -115,9 +118,6 @@ public class SampleActivity extends AppCompatActivity {
                         })
                         .setNegativeButton(R.string.dialog_negative_button, null)
                         .show();
-                return true;
-            case R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
 
