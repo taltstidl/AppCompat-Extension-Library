@@ -19,7 +19,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="125dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -91,7 +91,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/account_header"
         app:menu="@menu/menu_navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
 

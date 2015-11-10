@@ -5,18 +5,22 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.design.internal.NavigationMenuView;
 import android.support.v7.internal.view.ContextThemeWrapper;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.internal.AccountAdapter;
+
+import com.tr4android.appcompat.extension.R;
 
 import java.util.ArrayList;
 
@@ -26,15 +30,15 @@ import java.util.ArrayList;
 public class AccountHeaderView extends RelativeLayout {
     private static final String LOG_TAG = "AccountHeaderView";
 
-    // The ListView subclass used in the AppCompat Design Library NavigationView
+    // The RecyclerView subclass used in the AppCompat Design Library NavigationView
     // Note: this is prone to changes in the official support library
     private NavigationMenuView mNavigationMenuView;
 
+    // The parent of this view (for removing and adding itself)
+    private ViewGroup mParent;
+
     // The menu adapter used by the NavigationView
-    private ListAdapter mMenuAdapter;
-    
-    // The click listener used by the NavigationView
-    private AdapterView.OnItemClickListener mMenuClickListener;
+    private RecyclerView.Adapter mMenuAdapter;
 
     // The account list adapter
     private AccountAdapter mAccountListAdapter;
@@ -49,36 +53,15 @@ public class AccountHeaderView extends RelativeLayout {
             if (mIsShowingAccountList) {
                 // reset previously cached menu adapter
                 mNavigationMenuView.setAdapter(mMenuAdapter);
-                mNavigationMenuView.setOnItemClickListener(mMenuClickListener);
                 mMenuAdapter = null;
-                mMenuClickListener = null;
+                addViewToParent();
             } else {
                 // cache menu adapter for later
-                mMenuAdapter = ((HeaderViewListAdapter) mNavigationMenuView.getAdapter()).getWrappedAdapter();
-                mMenuClickListener = mNavigationMenuView.getOnItemClickListener();
+                removeViewFromParent();
+                mMenuAdapter = mNavigationMenuView.getAdapter();
                 mNavigationMenuView.setAdapter(mAccountListAdapter);
-                mNavigationMenuView.setOnItemClickListener(mAccountItemClickListener);
             }
             mIsShowingAccountList = !mIsShowingAccountList;
-        }
-    };
-
-    // The item click listener for the account list items
-    private AdapterView.OnItemClickListener mAccountItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == 0) return; // disable header click
-            hideAccountList();
-            int count = mAccountListAdapter.getCount();
-            if (position < mAccountListAdapter.getAccountCount()) {
-                Account selectedAccount = mAccountListAdapter.getItem(position);
-                switchPrimaryAccount(selectedAccount);
-                if (mListener != null) mListener.onAccountSelected(selectedAccount);
-            } else if (position == count && mAccountListAdapter.isAccountManageEnabled()) {
-                if (mListener != null) mListener.onAccountManageSelected();
-            } else {
-                if (mListener != null) mListener.onAccountAddSelected();
-            }
         }
     };
 
@@ -115,7 +98,7 @@ public class AccountHeaderView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.appcompat_extension_account_header, this, true);
 
         // Create an empty adapter (for "Add account" and "Manage accounts" entries)
-        mAccountListAdapter = new AccountAdapter(context, mAddAccountEnabled, mManageAccountEnabled);
+        mAccountListAdapter = new AccountAdapter(new ArrayList<Account>(), this, mAddAccountEnabled, mManageAccountEnabled);
 
         // Retrieve and setup the CircleImageViews used
         mPrimaryIconView = (CircleImageView) findViewById(R.id.account_header_icon_primary);
@@ -123,7 +106,7 @@ public class AccountHeaderView extends RelativeLayout {
         mSecondaryFirstIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account selectedAccount = mAccountListAdapter.getItem(1);
+                Account selectedAccount = mAccountListAdapter.get(1);
                 switchPrimaryAccount(selectedAccount);
                 if (mListener != null) mListener.onAccountSelected(selectedAccount);
             }
@@ -132,7 +115,7 @@ public class AccountHeaderView extends RelativeLayout {
         mSecondarySecondIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account selectedAccount = mAccountListAdapter.getItem(2);
+                Account selectedAccount = mAccountListAdapter.get(2);
                 switchPrimaryAccount(selectedAccount);
                 if (mListener != null) mListener.onAccountSelected(selectedAccount);
             }
@@ -143,6 +126,21 @@ public class AccountHeaderView extends RelativeLayout {
         mEmailView = (TextView) findViewById(R.id.account_header_text_email);
 
         findViewById(R.id.account_header_dropdown).setOnClickListener(mShowAccountClickListener);
+    }
+
+    // Handles a click passed on by the account list adapter
+    public void handleAccountClick(int position) {
+        hideAccountList();
+        int count = mAccountListAdapter.getItemCount();
+        if (position < mAccountListAdapter.getAccountCount()) {
+            Account selectedAccount = mAccountListAdapter.get(position);
+            switchPrimaryAccount(selectedAccount);
+            if (mListener != null) mListener.onAccountSelected(selectedAccount);
+        } else if (position == count - 1 && mAccountListAdapter.isAccountManageEnabled()) {
+            if (mListener != null) mListener.onAccountManageSelected();
+        } else {
+            if (mListener != null) mListener.onAccountAddSelected();
+        }
     }
 
     public void addAccounts(Account... accounts) {
@@ -177,12 +175,7 @@ public class AccountHeaderView extends RelativeLayout {
     }
 
     public ArrayList<Account> getAccounts() {
-        ArrayList<Account> allAccounts = new ArrayList<>();
-        int count = mAccountListAdapter.getAccountCount();
-        for (int i = 0; i < count; i++) {
-            allAccounts.add(mAccountListAdapter.getItem(i));
-        }
-        return allAccounts;
+        return mAccountListAdapter.getAll();
     }
 
     public void setAccountSelectedListener(OnAccountSelectedListener listener) {
@@ -196,10 +189,9 @@ public class AccountHeaderView extends RelativeLayout {
     public void showAccountList() {
         if (!mIsShowingAccountList) {
             // cache menu adapter for later
-            mMenuAdapter = ((HeaderViewListAdapter) mNavigationMenuView.getAdapter()).getWrappedAdapter();
-            mMenuClickListener = mNavigationMenuView.getOnItemClickListener();
+            removeViewFromParent();
+            mMenuAdapter = mNavigationMenuView.getAdapter();
             mNavigationMenuView.setAdapter(mAccountListAdapter);
-            mNavigationMenuView.setOnItemClickListener(mAccountItemClickListener);
         }
         mIsShowingAccountList = !mIsShowingAccountList;
     }
@@ -208,9 +200,8 @@ public class AccountHeaderView extends RelativeLayout {
         if (mIsShowingAccountList) {
             // reset previously cached menu adapter
             mNavigationMenuView.setAdapter(mMenuAdapter);
-            mNavigationMenuView.setOnItemClickListener(mMenuClickListener);
             mMenuAdapter = null;
-            mMenuClickListener = null;
+            addViewToParent();
         }
         mIsShowingAccountList = !mIsShowingAccountList;
     }
@@ -236,7 +227,7 @@ public class AccountHeaderView extends RelativeLayout {
             mNameView.setVisibility(GONE);
             mEmailView.setVisibility(GONE);
         } else {
-            Account primaryAccount = mAccountListAdapter.getItem(0);
+            Account primaryAccount = mAccountListAdapter.get(0);
             primaryAccount.applyAccountIcon(mPrimaryIconView);
             primaryAccount.applyAccountName(mNameView);
             primaryAccount.applyAccountEmail(mEmailView);
@@ -248,16 +239,31 @@ public class AccountHeaderView extends RelativeLayout {
         if (accountCount <= 1) {
             mSecondaryFirstIconView.setVisibility(GONE);
         } else {
-            mAccountListAdapter.getItem(1).applyAccountIcon(mSecondaryFirstIconView);
+            mAccountListAdapter.get(1).applyAccountIcon(mSecondaryFirstIconView);
             mSecondaryFirstIconView.setVisibility(VISIBLE);
         }
         // second secondary account
         if (accountCount <= 2) {
             mSecondarySecondIconView.setVisibility(GONE);
         } else {
-            mAccountListAdapter.getItem(2).applyAccountIcon(mSecondarySecondIconView);
+            mAccountListAdapter.get(2).applyAccountIcon(mSecondarySecondIconView);
             mSecondarySecondIconView.setVisibility(VISIBLE);
         }
+    }
+
+    private void removeViewFromParent() {
+        getViewParent().removeView(this);
+    }
+
+    private void addViewToParent() {
+        getViewParent().addView(this);
+    }
+
+    private ViewGroup getViewParent() {
+        if (mParent == null) {
+            mParent = (ViewGroup) getParent();
+        }
+        return mParent;
     }
 
     /**

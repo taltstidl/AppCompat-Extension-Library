@@ -15,9 +15,9 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -456,7 +456,7 @@ public class FloatingActionMenu extends ViewGroup {
         mDimmingColor = dimmingColor;
         mAnimator.buildAnimationForDimming(mDimmingView, mDimmingColor);
         // apply the appbar elevation so the dim gets rendered over it
-        ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.fab_elevation));
+        ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.design_fab_elevation));
         ViewCompat.setElevation(mDimmingView, getContext().getResources().getDimensionPixelSize(R.dimen.dim_elevation));
         // set click listener and disable clicks
         mDimmingView.setOnClickListener(new OnClickListener() {

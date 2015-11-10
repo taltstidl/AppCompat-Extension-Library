@@ -41,6 +41,7 @@ public class SampleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitleEnabled(true);
         toolbarLayout.setTitle(getString(R.string.sample_title));
 
         // Setup DrawerLayout so we can close it later
@@ -55,7 +56,7 @@ public class SampleActivity extends AppCompatActivity {
             }
         });
         // Setup AccountHeaderView
-        AccountHeaderView accountHeaderView = (AccountHeaderView) findViewById(R.id.account_header);
+        AccountHeaderView accountHeaderView = (AccountHeaderView) navigationView.inflateHeaderView(R.layout.account_header);
         accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android),
                 new Account().setName("Fountain Geyser").setEmail("fountaingeyser@example.com").setIconResource(R.drawable.account_drawer_profile_image_fountaingeyser),
                 new Account().setName("Alpha Account").setEmail("alpha.account@example.de"),
@@ -82,7 +83,7 @@ public class SampleActivity extends AppCompatActivity {
 
         // Setup the dimming of FloatingActionMenu
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
-        floatingActionMenu.setupWithDimmingView(findViewById(R.id.dimming_view), Color.parseColor("#99000000"));
+        floatingActionMenu.setupWithDimmingView(findViewById(R.id.dimming_view), Color.parseColor("#42000000"));
 
         // Setup the sample adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -110,7 +111,7 @@ public class SampleActivity extends AppCompatActivity {
                         .setNeutralButton(R.string.dialog_neutral_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String url = "https://github.com/TR4Android/Swipeable-RecyclerView";
+                                String url = "https://github.com/TR4Android/AppCompat-Extension-Library";
                                 Intent i = new Intent(Intent.ACTION_VIEW);
                                 i.setData(Uri.parse(url));
                                 startActivity(i);

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/account_list_item_height">
+    android:layout_height="@dimen/account_list_item_height"
+    android:background="?attr/selectableItemBackground">
 
     <com.tr4android.support.extension.widget.CircleImageView
         android:id="@+id/icon"
@@ -27,7 +28,7 @@
         android:layout_marginStart="@dimen/account_list_item_margin"
         android:layout_toEndOf="@+id/icon"
         android:layout_toRightOf="@+id/icon"
-        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         android:textSize="@dimen/account_list_item_text_size" />
 </RelativeLayout>
