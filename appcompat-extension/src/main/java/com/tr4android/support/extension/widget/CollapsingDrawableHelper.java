@@ -26,18 +26,8 @@ public class CollapsingDrawableHelper {
 
     private float mExpandedIconSize;
     private float mCollapsedIconSize;
-    private float mCurrentIconSize;
-
-    private float mExpandedDrawY;
-    private float mCollapsedDrawY;
-    private float mExpandedDrawX;
-    private float mCollapsedDrawX;
-    private float mCurrentDrawX;
-    private float mCurrentDrawY;
 
     private Drawable mDrawable;
-
-    private boolean mBoundsChanged;
     
     private Interpolator mIconSizeInterpolator;
     private Interpolator mPositionInterpolator;
@@ -72,7 +62,6 @@ public class CollapsingDrawableHelper {
     void setExpandedBounds(int left, int top, int right, int bottom) {
         if (!rectEquals(mExpandedBounds, left, top, right, bottom)) {
             mExpandedBounds.set(left, top, right, bottom);
-            mBoundsChanged = true;
             onBoundsChanged();
         }
     }
@@ -80,7 +69,6 @@ public class CollapsingDrawableHelper {
     void setCollapsedBounds(int left, int top, int right, int bottom) {
         if (!rectEquals(mCollapsedBounds, left, top, right, bottom)) {
             mCollapsedBounds.set(left, top, right, bottom);
-            mBoundsChanged = true;
             onBoundsChanged();
         }
     }
@@ -124,20 +112,14 @@ public class CollapsingDrawableHelper {
 
     private void calculateOffsets(final float fraction) {
         interpolateBounds(fraction);
-        mCurrentDrawX = lerp(mExpandedDrawX, mCollapsedDrawX, fraction,
-                mPositionInterpolator);
-        mCurrentDrawY = lerp(mExpandedDrawY, mCollapsedDrawY, fraction,
-                mPositionInterpolator);
 
-        setInterpolatedIconSize(lerp(mExpandedIconSize, mCollapsedIconSize,
-                fraction, mIconSizeInterpolator));
+        if (mDrawable != null) {
+            // Set new bounds for the drawable
+            mDrawable.setBounds(Math.round(mCurrentBounds.left), Math.round(mCurrentBounds.top),
+                    Math.round(mCurrentBounds.right), Math.round(mCurrentBounds.bottom));
+        }
 
         ViewCompat.postInvalidateOnAnimation(mView);
-    }
-
-    private void calculateBaseOffsets() {
-        // No need to calculate anything here (for now)
-        // The expanded and collapsed bounds have already been calculated earlier
     }
 
     private void interpolateBounds(float fraction) {
@@ -153,13 +135,8 @@ public class CollapsingDrawableHelper {
 
     public void draw(Canvas canvas) {
         final int saveCount = canvas.save();
-        Log.i("DrawableHelper", "Draw icon? " + mDrawIcon);
 
         if (mDrawable != null && mDrawIcon) {
-            // Set new bounds for the drawable
-            Log.i("DrawableHelper", "Bounds: " + mCurrentBounds.toString());
-            mDrawable.setBounds(Math.round(mCurrentBounds.left), Math.round(mCurrentBounds.top),
-                    Math.round(mCurrentBounds.right), Math.round(mCurrentBounds.bottom));
             // Let the drawable draw to the canvas (bounds are already set)
             mDrawable.draw(canvas);
         }
@@ -167,27 +144,10 @@ public class CollapsingDrawableHelper {
         canvas.restoreToCount(saveCount);
     }
 
-    private void setInterpolatedIconSize(float iconSize) {
-        calculateUsingIconSize(iconSize);
-
-        ViewCompat.postInvalidateOnAnimation(mView);
-    }
-
-    private void calculateUsingIconSize(final float iconSize) {
-        if (mDrawable == null) return;
-
-        // Set new bounds for the drawable
-        mDrawable.setBounds(Math.round(mCurrentBounds.left), Math.round(mCurrentBounds.top),
-                Math.round(mCurrentBounds.right), Math.round(mCurrentBounds.bottom));
-
-        mCurrentIconSize = iconSize;
-    }
-
     public void recalculate() {
         if (mView.getHeight() > 0 && mView.getWidth() > 0) {
             // If we've already been laid out, calculate everything now otherwise we'll wait
             // until a layout
-            calculateBaseOffsets();
             calculateCurrentOffsets();
         }
     }
