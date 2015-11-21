@@ -36,7 +36,6 @@ import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,6 @@ import android.widget.ImageView;
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.animation.AnimationUtils;
 import com.tr4android.support.extension.animation.ValueAnimatorCompat;
-import com.tr4android.support.extension.internal.Utils;
 import com.tr4android.support.extension.internal.ViewOffsetHelper;
 
 import java.lang.annotation.Retention;
@@ -438,7 +436,7 @@ public class FlexibleToolbarLayout extends FrameLayout {
         // Update the collapsed bounds by getting it's transformed bounds. This needs to be done
         // before the children are offset below
         if (mCollapsingTitleEnabled && mDrawTitles) {
-            Utils.getDescendantRect(this, mDummyView, mTmpRect);
+            ViewGroupUtils.getDescendantRect(this, mDummyView, mTmpRect);
             // Update the collapsed bounds
             mTitleCollapsingTextHelper.setCollapsedBounds(mTmpRect.left + horizontalOffsetCollapsed,
                     bottom - mTmpRect.height(), mTmpRect.right, bottom);
@@ -457,7 +455,7 @@ public class FlexibleToolbarLayout extends FrameLayout {
             mTitleCollapsingTextHelper.recalculate();
         }
         if (mCollapsingSubtitleEnabled && mDrawTitles) {
-            Utils.getDescendantRect(this, mDummyView, mTmpRect);
+            ViewGroupUtils.getDescendantRect(this, mDummyView, mTmpRect);
             // Update the collapsed bounds
             mSubtitleCollapsingTextHelper.setCollapsedBounds(mTmpRect.left + horizontalOffsetCollapsed,
                     bottom - mTmpRect.height(), mTmpRect.right, bottom);
@@ -476,7 +474,7 @@ public class FlexibleToolbarLayout extends FrameLayout {
             mSubtitleCollapsingTextHelper.recalculate();
         }
         if (mCollapsingIconEnabled && mDrawTitles) {
-            Utils.getDescendantRect(this, mDummyView, mTmpRect);
+            ViewGroupUtils.getDescendantRect(this, mDummyView, mTmpRect);
             // Update the collapsed bounds
             int collapsedIconSize = (int) mIconCollapsingHelper.getCollapsedIconSize();
             int collapsedTop = bottom - mTmpRect.height() + Math.round((mTmpRect.height() - collapsedIconSize) / 2f);

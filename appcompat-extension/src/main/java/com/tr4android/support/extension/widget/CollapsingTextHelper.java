@@ -36,7 +36,6 @@ import android.view.animation.Interpolator;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.animation.AnimationUtils;
-import com.tr4android.support.extension.internal.Utils;
 
 final class CollapsingTextHelper {
 
