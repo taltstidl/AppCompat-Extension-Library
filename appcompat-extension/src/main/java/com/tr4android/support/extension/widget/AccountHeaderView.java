@@ -10,10 +10,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.AdapterView;
-import android.widget.HeaderViewListAdapter;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -86,7 +82,7 @@ public class AccountHeaderView extends RelativeLayout {
     }
 
     public AccountHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(new ContextThemeWrapper(context, R.style.AccountHeaderView), attrs, defStyleAttr);
+        super(new ContextThemeWrapper(context, R.style.Widget_Design_AccountHeaderView), attrs, defStyleAttr);
 
         // Retrieve the style attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AccountHeaderView, defStyleAttr, 0);

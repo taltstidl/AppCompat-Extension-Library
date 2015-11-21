@@ -4,4 +4,5 @@
     <color name="material_yellow">#ffeb3b</color>
     <color name="material_green">#4caf50</color>
     <color name="material_blue">#2196f3</color>
+    <color name="material_blue_dark">#1976d2</color>
 </resources>
