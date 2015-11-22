@@ -154,9 +154,12 @@ public class FlexibleToolbarLayout extends FrameLayout {
                 R.styleable.FlexibleToolbarLayout, defStyleAttr,
                 R.style.Widget_Design_FlexibleToolbarLayout);
 
-        mTitleCollapsingTextHelper.setExpandedTextGravity(GravityCompat.START | Gravity.CENTER_VERTICAL);
+        int expandedVerticalGravity =
+                a.getInt(R.styleable.FlexibleToolbarLayout_expandedGravity, Gravity.CENTER_VERTICAL);
+
+        mTitleCollapsingTextHelper.setExpandedTextGravity(GravityCompat.START | expandedVerticalGravity);
         mTitleCollapsingTextHelper.setCollapsedTextGravity(GravityCompat.START | Gravity.CENTER_VERTICAL);
-        mSubtitleCollapsingTextHelper.setExpandedTextGravity(GravityCompat.START | Gravity.CENTER_VERTICAL);
+        mSubtitleCollapsingTextHelper.setExpandedTextGravity(GravityCompat.START | expandedVerticalGravity);
         mSubtitleCollapsingTextHelper.setCollapsedTextGravity(GravityCompat.START | Gravity.CENTER_VERTICAL);
 
         mExpandedMarginLeft = mExpandedMarginTop = mExpandedMarginRight = mExpandedMarginBottom =

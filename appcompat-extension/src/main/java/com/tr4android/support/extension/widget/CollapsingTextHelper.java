@@ -398,10 +398,10 @@ final class CollapsingTextHelper {
                 mIsRtl ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR);
         switch (collapsedAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) {
             case Gravity.BOTTOM:
-                mCollapsedDrawY = mCollapsedBounds.bottom;
+                mCollapsedDrawY = mCollapsedBounds.bottom - mCollapsedTextOffsetBottom;
                 break;
             case Gravity.TOP:
-                mCollapsedDrawY = mCollapsedBounds.top - mTextPaint.ascent();
+                mCollapsedDrawY = mCollapsedBounds.top - mTextPaint.ascent() + mCollapsedTextOffsetTop;
                 break;
             case Gravity.CENTER_VERTICAL:
             default:
@@ -432,10 +432,10 @@ final class CollapsingTextHelper {
                 mIsRtl ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR);
         switch (expandedAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) {
             case Gravity.BOTTOM:
-                mExpandedDrawY = mExpandedBounds.bottom;
+                mExpandedDrawY = mExpandedBounds.bottom - mExpandedTextOffsetBottom;
                 break;
             case Gravity.TOP:
-                mExpandedDrawY = mExpandedBounds.top - mTextPaint.ascent();
+                mExpandedDrawY = mExpandedBounds.top - mTextPaint.ascent() + mExpandedTextOffsetTop;
                 break;
             case Gravity.CENTER_VERTICAL:
             default:
