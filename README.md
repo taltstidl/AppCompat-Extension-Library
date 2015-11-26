@@ -19,10 +19,10 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.2'
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.3'
 }
 ```
-The latest Release is [Release 0.1.2](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.2). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.2/sample.apk) with this release.
+The latest Release is [Release 0.1.3](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.3). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.3/sample.apk) with this release.
 
 ## AccountHeaderView
 The `AccountHeaderView` is a component that allows easy switching between accounts in the navigation drawer by clicking on the avatars on the header or by choosing from the dropdown list.
