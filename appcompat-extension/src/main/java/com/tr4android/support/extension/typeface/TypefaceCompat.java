@@ -28,8 +28,8 @@ public class TypefaceCompat {
     private static final String[] STYLE_SUFFIX = new String[]{"Regular", "Bold", "Italic", "BoldItalic"};
     private static final String TTF_SUFFIX = ".ttf";
 
-    private static int TYPEFACE_CACHE_SIZE = 0;
-    private static final LruCache<String, Typeface> TYPEFACE_CACHE = new LruCache<>(TYPEFACE_CACHE_SIZE);
+    private static final int TYPEFACE_CACHE_MAX_SIZE = 8;
+    private static final LruCache<String, Typeface> TYPEFACE_CACHE = new LruCache<>(TYPEFACE_CACHE_MAX_SIZE);
 
     static {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif", "Roboto-");
@@ -70,8 +70,6 @@ public class TypefaceCompat {
                 String fontPath = "fonts/" + fileName;
                 tf = Typeface.createFromAsset(ctx.getAssets(), fontPath);
                 if (tf != null) {
-                    // Increase cache size to make room for the new Typeface
-                    TYPEFACE_CACHE.resize(TYPEFACE_CACHE_SIZE++);
                     TYPEFACE_CACHE.put(fileName, tf);
                 }
             }
