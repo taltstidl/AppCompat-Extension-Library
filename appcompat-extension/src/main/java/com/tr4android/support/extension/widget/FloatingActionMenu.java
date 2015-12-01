@@ -15,6 +15,8 @@ import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +35,7 @@ import com.tr4android.support.extension.internal.FloatingActionMenuAnimatorHoney
 import com.tr4android.support.extension.internal.PairedTouchListener;
 
 @SuppressLint("NewApi")
+@CoordinatorLayout.DefaultBehavior(FloatingActionMenu.Behavior.class)
 public class FloatingActionMenu extends ViewGroup {
     public static final int EXPAND_UP = 0;
     public static final int EXPAND_DOWN = 1;
@@ -638,5 +641,40 @@ public class FloatingActionMenu extends ViewGroup {
                 return new SavedState[size];
             }
         };
+    }
+
+    /**
+     * Behavior designed for use with {@link FloatingActionMenu} instances. It's main function
+     * is to move all {@link FloatingActionButton}s views inside {@link FloatingActionMenu} so
+     * that any displayed {@link Snackbar}s do not cover them.
+     */
+    public static class Behavior extends CoordinatorLayout.Behavior<FloatingActionMenu> {
+
+        /**
+         * Default constructor for instantiating Behaviors.
+         */
+        public Behavior() {
+        }
+
+        // We only support the FAB <> Snackbar shift movement on Honeycomb and above. This is
+        // because we can use view translation properties which greatly simplifies the code.
+        private static final boolean SNACKBAR_BEHAVIOR_ENABLED = Build.VERSION.SDK_INT >= 11;
+
+        public Behavior(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        @Override
+        public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionMenu child, View dependency) {
+            // We're dependent on all SnackbarLayouts (if enabled)
+            return SNACKBAR_BEHAVIOR_ENABLED && dependency instanceof Snackbar.SnackbarLayout;
+        }
+
+        @Override
+        public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionMenu child, View dependency) {
+            float translationY = Math.min(0, dependency.getTranslationY() - dependency.getHeight());
+            child.setTranslationY(translationY);
+            return true;
+        }
     }
 }

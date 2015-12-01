@@ -13,12 +13,12 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.internal.widget.ThemeUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.tr4android.appcompat.extension.R;
+import com.tr4android.support.extension.utils.ThemeUtils;
 
 /**
  * A supercharged ImageView that displays images as circles and creates placeholder images
