@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.design.internal.NavigationMenuView;
-import android.support.v7.internal.view.ContextThemeWrapper;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -17,6 +17,7 @@ import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.internal.AccountAdapter;
 
 import com.tr4android.appcompat.extension.R;
+import com.tr4android.support.extension.utils.ThemeUtils;
 
 import java.util.ArrayList;
 
@@ -83,6 +84,11 @@ public class AccountHeaderView extends RelativeLayout {
 
     public AccountHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(new ContextThemeWrapper(context, R.style.Widget_Design_AccountHeaderView), attrs, defStyleAttr);
+
+        // Provide default background if none is set
+        if (getBackground() == null) {
+            setBackgroundColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary));
+        }
 
         // Retrieve the style attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AccountHeaderView, defStyleAttr, 0);

@@ -2,10 +2,7 @@
 <resources>
 
     <style name="Widget.Design.AccountHeaderView" parent="android:Widget">
-        <item name="android:minHeight">@dimen/account_header_height</item>
-        <item name="android:maxHeight">@dimen/account_header_height</item>
         <item name="android:paddingTop">@dimen/account_header_padding_top</item>
-        <item name="android:background">?attr/colorPrimary</item>
         <item name="android:clickable">true</item>
     </style>
 
