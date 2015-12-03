@@ -21,6 +21,7 @@ import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.internal.AccountAdapter;
 
 import com.tr4android.appcompat.extension.R;
+import com.tr4android.support.extension.utils.ThemeUtils;
 
 import java.util.ArrayList;
 
@@ -87,6 +88,11 @@ public class AccountHeaderView extends RelativeLayout {
 
     public AccountHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(new ContextThemeWrapper(context, R.style.AccountHeaderView), attrs, defStyleAttr);
+
+        // Provide default background if none is set
+        if (getBackground() == null) {
+            setBackgroundColor(ThemeUtils.getThemeAttrColor(context, R.attr.colorPrimary));
+        }
 
         // Retrieve the style attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AccountHeaderView, defStyleAttr, 0);
