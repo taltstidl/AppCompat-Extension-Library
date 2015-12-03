@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2015 Thomas Robert Altstidl
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +21,7 @@
         <attr name="accountHeaderManageEnabled" format="boolean" />
     </declare-styleable>
 
-    <!-- CirlceImageView -->
+    <!-- CircleImageView -->
     <declare-styleable name="CircleImageView">
         <attr name="circleImageEnabled" format="boolean" />
         <attr name="placeholderCircleColor" format="color" />
@@ -46,5 +45,48 @@
         <attr name="fabMenuLabelStyle" format="reference" />
         <attr name="fabMenuCloseIconSrc" format="reference" />
         <attr name="fabMenuCloseIconAngle" format="float" />
+    </declare-styleable>
+
+    <!-- FlexibleToolbarLayout -->
+    <declare-styleable name="FlexibleToolbarLayout">
+        <attr name="expandedMargin" format="dimension" />
+        <attr name="expandedMarginStart" format="dimension" />
+        <attr name="expandedMarginTop" format="dimension" />
+        <attr name="expandedMarginEnd" format="dimension" />
+        <attr name="expandedMarginBottom" format="dimension" />
+        <attr name="expandedGravity">
+            <flag name="top" value="0x30"/>
+            <flag name="center_vertical" value="0x10"/>
+            <flag name="bottom" value="0x50"/>
+
+            <!--<flag name="left" value="0x03"/>-->
+            <!--<flag name="right" value="0x05"/>-->
+            <!--<flag name="center_horizontal" value="0x01"/>-->
+            <!--<flag name="center" value="0x11"/>-->
+            <!--<flag name="start" value="0x00800003"/>-->
+            <!--<flag name="end" value="0x00800005"/>-->
+        </attr>
+
+        <attr name="titleExpandedTextAppearance" format="reference" />
+        <attr name="titleCollapsedTextAppearance" format="reference" />
+        <attr name="subtitleExpandedTextAppearance" format="reference" />
+        <attr name="subtitleCollapsedTextAppearance" format="reference" />
+        <attr name="iconExpandedSize" format="dimension" />
+        <attr name="iconCollapsedSize" format="dimension" />
+
+        <attr name="titleFlexibleEnabled" format="boolean" />
+        <attr name="title" />
+        <attr name="subtitleFlexibleEnabled" format="boolean" />
+        <attr name="subtitle" />
+        <attr name="iconFlexibleEnabled" format="boolean" />
+        <attr name="icon" />
+
+        <attr name="spaceTitleSubtitle" format="dimension" />
+        <attr name="spaceIconTitles" format="dimension" />
+
+        <attr name="contentScrimColor" format="color" />
+        <attr name="statusBarScrimColor" format="color" />
+
+        <attr name="toolbarRefId" format="reference" />
     </declare-styleable>
 </resources>

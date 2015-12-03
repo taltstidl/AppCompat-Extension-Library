@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
+import com.tr4android.support.extension.widget.FlexibleToolbarLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
 
 
@@ -40,9 +41,8 @@ public class SampleActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        FlexibleToolbarLayout toolbarLayout = (FlexibleToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbarLayout.setTitleEnabled(true);
-        toolbarLayout.setTitle(getString(R.string.sample_title));
 
         // Setup DrawerLayout so we can close it later
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

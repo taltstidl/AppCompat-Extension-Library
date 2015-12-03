@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AccountHeaderView">
+    <style name="Widget.Design.AccountHeaderView" parent="android:Widget">
         <item name="android:paddingTop">@dimen/account_header_padding_top</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Widget.Design.FlexibleToolbarLayout" parent="android:Widget">
+        <item name="expandedMargin">16dp</item>
+        <item name="spaceTitleSubtitle">4dp</item>
+        <item name="spaceIconTitles">16dp</item>
+        <item name="iconCollapsedSize">40dp</item>
+        <item name="iconExpandedSize">56dp</item>
+        <item name="statusBarScrim">?attr/colorPrimaryDark</item>
+    </style>
+
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.ExpandedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.CollapsedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Design.FlexibleToolbarLayout.Subtitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="label_style_dark">
