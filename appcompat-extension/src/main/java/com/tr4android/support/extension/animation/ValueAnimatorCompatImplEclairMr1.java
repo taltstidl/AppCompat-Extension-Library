@@ -29,6 +29,7 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
 
     private static final int HANDLER_DELAY = 10;
     private static final int DEFAULT_DURATION = 200;
+    private static final int DEFAULT_REPEAT_COUNT = 0;
 
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
 
@@ -39,6 +40,7 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
     private final float[] mFloatValues = new float[2];
 
     private int mDuration = DEFAULT_DURATION;
+    private int mRepeatCount = DEFAULT_REPEAT_COUNT;
     private Interpolator mInterpolator;
     private AnimatorListenerProxy mListener;
     private AnimatorUpdateListenerProxy mUpdateListener;
@@ -84,6 +86,11 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
     @Override
     public void setUpdateListener(AnimatorUpdateListenerProxy updateListener) {
         mUpdateListener = updateListener;
+    }
+
+    @Override
+    public void setRepeatCount(int count) {
+        mRepeatCount = count;
     }
 
     @Override

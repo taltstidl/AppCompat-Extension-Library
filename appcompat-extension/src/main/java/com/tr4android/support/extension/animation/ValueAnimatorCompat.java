@@ -24,6 +24,11 @@ import android.view.animation.Interpolator;
  * You shouldn't not instantiate this directly. Instead use {@code ViewUtils.createAnimator()}.
  */
 public class ValueAnimatorCompat {
+    /**
+     * This value is used with the {@link #setRepeatCount(int)} property to repeat
+     * the animation indefinitely.
+     */
+    public static final int INFINITE = -1;
 
     public interface AnimatorUpdateListener {
         /**
@@ -60,6 +65,12 @@ public class ValueAnimatorCompat {
          * @param animator The animation which was canceled.
          */
         void onAnimationCancel(ValueAnimatorCompat animator);
+        /**
+         * <p>Notifies the repetition of the animation.</p>
+         *
+         * @param animator The animation which was repeated.
+         */
+        void onAnimationRepeat(ValueAnimatorCompat animator);
     }
 
     static class AnimatorListenerAdapter implements AnimatorListener {
@@ -73,6 +84,10 @@ public class ValueAnimatorCompat {
 
         @Override
         public void onAnimationCancel(ValueAnimatorCompat animator) {
+        }
+
+        @Override
+        public void onAnimationRepeat(ValueAnimatorCompat animator) {
         }
     }
 
@@ -89,6 +104,7 @@ public class ValueAnimatorCompat {
             void onAnimationStart();
             void onAnimationEnd();
             void onAnimationCancel();
+            void onAnimationRepeat();
         }
 
         abstract void start();
@@ -105,6 +121,7 @@ public class ValueAnimatorCompat {
         abstract float getAnimatedFraction();
         abstract void end();
         abstract long getDuration();
+        abstract void setRepeatCount(int count);
     }
 
     private final Impl mImpl;
@@ -155,10 +172,19 @@ public class ValueAnimatorCompat {
                 public void onAnimationCancel() {
                     listener.onAnimationCancel(ValueAnimatorCompat.this);
                 }
+
+                @Override
+                public void onAnimationRepeat() {
+                    listener.onAnimationRepeat(ValueAnimatorCompat.this);
+                }
             });
         } else {
             mImpl.setListener(null);
         }
+    }
+
+    public void setRepeatCount(int count) {
+        mImpl.setRepeatCount(count);
     }
 
     public void setIntValues(int from, int to) {

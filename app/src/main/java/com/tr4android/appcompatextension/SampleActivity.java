@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.tr4android.support.extension.drawable.IndeterminateProgressDrawable;
+import com.tr4android.support.extension.drawable.MediaControlDrawable;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
@@ -89,6 +91,24 @@ public class SampleActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new FileAdapter(this));
+
+        float dp = getResources().getDisplayMetrics().density;
+
+        // Setup delightful detail drawables
+        ImageView artImageView = (ImageView) findViewById(R.id.art_imageview);
+        final IndeterminateProgressDrawable progressDrawable = new IndeterminateProgressDrawable(this, Color.WHITE, 4 * dp, 16 * dp);
+        artImageView.setImageDrawable(progressDrawable);
+        progressDrawable.start(); // start animation
+
+        ImageView controlsImageView = (ImageView) findViewById(R.id.controls_imageview);
+        final MediaControlDrawable controlDrawable = new MediaControlDrawable(this, Color.WHITE, 8 * dp, MediaControlDrawable.State.PLAY);
+        controlsImageView.setImageDrawable(controlDrawable);
+        controlsImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // start animation on click
+                controlDrawable.setMediaControlState(getNextState(controlDrawable.getMediaControlState()));
+            }
+        });
     }
 
     @Override
@@ -123,5 +143,28 @@ public class SampleActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean mReverse = true;
+    /**
+     * Helper for cycling through the {@link MediaControlDrawable} states
+     */
+    private MediaControlDrawable.State getNextState(MediaControlDrawable.State current) {
+        switch (current) {
+            case PLAY:
+                mReverse = !mReverse;
+                return mReverse
+                        ? MediaControlDrawable.State.PAUSE
+                        : MediaControlDrawable.State.STOP;
+            case STOP:
+                return mReverse
+                        ? MediaControlDrawable.State.PLAY
+                        : MediaControlDrawable.State.PAUSE;
+            case PAUSE:
+                return mReverse
+                        ? MediaControlDrawable.State.STOP
+                        : MediaControlDrawable.State.PLAY;
+        }
+        return null;
     }
 }
