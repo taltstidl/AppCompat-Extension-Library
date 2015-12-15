@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
+import android.util.Log;
 
 import com.tr4android.support.extension.animation.AnimationUtils;
 import com.tr4android.support.extension.animation.ValueAnimatorCompat;
@@ -33,6 +34,12 @@ public class MediaControlDrawable extends Drawable {
     private float mRotation;
     private Path mPrimaryPath = new Path();
     private Path mSecondaryPath = new Path();
+
+    // Cached metrics
+    private float mCenter;
+    private float mSize;
+    private float mPlayTipOffset;
+    private float mPlayBaseOffset;
 
     // Animator
     private ValueAnimatorCompat mAnimator;
@@ -90,6 +97,7 @@ public class MediaControlDrawable extends Drawable {
 
 
     private void setTransitionState(float rotation, float fraction) {
+        if (fraction == 1f) mCurrentState = mTargetState;
         if (mCurrentState == mTargetState) rotation = fraction = 0f;
         // Calculate current drawable metrics
         mRotation = rotation;
@@ -99,18 +107,21 @@ public class MediaControlDrawable extends Drawable {
         if (mCurrentState == State.PLAY && (mTargetState == State.STOP
                 || mTargetState == State.PLAY)) {
             // Transition between play and stop icon
-            mPrimaryPath.moveTo(mInternalBounds.right,
-                    interpolate(mInternalBounds.centerX(), mInternalBounds.bottom, fraction));
-            mPrimaryPath.lineTo(mInternalBounds.left,
-                    mInternalBounds.bottom);
-            mPrimaryPath.lineTo(mInternalBounds.left,
-                    interpolate(mInternalBounds.centerX(), mInternalBounds.top, fraction));
-            mPrimaryPath.lineTo(interpolate(mInternalBounds.left, mInternalBounds.right, fraction),
-                    mInternalBounds.top);
+            float offset = (1f - fraction) * mPlayTipOffset;
+            float offsetBase = (1f - fraction) * mPlayBaseOffset;
+            Log.i(TAG, "Base offset: " + offsetBase);
+            mPrimaryPath.moveTo(mInternalBounds.right + offset,
+                    interpolate(mCenter, mInternalBounds.bottom, fraction));
+            mPrimaryPath.lineTo(mInternalBounds.left + offset,
+                    mInternalBounds.bottom + offsetBase);
+            mPrimaryPath.lineTo(mInternalBounds.left + offset,
+                    interpolate(mCenter, mInternalBounds.top, fraction));
+            mPrimaryPath.lineTo(interpolate(mInternalBounds.left, mInternalBounds.right, fraction) + offset,
+                    mInternalBounds.top - offsetBase);
         } else if (mCurrentState == State.STOP && mTargetState == State.PAUSE) {
             // Transition between stop and pause icon
-            float primaryBottom = mInternalBounds.centerX() - fraction * 3f / 20f * mInternalBounds.width();
-            float secondaryTop = mInternalBounds.centerX() + fraction * 3f / 20f * mInternalBounds.width();
+            float primaryBottom = mCenter - fraction * 3f / 20f * mSize;
+            float secondaryTop = mCenter + fraction * 3f / 20f * mSize;
             mPrimaryPath.moveTo(mInternalBounds.right, mInternalBounds.top);
             mPrimaryPath.lineTo(mInternalBounds.right, primaryBottom);
             mPrimaryPath.lineTo(mInternalBounds.left, primaryBottom);
@@ -121,37 +132,43 @@ public class MediaControlDrawable extends Drawable {
             mSecondaryPath.lineTo(mInternalBounds.left, mInternalBounds.bottom);
         } else if (mCurrentState == State.PAUSE && mTargetState == State.PLAY) {
             // Transition between pause and play icon
-            float primaryRight = mInternalBounds.centerX() - Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mInternalBounds.width();
-            float primaryBottomLeft = mInternalBounds.left + fraction * (mInternalBounds.width() / 2f);
-            float secondaryLeft = mInternalBounds.centerX() + Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mInternalBounds.width();
-            float secondaryBottomRight = mInternalBounds.right - fraction * (mInternalBounds.width() / 2f);
-            mPrimaryPath.moveTo(mInternalBounds.left, mInternalBounds.bottom);
-            mPrimaryPath.lineTo(primaryRight, mInternalBounds.bottom);
-            mPrimaryPath.lineTo(primaryRight, mInternalBounds.top);
-            mPrimaryPath.lineTo(primaryBottomLeft, mInternalBounds.top);
-            mSecondaryPath.moveTo(mInternalBounds.right, mInternalBounds.bottom);
-            mSecondaryPath.lineTo(secondaryLeft, mInternalBounds.bottom);
-            mSecondaryPath.lineTo(secondaryLeft, mInternalBounds.top);
-            mSecondaryPath.lineTo(secondaryBottomRight, mInternalBounds.top);
+            float offset = fraction * mPlayTipOffset;
+            float offsetBase = fraction * mPlayBaseOffset;
+            Log.i(TAG, "Base offset: " + offsetBase);
+            float primaryRight = mCenter - Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mSize;
+            float primaryBottomLeft = mInternalBounds.left + fraction * (mSize / 2f);
+            float secondaryLeft = mCenter + Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mSize;
+            float secondaryBottomRight = mInternalBounds.right - fraction * (mSize / 2f);
+            mPrimaryPath.moveTo(mInternalBounds.left - offsetBase, mInternalBounds.bottom - offset);
+            mPrimaryPath.lineTo(primaryRight, mInternalBounds.bottom - offset);
+            mPrimaryPath.lineTo(primaryRight, mInternalBounds.top - offset);
+            mPrimaryPath.lineTo(primaryBottomLeft, mInternalBounds.top - offset);
+            mSecondaryPath.moveTo(mInternalBounds.right + offsetBase, mInternalBounds.bottom - offset);
+            mSecondaryPath.lineTo(secondaryLeft, mInternalBounds.bottom - offset);
+            mSecondaryPath.lineTo(secondaryLeft, mInternalBounds.top - offset);
+            mSecondaryPath.lineTo(secondaryBottomRight, mInternalBounds.top - offset);
         } else if (mCurrentState == State.PLAY && mTargetState == State.PAUSE) {
             // Transition between play and pause icon
-            float primaryBottom = mInternalBounds.centerX() - Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mInternalBounds.width();
-            float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mInternalBounds.width() / 2f);
-            float secondaryTop = mInternalBounds.centerX() + Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mInternalBounds.width();
-            float secondaryLeftBottom = mInternalBounds.right - (1f - fraction) * (mInternalBounds.width() / 2f);
-            mPrimaryPath.moveTo(mInternalBounds.left, mInternalBounds.top);
-            mPrimaryPath.lineTo(mInternalBounds.left, primaryBottom);
-            mPrimaryPath.lineTo(mInternalBounds.right, primaryBottom);
-            mPrimaryPath.lineTo(mInternalBounds.right, primaryLeftTop);
-            mSecondaryPath.moveTo(mInternalBounds.left, mInternalBounds.bottom);
-            mSecondaryPath.lineTo(mInternalBounds.left, secondaryTop);
-            mSecondaryPath.lineTo(mInternalBounds.right, secondaryTop);
-            mSecondaryPath.lineTo(mInternalBounds.right, secondaryLeftBottom);
+            float offset = (1f - fraction) * mPlayTipOffset;
+            float offsetBase = (1f - fraction) * mPlayBaseOffset;
+            Log.i(TAG, "Base offset: " + offsetBase);
+            float primaryBottom = mCenter - Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mSize;
+            float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mSize / 2f);
+            float secondaryTop = mCenter + Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mSize;
+            float secondaryLeftBottom = mInternalBounds.right - (1f - fraction) * (mSize / 2f);
+            mPrimaryPath.moveTo(mInternalBounds.left + offset, mInternalBounds.top - offsetBase);
+            mPrimaryPath.lineTo(mInternalBounds.left + offset, primaryBottom);
+            mPrimaryPath.lineTo(mInternalBounds.right + offset, primaryBottom);
+            mPrimaryPath.lineTo(mInternalBounds.right + offset, primaryLeftTop);
+            mSecondaryPath.moveTo(mInternalBounds.left + offset, mInternalBounds.bottom + offsetBase);
+            mSecondaryPath.lineTo(mInternalBounds.left + offset, secondaryTop);
+            mSecondaryPath.lineTo(mInternalBounds.right + offset, secondaryTop);
+            mSecondaryPath.lineTo(mInternalBounds.right + offset, secondaryLeftBottom);
         } else if (mCurrentState == State.PAUSE && (mTargetState == State.STOP
                 || mTargetState == State.PAUSE)) {
             // Transition between pause and stop icon
-            float primaryRight = mInternalBounds.centerX() - (1f - fraction) * 3f / 20f * mInternalBounds.width();
-            float secondaryLeft = mInternalBounds.centerX() + (1f - fraction) * 3f / 20f * mInternalBounds.width();
+            float primaryRight = mCenter - (1f - fraction) * 3f / 20f * mSize;
+            float secondaryLeft = mCenter + (1f - fraction) * 3f / 20f * mSize;
             mPrimaryPath.moveTo(mInternalBounds.left, mInternalBounds.top);
             mPrimaryPath.lineTo(primaryRight, mInternalBounds.top);
             mPrimaryPath.lineTo(primaryRight, mInternalBounds.bottom);
@@ -163,14 +180,17 @@ public class MediaControlDrawable extends Drawable {
         } else if (mCurrentState == State.STOP && (mTargetState == State.PLAY
                 || mTargetState == State.STOP)) {
             // Transition between stop and play icon
-            mPrimaryPath.moveTo(interpolate(mInternalBounds.left, mInternalBounds.centerX(), fraction),
-                    mInternalBounds.top);
-            mPrimaryPath.lineTo(mInternalBounds.left,
-                    mInternalBounds.bottom);
-            mPrimaryPath.lineTo(interpolate(mInternalBounds.right, mInternalBounds.centerX(), fraction),
-                    mInternalBounds.bottom);
-            mPrimaryPath.lineTo(mInternalBounds.right,
-                    interpolate(mInternalBounds.top, mInternalBounds.bottom, fraction));
+            float offset = fraction * mPlayTipOffset;
+            float offsetBase = fraction * mPlayBaseOffset;
+            Log.i(TAG, "Base offset: " + offsetBase);
+            mPrimaryPath.moveTo(interpolate(mInternalBounds.left, mCenter, fraction),
+                    mInternalBounds.top - offset);
+            mPrimaryPath.lineTo(mInternalBounds.left - offsetBase,
+                    mInternalBounds.bottom - offset);
+            mPrimaryPath.lineTo(interpolate(mInternalBounds.right, mCenter, fraction),
+                    mInternalBounds.bottom - offset);
+            mPrimaryPath.lineTo(mInternalBounds.right + offsetBase,
+                    interpolate(mInternalBounds.top, mInternalBounds.bottom, fraction) - offset);
         }
 
         invalidateSelf();
@@ -187,7 +207,12 @@ public class MediaControlDrawable extends Drawable {
         float padding = mPadding + (bounds.height() - 2f * mPadding) * 1f / 6f;
         mInternalBounds.set(bounds.left + padding, bounds.top + padding,
                 bounds.right - padding, bounds.bottom - padding);
+        mCenter = mInternalBounds.centerX();
+        mSize = mInternalBounds.width();
+        mPlayTipOffset = 1f / 6f * mSize;
+        mPlayBaseOffset = 0.07735f * mSize;
         setTransitionState(0f, 0f);
+        Log.i(TAG, "Play tip offset: " + mPlayTipOffset + ", Play base offset: " + mPlayBaseOffset);
     }
 
     /**
