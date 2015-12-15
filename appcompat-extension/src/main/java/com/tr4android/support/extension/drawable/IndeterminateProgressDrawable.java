@@ -31,6 +31,7 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
         mPathStart.cubicTo(0.7f, 0, 0.6f, 1, 1, 1);
         PATH_START_INTERPOLATOR = PathInterpolatorCompat.create(mPathStart);
     }
+
     // Interpolator used for path end
     private static final Interpolator PATH_END_INTERPOLATOR;
     static {
@@ -55,10 +56,6 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
 
     // Animator
     private ValueAnimatorCompat mAnimator;
-
-    public IndeterminateProgressDrawable(Context context) {
-        this(context, ThemeUtils.getThemeAttrColor(context, R.attr.colorAccent), -1f, -1f);
-    }
 
     public IndeterminateProgressDrawable(Context context, @ColorInt int color, float stroke, float padding) {
         mArcStrokeWidth = stroke;
@@ -89,18 +86,21 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
         });
         mAnimator.setListener(new ValueAnimatorCompat.AnimatorListener() {
             @Override
-            public void onAnimationStart(ValueAnimatorCompat animator) { }
+            public void onAnimationStart(ValueAnimatorCompat animator) {
+            }
 
             @Override
-            public void onAnimationEnd(ValueAnimatorCompat animator) { }
+            public void onAnimationEnd(ValueAnimatorCompat animator) {
+            }
 
             @Override
-            public void onAnimationCancel(ValueAnimatorCompat animator) { }
+            public void onAnimationCancel(ValueAnimatorCompat animator) {
+            }
 
             @Override
             public void onAnimationRepeat(ValueAnimatorCompat animator) {
                 // Update rotation count (rotation does 1 cycle for every 5 animator cycles)
-                mRotationCount = (mRotationCount + 1)%5;
+                mRotationCount = (mRotationCount + 1) % 5;
             }
         });
     }
@@ -161,25 +161,60 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
 
     /**
      * Helper that calculates the bounds and the stroke width of the progress arc
+     *
      * @param bounds the bounds of the drawable
      */
     private void calculateArcMetrics(Rect bounds) {
         float strokeWidth;
         if (mArcStrokeWidth == -1f) { // auto calculate stroke width
-            strokeWidth = 4f/48f * bounds.height();
+            strokeWidth = 4f / 48f * bounds.height();
         } else { // use provided stroke width
             strokeWidth = mArcStrokeWidth;
         }
         mArcPaint.setStrokeWidth(strokeWidth);
-        
+
         float padding;
         if (mArcPadding == -1f) { // auto calculate padding
-            padding = 5f/48f * bounds.height();
+            padding = 5f / 48f * bounds.height();
         } else { // use provided padding
-            padding = mArcPadding + strokeWidth/2;
+            padding = mArcPadding + strokeWidth / 2;
         }
         mArcRect.set(bounds.left + padding, bounds.top + padding,
                 bounds.right - padding, bounds.bottom - padding);
         Log.i(TAG, "Rect: " + mArcRect.toString());
+    }
+
+    public static class Builder {
+        private Context mContext;
+        private int mColor;
+        private float mPadding;
+        private float mStrokeWidth;
+
+        public Builder(Context context) {
+            mContext = context;
+            // Default values
+            mColor = ThemeUtils.getThemeAttrColor(mContext, R.attr.colorAccent);
+            mPadding = -1f; // auto calculates
+            mStrokeWidth = -1f; //auto calculates
+        }
+
+        public Builder setColor(@ColorInt int color) {
+            mColor = color;
+            return this;
+        }
+
+        public Builder setPadding(float padding) {
+            mPadding = padding;
+            return this;
+        }
+
+        public Builder setStrokeWidth(float strokeWidth) {
+            mStrokeWidth = strokeWidth;
+            return this;
+        }
+
+        public IndeterminateProgressDrawable build() {
+            return new IndeterminateProgressDrawable(mContext, mColor, mStrokeWidth, mPadding);
+        }
     }
 }

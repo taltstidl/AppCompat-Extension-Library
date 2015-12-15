@@ -96,12 +96,22 @@ public class SampleActivity extends AppCompatActivity {
 
         // Setup delightful detail drawables
         ImageView artImageView = (ImageView) findViewById(R.id.art_imageview);
-        final IndeterminateProgressDrawable progressDrawable = new IndeterminateProgressDrawable(this, Color.WHITE, 4 * dp, 16 * dp);
+        final IndeterminateProgressDrawable progressDrawable =
+                new IndeterminateProgressDrawable.Builder(this)
+                .setColor(Color.WHITE)
+                .setPadding(16 * dp)
+                .setStrokeWidth(4 * dp)
+                .build();
         artImageView.setImageDrawable(progressDrawable);
         progressDrawable.start(); // start animation
 
         ImageView controlsImageView = (ImageView) findViewById(R.id.controls_imageview);
-        final MediaControlDrawable controlDrawable = new MediaControlDrawable(this, Color.WHITE, 8 * dp, MediaControlDrawable.State.PLAY);
+        final MediaControlDrawable controlDrawable =
+                new MediaControlDrawable.Builder(this)
+                .setColor(Color.WHITE)
+                .setPadding(8 * dp)
+                .setInitialState(MediaControlDrawable.State.PLAY)
+                .build();
         controlsImageView.setImageDrawable(controlDrawable);
         controlsImageView.setOnClickListener(new View.OnClickListener() {
             @Override

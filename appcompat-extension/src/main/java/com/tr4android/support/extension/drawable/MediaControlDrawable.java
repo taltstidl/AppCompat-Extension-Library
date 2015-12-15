@@ -2,6 +2,7 @@ package com.tr4android.support.extension.drawable;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -242,5 +243,39 @@ public class MediaControlDrawable extends Drawable {
 
     public State getMediaControlState() {
         return mCurrentState;
+    }
+
+    public static class Builder {
+        private Context mContext;
+        private int mColor;
+        private float mPadding;
+        private State mInitialState;
+
+        public Builder(Context context) {
+            mContext = context;
+            // Default values
+            mColor = Color.WHITE;
+            mPadding = 0f;
+            mInitialState = State.PLAY;
+        }
+
+        public Builder setColor(@ColorInt int color) {
+            mColor = color;
+            return this;
+        }
+
+        public Builder setPadding(float padding) {
+            mPadding = padding;
+            return this;
+        }
+
+        public Builder setInitialState(State initialState) {
+            mInitialState = initialState;
+            return this;
+        }
+
+        public MediaControlDrawable build() {
+            return new MediaControlDrawable(mContext, mColor, mPadding, mInitialState);
+        }
     }
 }
