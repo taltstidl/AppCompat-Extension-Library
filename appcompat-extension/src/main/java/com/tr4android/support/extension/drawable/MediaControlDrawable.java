@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
-import android.util.Log;
 
 import com.tr4android.support.extension.animation.AnimationUtils;
 import com.tr4android.support.extension.animation.ValueAnimatorCompat;
@@ -109,7 +108,6 @@ public class MediaControlDrawable extends Drawable {
             // Transition between play and stop icon
             float offset = (1f - fraction) * mPlayTipOffset;
             float offsetBase = (1f - fraction) * mPlayBaseOffset;
-            Log.i(TAG, "Base offset: " + offsetBase);
             mPrimaryPath.moveTo(mInternalBounds.right + offset,
                     interpolate(mCenter, mInternalBounds.bottom, fraction));
             mPrimaryPath.lineTo(mInternalBounds.left + offset,
@@ -134,7 +132,6 @@ public class MediaControlDrawable extends Drawable {
             // Transition between pause and play icon
             float offset = fraction * mPlayTipOffset;
             float offsetBase = fraction * mPlayBaseOffset;
-            Log.i(TAG, "Base offset: " + offsetBase);
             float primaryRight = mCenter - Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mSize;
             float primaryBottomLeft = mInternalBounds.left + fraction * (mSize / 2f);
             float secondaryLeft = mCenter + Math.max(0f, -2f * fraction + 1f) * 3f / 20f * mSize;
@@ -151,7 +148,6 @@ public class MediaControlDrawable extends Drawable {
             // Transition between play and pause icon
             float offset = (1f - fraction) * mPlayTipOffset;
             float offsetBase = (1f - fraction) * mPlayBaseOffset;
-            Log.i(TAG, "Base offset: " + offsetBase);
             float primaryBottom = mCenter - Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mSize;
             float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mSize / 2f);
             float secondaryTop = mCenter + Math.max(0f, 2f * fraction - 1f) * 3f / 20f * mSize;
@@ -182,7 +178,6 @@ public class MediaControlDrawable extends Drawable {
             // Transition between stop and play icon
             float offset = fraction * mPlayTipOffset;
             float offsetBase = fraction * mPlayBaseOffset;
-            Log.i(TAG, "Base offset: " + offsetBase);
             mPrimaryPath.moveTo(interpolate(mInternalBounds.left, mCenter, fraction),
                     mInternalBounds.top - offset);
             mPrimaryPath.lineTo(mInternalBounds.left - offsetBase,
@@ -212,7 +207,6 @@ public class MediaControlDrawable extends Drawable {
         mPlayTipOffset = 1f / 6f * mSize;
         mPlayBaseOffset = 0.07735f * mSize;
         setTransitionState(0f, 0f);
-        Log.i(TAG, "Play tip offset: " + mPlayTipOffset + ", Play base offset: " + mPlayBaseOffset);
     }
 
     /**
@@ -241,24 +235,6 @@ public class MediaControlDrawable extends Drawable {
             @Override
             public void onAnimationUpdate(ValueAnimatorCompat animator) {
                 setTransitionState(animator.getAnimatedFloatValue(), animator.getAnimatedFraction());
-            }
-        });
-        mAnimator.setListener(new ValueAnimatorCompat.AnimatorListener() {
-            @Override
-            public void onAnimationStart(ValueAnimatorCompat animator) {
-            }
-
-            @Override
-            public void onAnimationEnd(ValueAnimatorCompat animator) {
-                mCurrentState = mTargetState;
-            }
-
-            @Override
-            public void onAnimationCancel(ValueAnimatorCompat animator) {
-            }
-
-            @Override
-            public void onAnimationRepeat(ValueAnimatorCompat animator) {
             }
         });
         mAnimator.start();
