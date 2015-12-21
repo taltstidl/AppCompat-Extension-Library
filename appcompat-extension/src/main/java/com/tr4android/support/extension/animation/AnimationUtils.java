@@ -18,6 +18,7 @@ package com.tr4android.support.extension.animation;
 
 import android.os.Build;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -28,6 +29,7 @@ public class AnimationUtils {
     public static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     public static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
     public static final Interpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
+    public static final Interpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
     /**
      * Linear interpolation between {@code startValue} and {@code endValue} by {@code fraction}.

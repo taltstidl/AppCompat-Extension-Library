@@ -71,7 +71,17 @@ class ValueAnimatorCompatImplHoneycombMr1 extends ValueAnimatorCompat.Impl {
             public void onAnimationCancel(Animator animator) {
                 listener.onAnimationCancel();
             }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+                listener.onAnimationRepeat();
+            }
         });
+    }
+
+    @Override
+    public void setRepeatCount(int count) {
+        mValueAnimator.setRepeatCount(count);
     }
 
     @Override

@@ -26,25 +26,49 @@
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:title="Open Movie Project"
-                app:subtitle="Blender Foundation"
                 app:icon="@drawable/toolbar_circle_placeholder"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:subtitle="Blender Foundation"
+                app:title="Open Movie Project">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
             </com.tr4android.support.extension.widget.FlexibleToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorPrimary"
+            android:elevation="@dimen/design_appbar_elevation"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/art_imageview"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="left"
+                android:background="?attr/colorPrimaryDark" />
+
+            <ImageView
+                android:id="@+id/controls_imageview"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </FrameLayout>
+
         <View
             android:id="@+id/dimming_view"
-            android:fitsSystemWindows="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true" />
 
         <com.tr4android.support.extension.widget.FloatingActionMenu
             android:id="@+id/fab_menu"
@@ -58,7 +82,9 @@
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/fab_margin"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="80dp"
                 android:src="@drawable/ic_add_white_24dp" />
 
             <android.support.design.widget.FloatingActionButton

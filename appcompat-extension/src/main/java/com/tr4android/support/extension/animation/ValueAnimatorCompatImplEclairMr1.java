@@ -29,6 +29,7 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
 
     private static final int HANDLER_DELAY = 10;
     private static final int DEFAULT_DURATION = 200;
+    private static final int DEFAULT_REPEAT_COUNT = 0;
 
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
 
@@ -39,9 +40,12 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
     private final float[] mFloatValues = new float[2];
 
     private int mDuration = DEFAULT_DURATION;
+    private int mRepeatCount = DEFAULT_REPEAT_COUNT;
     private Interpolator mInterpolator;
     private AnimatorListenerProxy mListener;
     private AnimatorUpdateListenerProxy mUpdateListener;
+
+    private int mCurrentIteration = 0;
 
     private float mAnimatedFraction;
 
@@ -84,6 +88,11 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
     @Override
     public void setUpdateListener(AnimatorUpdateListenerProxy updateListener) {
         mUpdateListener = updateListener;
+    }
+
+    @Override
+    public void setRepeatCount(int count) {
+        mRepeatCount = count;
     }
 
     @Override
@@ -168,10 +177,21 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
 
             // Check to see if we've passed the animation duration
             if (SystemClock.uptimeMillis() >= (mStartTime + mDuration)) {
-                mIsRunning = false;
+                if (mRepeatCount < mCurrentIteration || mRepeatCount == ValueAnimatorCompat.INFINITE) {
+                    // Animation repeats
+                    mCurrentIteration += 1;
+                    mStartTime += mDuration;
 
-                if (mListener != null) {
-                    mListener.onAnimationEnd();
+                    if (mListener != null) {
+                        mListener.onAnimationRepeat();
+                    }
+                } else {
+                    // Animation ends
+                    mIsRunning = false;
+
+                    if (mListener != null) {
+                        mListener.onAnimationEnd();
+                    }
                 }
             }
         }
