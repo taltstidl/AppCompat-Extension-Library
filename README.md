@@ -19,10 +19,10 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.1.3'
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.2.0'
 }
 ```
-The latest Release is [Release 0.1.3](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.1.3). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.1.3/sample.apk) with this release.
+The latest Release is [Release 0.2.0](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.2.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.2.0/sample.apk) with this release.
 
 ## AccountHeaderView
 The `AccountHeaderView` is a component that allows easy switching between accounts in the navigation drawer by clicking on the avatars on the header or by choosing from the dropdown list.
@@ -97,6 +97,60 @@ Instead of the default `ImageView` use the following in your layouts:
 Then use `setImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
 *For the full documentation and customization options head over to the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).*
+
+## FlexibleToolbarLayout
+The `FlexibleToolbarLayout` is a more advanced alternative to the already powerful `CollapsingToolbarLayout` that excels by also providing a scaled icon and subtitle along with the title.
+
+##### Main features:
+* Collapses more than just a title! You can display a title, a subtitle and even an image which will all be scaled and animated while scrolling and you can style them to fit your personal needs.
+* Introduces more advanced elevation handling. The elevation you specified will no longer disappear when you have a solid background, but it still will if you have an immersive image.
+
+##### Basic setup:
+```xml
+<android.support.design.widget.CoordinatorLayout>
+    ...
+    <android.support.design.widget.AppBarLayout>
+        
+        <com.tr4android.support.extension.widget.FlexibleToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="My title"
+            app:subtitle="My subtitle"
+            app:icon="@drawable/ic_my_icon"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+        </com.tr4android.support.extension.widget.FlexibleToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>
+```
+Then update your `FlexibleToolbarLayout` at runtime by using `setTitle()`, `setSubtitle` or `setIcon()`.
+
+*For the full documentation and customization options head over to the [FlexibleToolbarLayout wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/FlexibleToolbarLayout).*
+
+## Delightful Detail Drawables
+The Delightful Detail Drawables provide ready-to-use implementations of the beautifully crafted animations presented in the [Delightful Details](https://www.google.com/design/spec/animation/delightful-details.html) section of the Material Design guidelines.
+
+##### Main features:
+* Let your users control their media with style by using the `MediaControlDrawable` which animates between the icons for media playback control (play, pause and stop) and works back to API level 7.
+* Indulge your users while they are waiting for their content to load by using the `IndeterminateProgressDrawable` which provides a compatibility implementation of the progress animation that works back to API level 7.
+
+##### Basic setup:
+```java
+// build a new MediaControlDrawable
+final MediaControlDrawable drawable = new MediaControlDrawable.Builder(this)
+        .setColor(Color.WHITE) // ... more options
+        .build();
+// build a new IndeterminateProgressDrawable
+final IndeterminateProgressDrawable drawable = new IndeterminateProgressDrawable.Builder(this)
+        .setColor(Color.WHITE) // ... more options
+        .build();
+```
+
+*For the full documentation and customization options head over to the [Delightful Detail Drawables wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/Delightful-Detail-Drawables).*
 
 ## TypefaceCompat
 The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color, line spacing *and typeface* for the styles specified in the guidelines.
