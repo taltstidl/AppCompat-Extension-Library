@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
+import android.view.animation.Interpolator;
 
 import com.tr4android.support.extension.animation.AnimationUtils;
 import com.tr4android.support.extension.animation.ValueAnimatorCompat;
@@ -44,7 +45,8 @@ public class MediaControlDrawable extends Drawable {
     // Animator
     private ValueAnimatorCompat mAnimator;
 
-    public MediaControlDrawable(Context context, @ColorInt int color, float padding, State state) {
+    public MediaControlDrawable(Context context, @ColorInt int color, float padding, State state,
+                                Interpolator interpolator, int duration) {
         mPadding = padding;
         mCurrentState = state;
         mTargetState = state;
@@ -52,6 +54,18 @@ public class MediaControlDrawable extends Drawable {
         // The paint used to draw the icons
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(color);
+
+        // The animator used to animate the icons
+        mAnimator = AnimationUtils.createAnimator();
+        mAnimator.setFloatValues(0f, 90f);
+        mAnimator.setDuration(duration);
+        mAnimator.setInterpolator(interpolator);
+        mAnimator.setUpdateListener(new ValueAnimatorCompat.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimatorCompat animator) {
+                setTransitionState(animator.getAnimatedFloatValue(), animator.getAnimatedFraction());
+            }
+        });
     }
 
     @Override
@@ -228,16 +242,6 @@ public class MediaControlDrawable extends Drawable {
             mAnimator.end();
         }
         mTargetState = state;
-        mAnimator = AnimationUtils.createAnimator();
-        mAnimator.setFloatValues(0f, 90f);
-        mAnimator.setDuration(500);
-        mAnimator.setInterpolator(AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR);
-        mAnimator.setUpdateListener(new ValueAnimatorCompat.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimatorCompat animator) {
-                setTransitionState(animator.getAnimatedFloatValue(), animator.getAnimatedFraction());
-            }
-        });
         mAnimator.start();
     }
 
@@ -250,6 +254,8 @@ public class MediaControlDrawable extends Drawable {
         private int mColor;
         private float mPadding;
         private State mInitialState;
+        private Interpolator mAnimationInterpolator;
+        private int mAnimationDuration;
 
         public Builder(Context context) {
             mContext = context;
@@ -257,6 +263,8 @@ public class MediaControlDrawable extends Drawable {
             mColor = Color.WHITE;
             mPadding = 0f;
             mInitialState = State.PLAY;
+            mAnimationInterpolator = AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR;
+            mAnimationDuration = 500;
         }
 
         public Builder setColor(@ColorInt int color) {
@@ -274,8 +282,19 @@ public class MediaControlDrawable extends Drawable {
             return this;
         }
 
+        public Builder setAnimationInterpolator(Interpolator interpolator) {
+            mAnimationInterpolator = interpolator;
+            return this;
+        }
+
+        public Builder setAnimationDuration(int duration) {
+            mAnimationDuration = duration;
+            return this;
+        }
+
         public MediaControlDrawable build() {
-            return new MediaControlDrawable(mContext, mColor, mPadding, mInitialState);
+            return new MediaControlDrawable(mContext, mColor, mPadding, mInitialState,
+                    mAnimationInterpolator, mAnimationDuration);
         }
     }
 }
