@@ -60,7 +60,19 @@ import java.lang.annotation.RetentionPolicy;
  * A title which is larger when the layout is fully visible but collapses and becomes smaller as
  * the layout is scrolled off screen. You can set the title to display via
  * {@link #setTitle(CharSequence)}. The title appearance can be tweaked via the
- * {@code collapsedTextAppearance} and {@code expandedTextAppearance} attributes.
+ * {@code titleCollapsedTextAppearance} and {@code titleExpandedTextAppearance} attributes.
+ * <p/>
+ * <h3>Collapsing subtitle</h3>
+ * A subtitle which can be larger when the layout is fully visible but collapses and becomes smaller as
+ * the layout is scrolled off screen. You can set the subtitle to display via
+ * {@link #setSubtitle(CharSequence)}. The subtitle appearance can be tweaked via the
+ * {@code subtitleCollapsedTextAppearance} and {@code subtitleExpandedTextAppearance} attributes.
+ * <p/>
+ * <h3>Collapsing title</h3>
+ * An icon which is larger when the layout is fully visible but collapses and becomes smaller as
+ * the layout is scrolled off screen. You can set the icon to display via
+ * {@link #setIcon(Drawable)}. The icon size can be tweaked via the
+ * {@code iconCollapsedSize} and {@code iconExpandedSize} attributes.
  * <p/>
  * <h3>Content scrim</h3>
  * A full-bleed scrim which is show or hidden when the scroll position has hit a certain threshold.
@@ -83,6 +95,10 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_titleCollapsedTextAppearance
  * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_titleExpandedTextAppearance
+ * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_subtitleCollapsedTextAppearance
+ * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_subtitleExpandedTextAppearance
+ * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_iconCollapsedSize
+ * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_iconExpandedSize
  * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_contentScrimColor
  * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_expandedMargin
  * @attr ref android.support.design.R.styleable#FlexibleToolbarLayout_expandedMarginStart
