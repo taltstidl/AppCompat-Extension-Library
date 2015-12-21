@@ -527,6 +527,62 @@ public class FlexibleToolbarLayout extends FrameLayout {
     }
 
     /**
+     * Collapses the {@link FlexibleToolbarLayout}.
+     * This will only have an effect if the {@link FlexibleToolbarLayout}
+     * is used as a child of {@link AppBarLayout}.
+     */
+    public void collapse() {
+        // Passes call to AppBarLayout if possible
+        ViewParent parent = getParent();
+        if (parent instanceof AppBarLayout) {
+            ((AppBarLayout) parent).setExpanded(false);
+        }
+    }
+
+    /**
+     * Collapses the FlexibleToolbarLayout.
+     * This will only have an effect if the {@link FlexibleToolbarLayout}
+     * is used as a child of {@link AppBarLayout}.
+     *
+     * @param animate Whether or not the collapse should be animated
+     */
+    public void collapse(boolean animate) {
+        // Passes call to AppBarLayout if possible
+        ViewParent parent = getParent();
+        if (parent instanceof AppBarLayout) {
+            ((AppBarLayout) parent).setExpanded(false, animate);
+        }
+    }
+
+    /**
+     * Expands the {@link FlexibleToolbarLayout}.
+     * This will only have an effect if the {@link FlexibleToolbarLayout}
+     * is used as a child of {@link AppBarLayout}.
+     */
+    public void expand() {
+        // Passes call to AppBarLayout if possible
+        ViewParent parent = getParent();
+        if (parent instanceof AppBarLayout) {
+            ((AppBarLayout) parent).setExpanded(true);
+        }
+    }
+
+    /**
+     * Expands the FlexibleToolbarLayout.
+     * This will only have an effect if the {@link FlexibleToolbarLayout}
+     * is used as a child of {@link AppBarLayout}.
+     *
+     * @param animate Whether or not the expansion should be animated
+     */
+    public void expand(boolean animate) {
+        // Passes call to AppBarLayout if possible
+        ViewParent parent = getParent();
+        if (parent instanceof AppBarLayout) {
+            ((AppBarLayout) parent).setExpanded(true, animate);
+        }
+    }
+
+    /**
      * Sets the title to be displayed by this view, if enabled.
      *
      * @attr ref R.styleable#FlexibleToolbarLayout_title
@@ -1045,7 +1101,8 @@ public class FlexibleToolbarLayout extends FrameLayout {
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 final ViewOffsetHelper offsetHelper = getViewOffsetHelper(child);
 
-                if (child instanceof ImageView && lp.width == LayoutParams.MATCH_PARENT) hasImmersiveImage = true;
+                if (child instanceof ImageView && lp.width == LayoutParams.MATCH_PARENT)
+                    hasImmersiveImage = true;
 
                 switch (lp.mCollapseMode) {
                     case LayoutParams.COLLAPSE_MODE_PIN:
@@ -1082,7 +1139,7 @@ public class FlexibleToolbarLayout extends FrameLayout {
                 // If we have some pinned children, and we're offset to only show those views,
                 // we want to be elevate
                 ViewCompat.setElevation(layout, layout.getTargetElevation());
-            } else if (hasImmersiveImage){
+            } else if (hasImmersiveImage) {
                 // Otherwise, we're inline with the content
                 ViewCompat.setElevation(layout, 0f);
             }
