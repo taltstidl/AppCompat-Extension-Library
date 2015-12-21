@@ -12,7 +12,6 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.animation.PathInterpolatorCompat;
-import android.util.Log;
 import android.view.animation.Interpolator;
 
 import com.tr4android.appcompat.extension.R;
@@ -190,7 +189,6 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
         mArcPaint.setStrokeWidth(strokeWidth);
         mArcRect.set(bounds.left + padding + xOffset, bounds.top + padding + yOffset,
                 bounds.right - padding - xOffset, bounds.bottom - padding - yOffset);
-        Log.i(TAG, "Rect: " + mArcRect.toString());
     }
 
     public static class Builder {
