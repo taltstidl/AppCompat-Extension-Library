@@ -66,6 +66,23 @@ public class MediaControlDrawable extends Drawable {
                 setTransitionState(animator.getAnimatedFloatValue(), animator.getAnimatedFraction());
             }
         });
+        mAnimator.setListener(new ValueAnimatorCompat.AnimatorListener() {
+            @Override
+            public void onAnimationStart(ValueAnimatorCompat animator) {}
+
+            @Override
+            public void onAnimationEnd(ValueAnimatorCompat animator) {
+                mCurrentState = mTargetState;
+                // make sure the icon has reached its final appearance
+                setTransitionState(0f, 0f);
+            }
+
+            @Override
+            public void onAnimationCancel(ValueAnimatorCompat animator) {}
+
+            @Override
+            public void onAnimationRepeat(ValueAnimatorCompat animator) {}
+        });
     }
 
     @Override
@@ -111,7 +128,6 @@ public class MediaControlDrawable extends Drawable {
 
 
     private void setTransitionState(float rotation, float fraction) {
-        if (fraction == 1f) mCurrentState = mTargetState;
         if (mCurrentState == mTargetState) rotation = fraction = 0f;
         // Calculate current drawable metrics
         mRotation = rotation;
@@ -256,7 +272,7 @@ public class MediaControlDrawable extends Drawable {
     }
 
     public void setMediaControlState(State state) {
-        if (mAnimator != null && mAnimator.isRunning()) {
+        if (mAnimator.isRunning()) {
             mAnimator.end();
         }
         mTargetState = state;

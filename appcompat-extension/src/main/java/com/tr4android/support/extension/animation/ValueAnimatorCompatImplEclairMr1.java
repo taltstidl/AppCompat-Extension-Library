@@ -45,6 +45,8 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
     private AnimatorListenerProxy mListener;
     private AnimatorUpdateListenerProxy mUpdateListener;
 
+    private int mCurrentIteration = 0;
+
     private float mAnimatedFraction;
 
     @Override
@@ -175,10 +177,21 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
 
             // Check to see if we've passed the animation duration
             if (SystemClock.uptimeMillis() >= (mStartTime + mDuration)) {
-                mIsRunning = false;
+                if (mRepeatCount < mCurrentIteration || mRepeatCount == ValueAnimatorCompat.INFINITE) {
+                    // Animation repeats
+                    mCurrentIteration += 1;
+                    mStartTime += mDuration;
 
-                if (mListener != null) {
-                    mListener.onAnimationEnd();
+                    if (mListener != null) {
+                        mListener.onAnimationRepeat();
+                    }
+                } else {
+                    // Animation ends
+                    mIsRunning = false;
+
+                    if (mListener != null) {
+                        mListener.onAnimationEnd();
+                    }
                 }
             }
         }
