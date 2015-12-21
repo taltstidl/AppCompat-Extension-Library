@@ -48,7 +48,8 @@
             android:elevation="@dimen/design_appbar_elevation"
             android:orientation="horizontal">
 
-            <ImageView
+            <ProgressBar
+                android:indeterminate="true"
                 android:id="@+id/art_imageview"
                 android:layout_width="64dp"
                 android:layout_height="64dp"

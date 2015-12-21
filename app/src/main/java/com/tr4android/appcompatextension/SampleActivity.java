@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.tr4android.support.extension.drawable.IndeterminateProgressDrawable;
 import com.tr4android.support.extension.drawable.MediaControlDrawable;
@@ -95,15 +96,14 @@ public class SampleActivity extends AppCompatActivity {
         float dp = getResources().getDisplayMetrics().density;
 
         // Setup delightful detail drawables
-        ImageView artImageView = (ImageView) findViewById(R.id.art_imageview);
-        final IndeterminateProgressDrawable progressDrawable =
+        ProgressBar artImageView = (ProgressBar) findViewById(R.id.art_imageview);
+        IndeterminateProgressDrawable progressDrawable =
                 new IndeterminateProgressDrawable.Builder(this)
                 .setColor(Color.WHITE)
                 .setPadding(16 * dp)
                 .setStrokeWidth(4 * dp)
                 .build();
-        artImageView.setImageDrawable(progressDrawable);
-        progressDrawable.start(); // start animation
+        artImageView.setIndeterminateDrawable(progressDrawable);
 
         ImageView controlsImageView = (ImageView) findViewById(R.id.controls_imageview);
         final MediaControlDrawable controlDrawable =
