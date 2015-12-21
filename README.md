@@ -8,6 +8,8 @@ Google's AppCompat Design Library provides some awesome components for your deve
 * [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
 * [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
 * [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#circleimageview)
+* [FlexibleToolbarLayout](https://github.com/TR4Android/AppCompat-Extension-Library#flexibletoolbarlayout)
+* [Delightful Detail Drawables](https://github.com/TR4Android/AppCompat-Extension-Library#delightful-detail-drawables)
 * [TypefaceCompat](https://github.com/TR4Android/AppCompat-Extension-Library#typefacecompat)
 
 There are wikis for every component that explain the setup in more depth, so be sure to check them out. Here's a link to the [Wiki Home Page](https://github.com/TR4Android/AppCompat-Extension-Library/wiki)
