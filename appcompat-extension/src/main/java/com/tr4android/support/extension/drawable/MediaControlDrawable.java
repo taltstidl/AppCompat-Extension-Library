@@ -248,9 +248,12 @@ public class MediaControlDrawable extends Drawable {
      * Google design guidelines - Icon - Style - System Icons</a>
      */
     private void calculateTrimArea(Rect bounds) {
+        float size = Math.min(bounds.height(), bounds.width());
+        float yOffset = (bounds.height() - size) / 2f;
+        float xOffset = (bounds.width() - size) / 2f;
         float padding = mPadding + (bounds.height() - 2f * mPadding) * 1f / 6f;
-        mInternalBounds.set(bounds.left + padding, bounds.top + padding,
-                bounds.right - padding, bounds.bottom - padding);
+        mInternalBounds.set(bounds.left + padding + xOffset, bounds.top + padding + yOffset,
+                bounds.right - padding - xOffset, bounds.bottom - padding - yOffset);
         mCenter = mInternalBounds.centerX();
         mSize = mInternalBounds.width();
         mPlayTipOffset = 1f / 6f * mSize;

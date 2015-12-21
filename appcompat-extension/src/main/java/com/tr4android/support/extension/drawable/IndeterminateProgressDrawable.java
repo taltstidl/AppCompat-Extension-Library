@@ -165,22 +165,31 @@ public class IndeterminateProgressDrawable extends Drawable implements Animatabl
      * @param bounds the bounds of the drawable
      */
     private void calculateArcMetrics(Rect bounds) {
-        float strokeWidth;
-        if (mArcStrokeWidth == -1f) { // auto calculate stroke width
-            strokeWidth = 4f / 48f * bounds.height();
-        } else { // use provided stroke width
-            strokeWidth = mArcStrokeWidth;
-        }
-        mArcPaint.setStrokeWidth(strokeWidth);
+        float size = Math.min(bounds.height(), bounds.width());
+        float yOffset = (bounds.height() - size) / 2f;
+        float xOffset = (bounds.width() - size) / 2f;
 
+        float strokeWidth;
         float padding;
-        if (mArcPadding == -1f) { // auto calculate padding
-            padding = 5f / 48f * bounds.height();
-        } else { // use provided padding
+        if (mArcStrokeWidth == -1f && mArcPadding == -1f) {
+            // auto calculate bounds
+            strokeWidth = 4f / 48f * size;
+            padding = 5f / 48f * size;
+        } else if (mArcStrokeWidth == -1f) {
+            // auto calculate stroke width
+            strokeWidth = 4f / 48f * size;
+            padding = mArcPadding + strokeWidth / 2;
+        } else if (mArcPadding == -1f) {
+            // auto calculate padding
+            strokeWidth = mArcStrokeWidth;
+            padding = 3f / 48f * size + strokeWidth / 2;
+        } else {
+            strokeWidth = mArcStrokeWidth;
             padding = mArcPadding + strokeWidth / 2;
         }
-        mArcRect.set(bounds.left + padding, bounds.top + padding,
-                bounds.right - padding, bounds.bottom - padding);
+        mArcPaint.setStrokeWidth(strokeWidth);
+        mArcRect.set(bounds.left + padding + xOffset, bounds.top + padding + yOffset,
+                bounds.right - padding - xOffset, bounds.bottom - padding - yOffset);
         Log.i(TAG, "Rect: " + mArcRect.toString());
     }
 
