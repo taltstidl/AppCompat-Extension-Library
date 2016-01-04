@@ -17,6 +17,7 @@
 package com.tr4android.support.extension.widget;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,6 +35,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.tr4android.appcompat.extension.R;
+import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.utils.ThemeUtils;
 
 /**
@@ -42,32 +44,17 @@ import com.tr4android.support.extension.utils.ThemeUtils;
 public class CircleImageView extends ImageView {
     private static final String LOG_TAG = "CircleImageView";
 
-    // whether an image or a placeholder is displayed
-    private boolean mIsPlaceholder = true;
-
     // whether the image should be clipped to a circle
     private boolean mIsCircleImageEnabled = true;
 
     // whether an image drawable is being resolved
     private boolean mIsResolvingDrawable;
 
-    // default color for circle paint
+    // the placeholder drawable used for drawing the placeholder
+    private PlaceholderDrawable mPlaceholderDrawable;
+
+    // default color for circle
     private int mPlaceholderCircleDefaultColor;
-
-    // paint used for drawing the colored circle
-    private Paint mPlaceholderCirclePaint;
-
-    // paint used for drawing the placeholder text
-    private Paint mPlaceholderTextPaint;
-
-    // size of the placeholder icon
-    private int mPlaceholderImageSize;
-
-    // paint used for drawing the placeholder icon
-    private Drawable mPlaceholderImage;
-
-    // placeholder text (usually the first letter of a name)
-    private String mPlaceholderText = "";
 
     public CircleImageView(Context context) {
         this(context, null);
@@ -85,33 +72,28 @@ public class CircleImageView extends ImageView {
         mPlaceholderCircleDefaultColor = a.getColor(R.styleable.CircleImageView_placeholderCircleColor, ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorAccent));
         int mPlaceholderTextSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderTextSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderTextSize));
         int mPlaceholderTextColor = a.getColor(R.styleable.CircleImageView_placeholderTextColor, ThemeUtils.getThemeAttrColor(getContext(), android.R.attr.textColorPrimaryInverse));
-        mPlaceholderImageSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderIconSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderImageSize));
+        int mPlaceholderImageSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderIconSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderImageSize));
         a.recycle();
 
-        mPlaceholderCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPlaceholderCirclePaint.setColor(mPlaceholderCircleDefaultColor);
-        mPlaceholderTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPlaceholderTextPaint.setTextAlign(Paint.Align.CENTER);
-        mPlaceholderTextPaint.setTextSize(mPlaceholderTextSize);
-        mPlaceholderTextPaint.setColor(mPlaceholderTextColor);
+        mPlaceholderDrawable = new PlaceholderDrawable(
+                mPlaceholderTextSize, mPlaceholderTextColor, mPlaceholderImageSize);
     }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
         if (mIsCircleImageEnabled) {
-            setImageDrawable(getCircleBitmapDrawable(bm));
+            setImageDrawable(getCircleBitmapDrawable(getContext(), bm));
         } else {
-            if (bm != null) mIsPlaceholder = false;
             super.setImageBitmap(bm);
         }
     }
 
     @Override
     public void setImageDrawable(Drawable drawable) {
-        if (mIsCircleImageEnabled && drawable != null && !(drawable instanceof RoundedBitmapDrawable)) {
-            setImageDrawable(getCircleBitmapDrawable(getBitmapFromDrawable(drawable)));
+        if (mIsCircleImageEnabled && drawable != null &&
+                !(drawable instanceof RoundedBitmapDrawable) && !(drawable instanceof PlaceholderDrawable)) {
+            setImageDrawable(getCircleBitmapDrawable(getContext(), getBitmapFromDrawable(drawable)));
         } else {
-            if (drawable != null) mIsPlaceholder = false;
             super.setImageDrawable(drawable);
         }
     }
@@ -122,9 +104,8 @@ public class CircleImageView extends ImageView {
             mIsResolvingDrawable = true;
             super.setImageResource(resId);
             mIsResolvingDrawable = false;
-            setImageDrawable(getCircleBitmapDrawable(getBitmapFromDrawable(getDrawable())));
+            setImageDrawable(getCircleBitmapDrawable(getContext(), getBitmapFromDrawable(getDrawable())));
         } else {
-            if (resId != 0) mIsPlaceholder = false;
             super.setImageResource(resId);
         }
     }
@@ -135,9 +116,8 @@ public class CircleImageView extends ImageView {
             mIsResolvingDrawable = true;
             super.setImageURI(uri);
             mIsResolvingDrawable = false;
-            setImageDrawable(getCircleBitmapDrawable(getBitmapFromDrawable(getDrawable())));
+            setImageDrawable(getCircleBitmapDrawable(getContext(), getBitmapFromDrawable(getDrawable())));
         } else {
-            if (uri != null) mIsPlaceholder = false;
             super.setImageURI(uri);
         }
     }
@@ -182,11 +162,8 @@ public class CircleImageView extends ImageView {
      * @param circleColor     Color to use for the circle
      */
     public void setPlaceholder(String placeholderText, @ColorInt int circleColor) {
-        mIsPlaceholder = true;
-        mPlaceholderImage = null;
-        mPlaceholderText = placeholderText;
-        mPlaceholderCirclePaint.setColor(circleColor);
-        setImageDrawable(null);
+        mPlaceholderDrawable.setPlaceholder(placeholderText, circleColor);
+        setImageDrawable(mPlaceholderDrawable);
     }
 
     /**
@@ -210,7 +187,7 @@ public class CircleImageView extends ImageView {
     /**
      * Set a placeholder with an image and circle color.
      *
-     * @param resId The resource id of the placeholder drawable
+     * @param resId       The resource id of the placeholder drawable
      * @param circleColor Color to use for the circle
      */
     public void setPlaceholder(@DrawableRes int resId, @ColorInt int circleColor) {
@@ -220,15 +197,12 @@ public class CircleImageView extends ImageView {
     /**
      * Set a placeholder with an image and circle color.
      *
-     * @param drawable The placeholder drawable
+     * @param drawable    The placeholder drawable
      * @param circleColor Color to use for the circle
      */
     public void setPlaceholder(Drawable drawable, @ColorInt int circleColor) {
-        mIsPlaceholder = true;
-        mPlaceholderImage = drawable;
-        mPlaceholderText = "";
-        mPlaceholderCirclePaint.setColor(circleColor);
-        setImageDrawable(null);
+        mPlaceholderDrawable.setPlaceholder(drawable, circleColor);
+        setImageDrawable(mPlaceholderDrawable);
     }
 
     /**
@@ -245,40 +219,28 @@ public class CircleImageView extends ImageView {
     public void onDraw(Canvas canvas) {
         if (mIsResolvingDrawable) return;
         super.onDraw(canvas);
-        if (mIsPlaceholder) {
-            // draw placeholder circle
-            float radius = Math.min(canvas.getWidth(), canvas.getHeight()) / 2;
-            int xPos = (canvas.getWidth() / 2);
-            canvas.drawCircle(xPos, canvas.getHeight() / 2, radius, mPlaceholderCirclePaint);
-            if (mPlaceholderImage == null) {
-                // draw placeholder text
-                int yPos = (int) ((canvas.getHeight() / 2) -
-                        ((mPlaceholderTextPaint.descent() + mPlaceholderTextPaint.ascent()) / 2));
-                canvas.drawText(mPlaceholderText, xPos, yPos, mPlaceholderTextPaint);
-            } else {
-                // draw placeholder image
-                int horizontalPadding = (canvas.getWidth() - mPlaceholderImageSize)/2;
-                int verticalPadding = (canvas.getHeight() - mPlaceholderImageSize)/2;
-                mPlaceholderImage.setBounds(horizontalPadding, verticalPadding, horizontalPadding + mPlaceholderImageSize, verticalPadding + mPlaceholderImageSize);
-                mPlaceholderImage.draw(canvas);
-            }
-        }
     }
 
     /**
-     * Internal Helper for creating a circle bitmap drawable using the {@link android.support.v4.graphics.drawable.RoundedBitmapDrawable}
+     * Helper for creating a circle bitmap drawable using the {@link android.support.v4.graphics.drawable.RoundedBitmapDrawable}
      *
-     * @param bitmap
+     * @param bitmap The bitmap which should be converted to a circle bitmap drawable
      * @return the {@link android.support.v4.graphics.drawable.RoundedBitmapDrawable} containing the bitmap
      */
-    private RoundedBitmapDrawable getCircleBitmapDrawable(Bitmap bitmap) {
-        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+    public static RoundedBitmapDrawable getCircleBitmapDrawable(Context context, Bitmap bitmap) {
+        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         drawable.setCornerRadius(Math.max(bitmap.getWidth() / 2, bitmap.getHeight() / 2));
         drawable.setAntiAlias(true);
         return drawable;
     }
 
-    private Bitmap getBitmapFromDrawable(Drawable drawable) {
+    /**
+     * Helper for creating a bitmap from a drawable
+     *
+     * @param drawable The drawable which should be converted to a bitmap
+     * @return the bitmap containing the drawable
+     */
+    public static Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) return null;
         if (drawable instanceof BitmapDrawable) {
             Log.w(LOG_TAG, "For better performance consider using setImageBitmap() instead!");
