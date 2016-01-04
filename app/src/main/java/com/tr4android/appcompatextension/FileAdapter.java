@@ -15,8 +15,8 @@ import com.tr4android.support.extension.widget.CircleImageView;
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
     private int[] mIcons = new int[]{R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_insert_chart_white_24dp, R.drawable.ic_grid_on_white_24dp, R.drawable.ic_insert_drive_file_white_24dp};
     private int[] mColors = new int[]{R.color.material_indigo, R.color.material_indigo, R.color.material_indigo, R.color.material_indigo, R.color.material_yellow, R.color.material_green, R.color.material_blue};
-    private String[] mFileNames = new String[]{"Movies", "Photos", "Recipes", "Work", "Project Presentation", "Project Expense Summary", "Project Flyer"};
-    private String[] mFileInfos = new String[]{"Jan 6, 2014", "Jan 9, 2014", "Jan 17, 2014", "Jan 28, 2014", "Jan 20, 2014", "Jan 20, 2014", "Jan 20, 2014"};
+    private String[] mFileNames = new String[]{"Big Buck Bunny", "Caminandes", "Sintel", "Trailers", "Movies Presentation", "Movies Expense Summary", "Movie Posters"};
+    private String[] mFileInfos = new String[]{"Jan 6, 2015", "Jan 9, 2015", "Jan 17, 2015", "Jan 28, 2015", "Jan 20, 2015", "Jan 20, 2015", "Jan 20, 2015"};
 
     private Context mContext; // for resolving colors
 

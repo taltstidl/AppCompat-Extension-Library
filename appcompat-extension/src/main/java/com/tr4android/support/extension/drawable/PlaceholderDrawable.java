@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -72,20 +73,22 @@ public class PlaceholderDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
+        Rect bounds = getBounds();
         // draw placeholder circle
-        float radius = Math.min(canvas.getWidth(), canvas.getHeight()) / 2;
-        int xPos = (canvas.getWidth() / 2);
-        canvas.drawCircle(xPos, canvas.getHeight() / 2, radius, mPlaceholderCirclePaint);
+        float radius = Math.min(bounds.width(), bounds.height()) / 2f;
+        float xPos = bounds.left + (bounds.width() / 2f);
+        canvas.drawCircle(xPos, bounds.top + bounds.height() / 2f, radius, mPlaceholderCirclePaint);
         if (mPlaceholderImage == null) {
             // draw placeholder text
-            int yPos = (int) ((canvas.getHeight() / 2) -
-                    ((mPlaceholderTextPaint.descent() + mPlaceholderTextPaint.ascent()) / 2));
+            float yPos = (bounds.top + (bounds.height() / 2f) -
+                    ((mPlaceholderTextPaint.descent() + mPlaceholderTextPaint.ascent()) / 2f));
             canvas.drawText(mPlaceholderText, xPos, yPos, mPlaceholderTextPaint);
         } else {
             // draw placeholder image
-            int horizontalPadding = (canvas.getWidth() - mPlaceholderImageSize) / 2;
-            int verticalPadding = (canvas.getHeight() - mPlaceholderImageSize) / 2;
-            mPlaceholderImage.setBounds(horizontalPadding, verticalPadding, horizontalPadding + mPlaceholderImageSize, verticalPadding + mPlaceholderImageSize);
+            int horizontalPadding = (bounds.width() - mPlaceholderImageSize) / 2;
+            int verticalPadding = (bounds.height() - mPlaceholderImageSize) / 2;
+            mPlaceholderImage.setBounds(bounds.left + horizontalPadding, bounds.top + verticalPadding,
+                    bounds.right - horizontalPadding, bounds.bottom - verticalPadding);
             mPlaceholderImage.draw(canvas);
         }
     }

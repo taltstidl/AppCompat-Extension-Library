@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 
 import com.tr4android.support.extension.drawable.IndeterminateProgressDrawable;
 import com.tr4android.support.extension.drawable.MediaControlDrawable;
+import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
@@ -87,6 +88,12 @@ public class SampleActivity extends AppCompatActivity {
         // Setup the dimming of FloatingActionMenu
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         floatingActionMenu.setupWithDimmingView(findViewById(R.id.dimming_view), Color.parseColor("#42000000"));
+
+        // Setup the icon of the FlexibleToolbarLayout
+        FlexibleToolbarLayout flexibleToolbarLayout = (FlexibleToolbarLayout) findViewById(R.id.toolbar_layout);
+        PlaceholderDrawable placeholderDrawable =
+                new PlaceholderDrawable.Builder(this).setPlaceholderText("M").build();
+        flexibleToolbarLayout.setIcon(placeholderDrawable);
 
         // Setup the sample adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
