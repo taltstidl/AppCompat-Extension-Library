@@ -549,12 +549,12 @@ final class CollapsingTextHelper {
     private void calculateUsingTextSize(final float textSize) {
         if (mText == null) return;
 
-        final float availableWidth;
+        final float availableWidth = lerp(mExpandedBounds.width(), mCollapsedBounds.width(),
+                mExpandedFraction, mTextSizeInterpolator);
         final float newTextSize;
         boolean updateDrawText = false;
 
         if (isClose(textSize, mCollapsedTextSize)) {
-            availableWidth = mCollapsedBounds.width();
             newTextSize = mCollapsedTextSize;
             mScale = 1f;
             if (mCurrentTypeface != mCollapsedTypeface) {
@@ -562,7 +562,6 @@ final class CollapsingTextHelper {
                 updateDrawText = true;
             }
         } else {
-            availableWidth = mExpandedBounds.width();
             newTextSize = mExpandedTextSize;
             if (mCurrentTypeface != mExpandedTypeface) {
                 mCurrentTypeface = mExpandedTypeface;
@@ -585,17 +584,18 @@ final class CollapsingTextHelper {
         }
 
         if (mTextToDraw == null || updateDrawText) {
-            mTextPaint.setTextSize(mCurrentTextSize);
             mTextPaint.setTypeface(mCurrentTypeface);
-
-            // If we don't currently have text to draw, or the text size has changed, ellipsize...
-            final CharSequence title = TextUtils.ellipsize(mText, mTextPaint,
-                    availableWidth, TextUtils.TruncateAt.END);
-            if (!TextUtils.equals(title, mTextToDraw)) {
-                mTextToDraw = title;
-                mIsRtl = calculateIsRtl(mTextToDraw);
-            }
         }
+
+        // Now we update the text ellipsis...
+        mTextPaint.setTextSize(textSize);
+        final CharSequence title = TextUtils.ellipsize(mText, mTextPaint,
+                availableWidth, TextUtils.TruncateAt.END);
+        if (!TextUtils.equals(title, mTextToDraw)) {
+            mTextToDraw = title;
+            mIsRtl = calculateIsRtl(mTextToDraw);
+        }
+        mTextPaint.setTextSize(mCurrentTextSize);
     }
 
     private void ensureExpandedTexture() {
