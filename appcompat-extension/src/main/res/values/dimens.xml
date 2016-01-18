@@ -42,6 +42,9 @@
     <dimen name="fam_label_spacing">16dp</dimen>
     <dimen name="dim_elevation">5dp</dimen>
 
+    <!-- FlexibleToolbarLayout -->
+    <dimen name="toolbar_layout_height">128dp</dimen>
+
     <!-- TypefaceCompat (line spacing extra & workaround for appcompat bug) -->
     <dimen name="line_spacing_extra_display_2_material">3sp</dimen>
     <dimen name="line_spacing_extra_display_1_material">6sp</dimen>

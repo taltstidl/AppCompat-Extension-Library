@@ -17,7 +17,7 @@
 
     <style name="TextAppearance.Design.FlexibleToolbarLayout.ExpandedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
     <style name="TextAppearance.Design.FlexibleToolbarLayout.CollapsedTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">?android:attr/textColorPrimary</item>

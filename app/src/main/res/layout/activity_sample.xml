@@ -20,13 +20,13 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="128dp"
+            android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.tr4android.support.extension.widget.FlexibleToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/toolbar_layout_height"
                 app:icon="@drawable/toolbar_circle_placeholder"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:subtitle="4 folders, 3 files"
