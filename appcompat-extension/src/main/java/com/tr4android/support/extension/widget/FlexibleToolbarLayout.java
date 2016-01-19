@@ -328,7 +328,7 @@ public class FlexibleToolbarLayout extends FrameLayout {
             mSubtitleCollapsingTextHelper.draw(canvas);
         }
         // Let the collapsing drawable helper draw it's drawable
-        if (mCollapsingIconEnabled) {
+        if (mCollapsingIconEnabled && mDrawTitles) {
             mIconCollapsingHelper.draw(canvas);
         }
 
