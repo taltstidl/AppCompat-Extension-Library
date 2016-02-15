@@ -22,7 +22,6 @@
     <string name="nav_drawer_subheader">Subheader</string>
 
     <!-- Floating Action Menu items -->
-    <string name="fam_presentation">Presentation</string>
-    <string name="fam_spreadsheet">Spreadsheet</string>
-    <string name="fam_document">Text Document</string>
+    <string name="fam_datepicker">Date</string>
+    <string name="fam_timepicker">Time</string>
 </resources>

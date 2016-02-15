@@ -1,7 +1,15 @@
 <resources>
-    <string name="app_name">AppCompat Extension</string>
-
     <!-- Account list -->
     <string name="account_header_list_item_add_account">Add account</string>
     <string name="account_header_list_item_manage_accounts">Manage accounts</string>
+
+    <!-- DatePickerDialog -->
+    <string name="date_picker_month_typeface">sans-serif-medium</string>
+    <string name="date_picker_day_of_week_typeface">sans-serif-medium</string>
+    <string name="date_picker_day_typeface">sans-serif-medium</string>
+
+    <string name="date_picker_prev_month_button">Previous month</string>
+    <string name="date_picker_next_month_button">Next month</string>
+    <string name="select_day">Select month and day</string>
+    <string name="select_year">Select year</string>
 </resources>

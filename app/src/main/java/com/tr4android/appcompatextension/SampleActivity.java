@@ -1,5 +1,6 @@
 package com.tr4android.appcompatextension;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -24,10 +26,14 @@ import com.tr4android.support.extension.drawable.IndeterminateProgressDrawable;
 import com.tr4android.support.extension.drawable.MediaControlDrawable;
 import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.internal.Account;
+import com.tr4android.support.extension.picker.date.AppCompatDatePicker;
+import com.tr4android.support.extension.picker.date.AppCompatDatePickerDialog;
 import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.FlexibleToolbarLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
+
+import java.util.Calendar;
 
 
 public class SampleActivity extends AppCompatActivity {
@@ -126,6 +132,22 @@ public class SampleActivity extends AppCompatActivity {
                 controlDrawable.setMediaControlState(getNextState(controlDrawable.getMediaControlState()));
             }
         });
+
+        // Setup DatePickerDialog and TimePickerDialog
+        findViewById(R.id.fab_datepicker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show new DatePickerDialog
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
+        findViewById(R.id.fab_timepicker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show new TimePickerDialog
+            }
+        });
     }
 
     @Override
@@ -183,5 +205,24 @@ public class SampleActivity extends AppCompatActivity {
                         : MediaControlDrawable.State.PLAY;
         }
         return null;
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements AppCompatDatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of AppCompatDatePickerDialog and return it
+            return new AppCompatDatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(AppCompatDatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+        }
     }
 }

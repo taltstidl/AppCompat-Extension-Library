@@ -36,4 +36,33 @@
         <item name="android:background">@drawable/fab_label_background_light</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
+
+    <style name="TextAppearance.Material.Widget.Calendar.Day" parent="Base.TextAppearance.AppCompat.Caption">
+        <!-- We need to build the stateful ColorStateList at runtime -->
+        <item name="android:textColor">@null</item>
+    </style>
+    <style name="TextAppearance.Material.Widget.Calendar.DayOfWeek" parent="Base.TextAppearance.AppCompat.Caption" />
+    <style name="TextAppearance.Material.Widget.Calendar.Month" parent="Base.TextAppearance.AppCompat.Body2" />
+
+    <style name="TextAppearance.Material.DatePicker.YearLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/date_picker_year_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.DateLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/date_picker_date_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">@dimen/datepicker_list_year_label_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.Material.DatePicker.List.YearLabel.Selected">
+        <item name="android:textColor">?attr/colorControlActivated</item>
+        <item name="android:textSize">@dimen/datepicker_list_year_activated_label_size</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>

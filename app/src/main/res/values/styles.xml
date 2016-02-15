@@ -9,5 +9,10 @@
         <item name="colorPrimary">#2196f3</item>
         <item name="colorPrimaryDark">#1976d2</item>
         <item name="colorAccent">#3f51b5</item>
+        <item name="datePickerDialogTheme">@style/DatePickerDialog</item>
+    </style>
+
+    <style name="DatePickerDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#009688</item>
     </style>
 </resources>
