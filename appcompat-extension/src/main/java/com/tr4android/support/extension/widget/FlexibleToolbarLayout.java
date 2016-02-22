@@ -246,12 +246,12 @@ public class FlexibleToolbarLayout extends FrameLayout {
         if (a.hasValue(R.styleable.FlexibleToolbarLayout_subtitleExpandedTextAppearance)) {
             mSubtitleCollapsingTextHelper.setExpandedTextAppearance(
                     a.getResourceId(
-                            R.styleable.FlexibleToolbarLayout_titleExpandedTextAppearance, 0));
+                            R.styleable.FlexibleToolbarLayout_subtitleExpandedTextAppearance, 0));
         }
         if (a.hasValue(R.styleable.FlexibleToolbarLayout_subtitleCollapsedTextAppearance)) {
             mSubtitleCollapsingTextHelper.setCollapsedTextAppearance(
                     a.getResourceId(
-                            R.styleable.FlexibleToolbarLayout_titleCollapsedTextAppearance, 0));
+                            R.styleable.FlexibleToolbarLayout_subtitleCollapsedTextAppearance, 0));
 
         }
 
