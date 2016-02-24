@@ -35,8 +35,9 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.tr4android.appcompat.extension.R;
-import com.tr4android.support.extension.picker.CompatUtils;
-import com.tr4android.support.extension.picker.PickerThemeUtil;
+import com.tr4android.support.extension.picker.DateFormatUtils;
+import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.picker.PickerThemeUtils;
 import com.tr4android.support.extension.picker.date.DayPickerView.OnDaySelectedListener;
 import com.tr4android.support.extension.picker.date.YearPickerView.OnYearSelectedListener;
 import com.tr4android.support.extension.utils.ThemeUtils;
@@ -123,13 +124,13 @@ class AppCompatDatePickerDelegate extends AppCompatDatePicker.AbstractDatePicker
         if (a.hasValue(R.styleable.DatePickerDialog_headerTextColor)) {
             headerTextColor = a.getColorStateList(R.styleable.DatePickerDialog_headerTextColor);
         } else {
-            headerTextColor = PickerThemeUtil.getHeaderTextColorStateList(mContext);
+            headerTextColor = PickerThemeUtils.getHeaderTextColorStateList(mContext);
         }
         mHeaderYear.setTextColor(headerTextColor);
         mHeaderMonthDay.setTextColor(headerTextColor);
 
         // Set up header background, if available.
-        CompatUtils.setBackground(header, PickerThemeUtil.getHeaderBackground(mContext,
+        ViewCompatUtils.setBackground(header, PickerThemeUtils.getHeaderBackground(mContext,
                 a.getColor(R.styleable.DatePickerDialog_headerBackground,
                         ThemeUtils.getThemeAttrColor(mContext, R.attr.colorAccent))));
 
@@ -253,7 +254,7 @@ class AppCompatDatePickerDelegate extends AppCompatDatePicker.AbstractDatePicker
             final long millis = mCurrentDate.getTimeInMillis();
             final int flags = DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR;
             final String fullDateText = DateUtils.formatDateTime(mContext, millis, flags);
-            CompatUtils.announceForAccessibility(mAnimator, fullDateText);
+            ViewCompatUtils.announceForAccessibility(mAnimator, fullDateText);
         }
     }
 
@@ -269,7 +270,7 @@ class AppCompatDatePickerDelegate extends AppCompatDatePicker.AbstractDatePicker
                     mCurrentView = viewIndex;
                 }
 
-                CompatUtils.announceForAccessibility(mAnimator, mSelectDay);
+                ViewCompatUtils.announceForAccessibility(mAnimator, mSelectDay);
                 break;
             case VIEW_YEAR:
                 mYearPickerView.setDate(mCurrentDate.getTimeInMillis());
@@ -281,7 +282,7 @@ class AppCompatDatePickerDelegate extends AppCompatDatePicker.AbstractDatePicker
                     mCurrentView = viewIndex;
                 }
 
-                CompatUtils.announceForAccessibility(mAnimator, mSelectYear);
+                ViewCompatUtils.announceForAccessibility(mAnimator, mSelectYear);
                 break;
         }
     }

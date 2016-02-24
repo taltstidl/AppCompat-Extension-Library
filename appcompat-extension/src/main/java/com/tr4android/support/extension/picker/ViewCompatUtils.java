@@ -4,9 +4,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class CompatUtils {
+public class ViewCompatUtils {
     public static int getPaddingStart(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return view.getPaddingStart();
@@ -39,7 +40,7 @@ public class CompatUtils {
         }
     }
 
-    public static void announceForAccessibility(View view, String text) {
+    public static void announceForAccessibility(View view, CharSequence text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.announceForAccessibility(text);
         } // No-op on versions prior to Jellybean
@@ -49,15 +50,19 @@ public class CompatUtils {
         return ViewCompat.getLayoutDirection(view) == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
-    public static float constrain(float amount, float low, float high) {
-        return amount < low ? low : (amount > high ? high : amount);
+    public static int getRule(RelativeLayout.LayoutParams params, int verb) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return params.getRule(verb);
+        } else {
+            return params.getRules()[verb];
+        }
     }
 
-    public static int constrain(int amount, int low, int high) {
-        return amount < low ? low : (amount > high ? high : amount);
-    }
-
-    public static long constrain(long amount, long low, long high) {
-        return amount < low ? low : (amount > high ? high : amount);
+    public static void removeRule(RelativeLayout.LayoutParams params, int verb) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            params.removeRule(verb);
+        } else {
+            params.addRule(verb, 0);
+        }
     }
 }

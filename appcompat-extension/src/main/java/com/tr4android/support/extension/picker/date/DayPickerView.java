@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -30,8 +29,9 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageButton;
 
 import com.tr4android.appcompat.extension.R;
-import com.tr4android.support.extension.picker.CompatUtils;
-import com.tr4android.support.extension.picker.PickerThemeUtil;
+import com.tr4android.support.extension.picker.MathUtils;
+import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.picker.PickerThemeUtils;
 import com.tr4android.support.extension.widget.ViewPager;
 import com.tr4android.support.extension.widget.ViewPager.OnPageChangeListener;
 
@@ -153,8 +153,8 @@ class DayPickerView extends ViewGroup {
         mViewPager.addOnPageChangeListener(mOnPageChangedListener);
 
         // Set up background of the previous and next buttons.
-        CompatUtils.setBackground(mPrevButton, PickerThemeUtil.getNavButtonBackground(context));
-        CompatUtils.setBackground(mNextButton, PickerThemeUtil.getNavButtonBackground(context));
+        ViewCompatUtils.setBackground(mPrevButton, PickerThemeUtils.getNavButtonBackground(context));
+        ViewCompatUtils.setBackground(mNextButton, PickerThemeUtils.getNavButtonBackground(context));
 
         // Set up min and max dates.
         final Calendar tempDate = Calendar.getInstance();
@@ -172,7 +172,7 @@ class DayPickerView extends ViewGroup {
             throw new IllegalArgumentException("maxDate must be >= minDate");
         }
 
-        final long setDateMillis = CompatUtils.constrain(
+        final long setDateMillis = MathUtils.constrain(
                 System.currentTimeMillis(), minDateMillis, maxDateMillis);
 
         setFirstDayOfWeek(firstDayOfWeek);
@@ -226,14 +226,14 @@ class DayPickerView extends ViewGroup {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final ImageButton leftButton;
         final ImageButton rightButton;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             leftButton = mNextButton;
             rightButton = mPrevButton;
         } else {
             leftButton = mPrevButton;
             rightButton = mNextButton;
         }
-        PickerThemeUtil.setNavButtonDrawable(getContext(), leftButton, rightButton,
+        PickerThemeUtils.setNavButtonDrawable(getContext(), leftButton, rightButton,
                 mAdapter.getMonthTextAppearance());
 
         final int width = right - left;
@@ -380,7 +380,7 @@ class DayPickerView extends ViewGroup {
     private int getPositionFromDay(long timeInMillis) {
         final int diffMonthMax = getDiffMonths(mMinDate, mMaxDate);
         final int diffMonth = getDiffMonths(mMinDate, getTempCalendarForTime(timeInMillis));
-        return CompatUtils.constrain(diffMonth, 0, diffMonthMax);
+        return MathUtils.constrain(diffMonth, 0, diffMonthMax);
     }
 
     private Calendar getTempCalendarForTime(long timeInMillis) {

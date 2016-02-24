@@ -37,6 +37,14 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="TextAppearance.Material.TimePicker.TimeLabel" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/timepicker_time_label_size</item>
+    </style>
+
+    <style name="TextAppearance.Material.TimePicker.AmPmLabel" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/timepicker_ampm_label_size</item>
+    </style>
+
     <style name="TextAppearance.Material.Widget.Calendar.Day" parent="Base.TextAppearance.AppCompat.Caption">
         <!-- We need to build the stateful ColorStateList at runtime -->
         <item name="android:textColor">@null</item>

@@ -26,7 +26,9 @@ import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.util.TypedValue;
 import android.widget.ImageButton;
 
 import com.tr4android.appcompat.extension.R;
@@ -39,7 +41,7 @@ import com.tr4android.support.extension.utils.ThemeUtils;
  * This helper class has methods to easily create all the ColorStateLists needed for
  * the AppCompatDatePickerDialog and the AppCompatTimePickerDialog.
  */
-public class PickerThemeUtil {
+public class PickerThemeUtils {
 
     public static ColorStateList getHeaderTextColorStateList(Context context) {
         return new ColorStateList(new int[][]{ // states
@@ -63,18 +65,51 @@ public class PickerThemeUtil {
         }
     }
 
-    public static ColorStateList getDayTextColorStateList(Context context) {
+    public static ColorStateList getTextColorPrimaryActivatedStateList(Context context) {
+        final float disabledAlpha = getDisabledAlpha(context);
+        final int textColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColorPrimary);
+        final int textColorActivated = ContextCompat.getColor(context, R.color.abc_primary_text_material_dark);
         return new ColorStateList(new int[][]{ // states
                 new int[]{-android.R.attr.state_enabled, android.R.attr.state_selected},
                 new int[]{-android.R.attr.state_enabled},
                 new int[]{android.R.attr.state_selected},
                 new int[]{} // state_default
         }, new int[]{ // colors
-                ContextCompat.getColor(context, R.color.abc_secondary_text_material_dark),
-                ThemeUtils.getThemeAttrColor(context, android.R.attr.textColorSecondary),
-                ContextCompat.getColor(context, R.color.abc_primary_text_material_dark),
-                ThemeUtils.getThemeAttrColor(context, android.R.attr.textColorPrimary)
+                setAlphaComponent(textColorActivated, disabledAlpha),
+                setAlphaComponent(textColor, disabledAlpha),
+                textColorActivated,
+                textColor
         });
+    }
+
+    public static ColorStateList getTextColorSecondaryActivatedStateList(Context context) {
+        final float disabledAlpha = getDisabledAlpha(context);
+        final int textColor = ThemeUtils.getThemeAttrColor(context, android.R.attr.textColorSecondary);
+        final int textColorActivated = ContextCompat.getColor(context, R.color.abc_secondary_text_material_dark);
+        return new ColorStateList(new int[][]{ // states
+                new int[]{-android.R.attr.state_enabled, android.R.attr.state_selected},
+                new int[]{-android.R.attr.state_enabled},
+                new int[]{android.R.attr.state_selected},
+                new int[]{} // state_default
+        }, new int[]{ // colors
+                setAlphaComponent(textColorActivated, disabledAlpha),
+                setAlphaComponent(textColor, disabledAlpha),
+                textColorActivated,
+                textColor
+        });
+    }
+
+    public static float getDisabledAlpha(Context context) {
+        final TypedValue outValue = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.disabledAlpha, outValue, true);
+        return outValue.getFloat();
+    }
+
+    public static int setAlphaComponent(int color, float alpha) {
+        final int srcRgb = color & 0xFFFFFF;
+        final int srcAlpha = (color >> 24) & 0xFF;
+        final int dstAlpha = (int) (srcAlpha * alpha + 0.5f);
+        return srcRgb | (dstAlpha << 24);
     }
 
     public static ColorStateList getNavButtonColorStateList(Context context) {

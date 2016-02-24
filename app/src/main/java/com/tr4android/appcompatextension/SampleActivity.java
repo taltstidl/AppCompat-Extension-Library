@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.picker.date.AppCompatDatePicker;
 import com.tr4android.support.extension.picker.date.AppCompatDatePickerDialog;
+import com.tr4android.support.extension.picker.time.AppCompatTimePicker;
+import com.tr4android.support.extension.picker.time.AppCompatTimePickerDialog;
 import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.FlexibleToolbarLayout;
@@ -146,6 +149,8 @@ public class SampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Show new TimePickerDialog
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "timePicker");
             }
         });
     }
@@ -223,6 +228,26 @@ public class SampleActivity extends AppCompatActivity {
 
         public void onDateSet(AppCompatDatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
+        }
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements AppCompatTimePickerDialog.OnTimeSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new AppCompatTimePickerDialog(getActivity(), this, hour, minute,
+                    false);
+        }
+
+        public void onTimeSet(AppCompatTimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
         }
     }
 }

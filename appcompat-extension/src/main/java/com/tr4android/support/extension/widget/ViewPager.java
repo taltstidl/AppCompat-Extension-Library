@@ -58,7 +58,8 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
-import com.tr4android.support.extension.picker.CompatUtils;
+import com.tr4android.support.extension.picker.MathUtils;
+import com.tr4android.support.extension.picker.ViewCompatUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -606,10 +607,10 @@ public class ViewPager extends ViewGroup {
         }
 
         final int width = getPaddedWidth();
-        final int scaledOffset = (int) (width * CompatUtils.constrain(
+        final int scaledOffset = (int) (width * MathUtils.constrain(
                 info.offset, mFirstOffset, mLastOffset));
 
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             final int itemWidth = (int) (width * info.widthFactor + 0.5f);
             return MAX_SCROLL_X - itemWidth - scaledOffset;
         } else {
@@ -1691,7 +1692,7 @@ public class ViewPager extends ViewGroup {
             final int childMeasuredWidth = child.getMeasuredWidth();
             final int startOffset = (int) (childWidth * ii.offset);
             final int childLeft;
-            if (CompatUtils.isLayoutRtl(this)) {
+            if (ViewCompatUtils.isLayoutRtl(this)) {
                 childLeft = MAX_SCROLL_X - paddingRight - startOffset - childMeasuredWidth;
             } else {
                 childLeft = paddingLeft + startOffset;
@@ -1750,7 +1751,7 @@ public class ViewPager extends ViewGroup {
         }
         // Translate to scrollX to scrollStart for RTL.
         final int scrollStart;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             scrollStart = MAX_SCROLL_X - scrollX;
         } else {
             scrollStart = scrollX;
@@ -2172,7 +2173,7 @@ public class ViewPager extends ViewGroup {
                     final ItemInfo ii = infoForFirstVisiblePage();
                     final int currentPage = ii.position;
                     final float nextPageOffset;
-                    if (CompatUtils.isLayoutRtl(this)) {
+                    if (ViewCompatUtils.isLayoutRtl(this)) {
                         nextPageOffset = (ii.offset - scrolledPages) / ii.widthFactor;
                     } else {
                         nextPageOffset = (scrolledPages - ii.offset) / ii.widthFactor;
@@ -2237,7 +2238,7 @@ public class ViewPager extends ViewGroup {
 
         final EdgeEffectCompat startEdge;
         final EdgeEffectCompat endEdge;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             startEdge = mRightEdge;
             endEdge = mLeftEdge;
         } else {
@@ -2248,7 +2249,7 @@ public class ViewPager extends ViewGroup {
         // Translate scroll to relative coordinates.
         final float nextScrollX = getScrollX() + deltaX;
         final float scrollStart;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             scrollStart = MAX_SCROLL_X - nextScrollX;
         } else {
             scrollStart = nextScrollX;
@@ -2293,7 +2294,7 @@ public class ViewPager extends ViewGroup {
 
         // Translate back to absolute coordinates.
         final float targetScrollX;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             targetScrollX = MAX_SCROLL_X - clampedScrollStart;
         } else {
             targetScrollX = clampedScrollStart;
@@ -2360,7 +2361,7 @@ public class ViewPager extends ViewGroup {
     }
 
     private int getScrollStart() {
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             return MAX_SCROLL_X - getScrollX();
         } else {
             return getScrollX();
@@ -2388,7 +2389,7 @@ public class ViewPager extends ViewGroup {
             final ItemInfo lastItem = mItems.get(mItems.size() - 1);
 
             // Only let the user target pages we have items for
-            targetPage = CompatUtils.constrain(targetPage, firstItem.position, lastItem.position);
+            targetPage = MathUtils.constrain(targetPage, firstItem.position, lastItem.position);
         }
 
         return targetPage;
@@ -2470,7 +2471,7 @@ public class ViewPager extends ViewGroup {
 
                 final float left;
                 final float scaledOffset = itemOffset * width;
-                if (CompatUtils.isLayoutRtl(this)) {
+                if (ViewCompatUtils.isLayoutRtl(this)) {
                     left = MAX_SCROLL_X - scaledOffset;
                 } else {
                     left = scaledOffset + widthFactor * width;

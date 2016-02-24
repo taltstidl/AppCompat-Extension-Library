@@ -30,7 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
-import com.tr4android.support.extension.picker.CompatUtils;
+import com.tr4android.support.extension.picker.ViewCompatUtils;
 
 import java.util.Calendar;
 
@@ -199,7 +199,7 @@ class YearPickerView extends ListView {
                 } else {
                     textAppearanceResId = ITEM_TEXT_APPEARANCE;
                 }
-                CompatUtils.setTextAppearance(v, textAppearanceResId);
+                ViewCompatUtils.setTextAppearance(v, textAppearanceResId);
                 v.setTag(ITEM_IS_SELECTED, selected);
             }
 

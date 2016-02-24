@@ -1,4 +1,4 @@
-package com.tr4android.support.extension.picker.date;
+package com.tr4android.support.extension.picker;
 
 import android.os.Build;
 import android.text.format.DateFormat;
@@ -17,6 +17,8 @@ public class DateFormatUtils {
             // Try to improve the skeleton on older devices
             if (skeleton.equals("EMMMd")) return "E, MMM d";
             if (skeleton.equals("MMMMy")) return "MMMM yyyy";
+            if (skeleton.equals("Hm")) return "H:m";
+            if (skeleton.equals("hm")) return "h:m";
             return skeleton;
         }
     }

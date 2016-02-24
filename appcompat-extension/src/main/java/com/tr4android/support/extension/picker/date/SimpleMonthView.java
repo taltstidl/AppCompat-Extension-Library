@@ -26,7 +26,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
@@ -34,16 +33,16 @@ import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat.Accessi
 import android.support.v4.widget.ExploreByTouchHelper;
 import android.text.TextPaint;
 import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.tr4android.appcompat.extension.R;
-import com.tr4android.support.extension.picker.CompatUtils;
-import com.tr4android.support.extension.picker.PickerThemeUtil;
+import com.tr4android.support.extension.picker.DateFormatUtils;
+import com.tr4android.support.extension.picker.MathUtils;
+import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.picker.PickerThemeUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -226,7 +225,7 @@ class SimpleMonthView extends View {
         if (textColor != null) {
             mDayTextColor = textColor;
         } else {
-            mDayTextColor = PickerThemeUtil.getDayTextColorStateList(getContext());
+            mDayTextColor = PickerThemeUtils.getTextColorPrimaryActivatedStateList(getContext());
             mDayPaint.setColor(mDayTextColor.getColorForState(ENABLED_STATE_SET, 0));
         }
 
@@ -390,7 +389,7 @@ class SimpleMonthView extends View {
         for (int col = 0; col < DAYS_IN_WEEK; col++) {
             final int colCenter = colWidth * col + colWidth / 2;
             final int colCenterRtl;
-            if (CompatUtils.isLayoutRtl(this)) {
+            if (ViewCompatUtils.isLayoutRtl(this)) {
                 colCenterRtl = mPaddedWidth - colCenter;
             } else {
                 colCenterRtl = colCenter;
@@ -423,7 +422,7 @@ class SimpleMonthView extends View {
         for (int day = 1, col = findDayOffset(); day <= mDaysInMonth; day++) {
             final int colCenter = colWidth * col + colWidth / 2;
             final int colCenterRtl;
-            if (CompatUtils.isLayoutRtl(this)) {
+            if (ViewCompatUtils.isLayoutRtl(this)) {
                 colCenterRtl = mPaddedWidth - colCenter;
             } else {
                 colCenterRtl = colCenter;
@@ -564,8 +563,8 @@ class SimpleMonthView extends View {
             }
         }
 
-        mEnabledDayStart = CompatUtils.constrain(enabledDayStart, 1, mDaysInMonth);
-        mEnabledDayEnd = CompatUtils.constrain(enabledDayEnd, mEnabledDayStart, mDaysInMonth);
+        mEnabledDayStart = MathUtils.constrain(enabledDayStart, 1, mDaysInMonth);
+        mEnabledDayEnd = MathUtils.constrain(enabledDayEnd, mEnabledDayStart, mDaysInMonth);
 
         // Invalidate the old title.
         mTitle = null;
@@ -607,7 +606,7 @@ class SimpleMonthView extends View {
                 + mDesiredDayOfWeekHeight + mDesiredMonthHeight
                 + getPaddingTop() + getPaddingBottom();
         final int preferredWidth = mDesiredCellWidth * DAYS_IN_WEEK
-                + CompatUtils.getPaddingStart(this) + CompatUtils.getPaddingEnd(this);
+                + ViewCompatUtils.getPaddingStart(this) + ViewCompatUtils.getPaddingEnd(this);
         final int resolvedWidth = resolveSize(preferredWidth, widthMeasureSpec);
         final int resolvedHeight = resolveSize(preferredHeight, heightMeasureSpec);
         setMeasuredDimension(resolvedWidth, resolvedHeight);
@@ -710,7 +709,7 @@ class SimpleMonthView extends View {
 
         // Adjust for RTL after applying padding.
         final int paddedXRtl;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             paddedXRtl = mPaddedWidth - paddedX;
         } else {
             paddedXRtl = paddedX;
@@ -744,7 +743,7 @@ class SimpleMonthView extends View {
         final int col = index % DAYS_IN_WEEK;
         final int colWidth = mCellWidth;
         final int left;
-        if (CompatUtils.isLayoutRtl(this)) {
+        if (ViewCompatUtils.isLayoutRtl(this)) {
             left = getWidth() - getPaddingRight() - (col + 1) * colWidth;
         } else {
             left = getPaddingLeft() + col * colWidth;
@@ -853,7 +852,7 @@ class SimpleMonthView extends View {
         protected boolean onPerformActionForVirtualView(int virtualViewId, int action,
                                                         Bundle arguments) {
             switch (action) {
-                case AccessibilityNodeInfo.ACTION_CLICK:
+                case AccessibilityNodeInfoCompat.ACTION_CLICK:
                     return onDayClicked(virtualViewId);
             }
 
