@@ -33,8 +33,6 @@
         android:id="@+id/date_picker_year_picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="?attr/selectableItemBackground"
-        android:divider="@null"
-        android:scrollIndicators="bottom" />
+        android:scrollbars="none" />
 
 </com.tr4android.support.extension.picker.date.DialogViewAnimator>
