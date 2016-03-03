@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shape used pre Lollipop for maintaining 2dp corner radius on header -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners
+        android:topRightRadius="2dp"
+        android:bottomRightRadius="2dp" />
+    <solid android:color="@android:color/white" />
+</shape>

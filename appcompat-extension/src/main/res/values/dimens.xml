@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2015 Thomas Robert Altstidl & fountaingeyser
+  ~ Copyright (C) 2014 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -56,4 +57,59 @@
     <dimen name="abc_text_size_menu_material">14sp</dimen>
     <dimen name="abc_text_size_body_2_material">14sp</dimen>
     <dimen name="abc_text_size_body_1_material">14sp</dimen>
+
+    <!-- Material TimePickerDialog -->
+    <dimen name="timepicker_time_label_size">60dp</dimen>
+    <dimen name="timepicker_ampm_label_size">16dp</dimen>
+    <dimen name="timepicker_ampm_horizontal_padding">16dp</dimen>
+    <dimen name="timepicker_am_top_padding">4dp</dimen>
+    <dimen name="timepicker_pm_top_padding">4dp</dimen>
+    <dimen name="timepicker_separator_padding">2dp</dimen>
+    <dimen name="timepicker_header_height">96dp</dimen>
+    <dimen name="timepicker_radial_picker_preferred_height">322dp</dimen>
+    <dimen name="timepicker_radial_picker_preferred_width">316dp</dimen>
+    <dimen name="timepicker_radial_picker_dimen">296dp</dimen>
+    <dimen name="timepicker_radial_picker_top_margin">16dp</dimen>
+    <dimen name="timepicker_radial_picker_horizontal_margin">16dp</dimen>
+
+    <!-- RadialTimePicker used by TimePickerDialog -->
+    <dimen name="timepicker_selector_radius">20dp</dimen>
+    <dimen name="timepicker_selector_stroke">2dp</dimen>
+    <dimen name="timepicker_center_dot_radius">3dp</dimen>
+    <dimen name="timepicker_selector_dot_radius">2dp</dimen>
+    <dimen name="timepicker_text_inset_normal">22dp</dimen>
+    <dimen name="timepicker_text_inset_inner">58dp</dimen>
+    <dimen name="timepicker_text_size_normal">16sp</dimen>
+    <dimen name="timepicker_text_size_inner">12sp</dimen>
+
+    <!-- Material DatePickerDialog -->
+    <dimen name="datepicker_year_label_height">64dp</dimen>
+    <dimen name="datepicker_component_width">260dp</dimen>
+    <dimen name="datepicker_dialog_width">520dp</dimen>
+    <dimen name="datepicker_selected_date_day_size">88dp</dimen>
+    <dimen name="datepicker_selected_date_month_size">24dp</dimen>
+    <dimen name="datepicker_selected_date_year_size">24dp</dimen>
+    <dimen name="datepicker_header_height">30dp</dimen>
+    <dimen name="datepicker_header_text_size">14dp</dimen>
+
+    <dimen name="datepicker_list_year_label_size">16sp</dimen>
+    <dimen name="datepicker_list_year_activated_label_size">26sp</dimen>
+
+    <dimen name="date_picker_year_label_size">16sp</dimen>
+    <dimen name="date_picker_date_label_size">34dp</dimen>
+
+    <!-- SimpleMonthView used by DatePickerDialog -->
+    <dimen name="date_picker_month_text_size">14sp</dimen>
+    <dimen name="date_picker_day_of_week_text_size">12sp</dimen>
+    <dimen name="date_picker_day_text_size">12sp</dimen>
+    <dimen name="date_picker_month_height">56dp</dimen>
+    <dimen name="date_picker_day_of_week_height">36dp</dimen>
+    <dimen name="date_picker_day_height">40dp</dimen>
+    <dimen name="date_picker_day_width">44dp</dimen>
+    <dimen name="date_picker_day_selector_radius">20dp</dimen>
+    <dimen name="day_picker_padding_horizontal">20dp</dimen>
+    <dimen name="day_picker_padding_top">6dp</dimen>
+    <dimen name="day_picker_button_margin_top">0dp</dimen>
+
+    <dimen name="datepicker_view_animator_height">226dp</dimen>
 </resources>

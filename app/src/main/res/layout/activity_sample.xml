@@ -90,27 +90,19 @@
                 android:src="@drawable/ic_add_white_24dp" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_timepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/fam_document"
-                android:src="@drawable/ic_insert_drive_file_white_24dp"
-                app:backgroundTint="@color/material_blue"
+                android:contentDescription="@string/fam_timepicker"
+                android:src="@drawable/ic_schedule_white_24dp"
                 app:fabSize="mini" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_datepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/fam_spreadsheet"
-                android:src="@drawable/ic_grid_on_white_24dp"
-                app:backgroundTint="@color/material_green"
-                app:fabSize="mini" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/fam_presentation"
-                android:src="@drawable/ic_insert_chart_white_24dp"
-                app:backgroundTint="@color/material_yellow"
+                android:contentDescription="@string/fam_datepicker"
+                android:src="@drawable/ic_event_white_24dp"
                 app:fabSize="mini" />
         </com.tr4android.support.extension.widget.FloatingActionMenu>
 

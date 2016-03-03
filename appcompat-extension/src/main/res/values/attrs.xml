@@ -89,4 +89,36 @@
 
         <attr name="toolbarRefId" format="reference" />
     </declare-styleable>
+
+    <!-- Common PickerDialog attributes-->
+    <attr name="headerBackground" format="color" />
+    <attr name="headerTextColor" format="color" />
+
+    <!-- Material DatePickerDialog -->
+    <declare-styleable name="DatePickerDialog">
+        <attr name="firstDayOfWeek" format="integer" />
+        <attr name="minDate" format="string" />
+        <attr name="maxDate" format="string" />
+        <attr name="headerBackground" />
+        <attr name="headerTextColor" />
+        <attr name="monthTextAppearance" format="reference" />
+        <attr name="weekDayTextAppearance" format="reference" />
+        <attr name="dateTextAppearance" format="reference" />
+        <attr name="daySelectorColor" format="color" />
+        <attr name="dayHighlightColor" format="color" />
+    </declare-styleable>
+
+    <attr name="datePickerDialogTheme" format="reference" />
+
+    <!-- Material TimePickerDialog -->
+    <declare-styleable name="TimePickerDialog">
+        <attr name="headerBackground" />
+        <attr name="headerTextColor" />
+        <attr name="numbersTextColor" format="color" />
+        <attr name="numbersInnerTextColor" format="color" />
+        <attr name="numbersSelectorColor" format="color" />
+        <attr name="numbersBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <attr name="timePickerDialogTheme" format="reference" />
 </resources>

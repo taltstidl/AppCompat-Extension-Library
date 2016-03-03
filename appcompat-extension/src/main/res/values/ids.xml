@@ -3,4 +3,8 @@
 
     <!-- FloatingActionMenu -->
     <item name="fab_label" type="id"/>
+
+    <!-- Material DatePickerDialog -->
+    <!-- (id for tag storing selected state in YearPickerView) -->
+    <item name="date_picker_year_item_is_selected" type="id" />
 </resources>
