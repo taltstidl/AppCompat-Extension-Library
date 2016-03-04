@@ -56,6 +56,35 @@
                 android:background="?attr/colorPrimaryDark"
                 android:indeterminate="true" />
 
+            <LinearLayout
+                android:id="@+id/pickers_detail"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginRight="64dp"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_activity_picker_dialog"
+                    android:textColor="?android:attr/textColorPrimaryInverse"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_pickers"
+                    android:textColor="?android:attr/textColorSecondaryInverse"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/controls_imageview"
                 android:layout_width="40dp"
@@ -77,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             app:fabMenuCloseIconAngle="135"
-            app:fabMenuCloseIconSrc="@drawable/ic_edit_black_24dp"
+            app:fabMenuCloseIconSrc="@drawable/ic_fab_edit_black_24dp"
             app:fabMenuLabelStyle="@style/label_style_dark">
 
             <android.support.design.widget.FloatingActionButton
@@ -90,22 +119,31 @@
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_timepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/fam_timepicker"
+                android:contentDescription="@string/fam_document"
                 android:tint="@android:color/white"
+                app:backgroundTint="@color/material_blue"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_schedule_black_24dp" />
+                app:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_datepicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/fam_datepicker"
+                android:contentDescription="@string/fam_spreadsheet"
                 android:tint="@android:color/white"
+                app:backgroundTint="@color/material_green"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_event_black_24dp" />
+                app:srcCompat="@drawable/ic_grid_on_black_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/fam_presentation"
+                android:tint="@android:color/white"
+                app:backgroundTint="@color/material_yellow"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_insert_chart_black_24dp" />
         </com.tr4android.support.extension.widget.FloatingActionMenu>
 
     </android.support.design.widget.CoordinatorLayout>
