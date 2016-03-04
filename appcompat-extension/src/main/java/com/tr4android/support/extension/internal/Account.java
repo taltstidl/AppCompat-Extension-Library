@@ -141,9 +141,9 @@ public class Account {
             iv.setImageURI(mIconUri);
         } else if (mPlaceholderIconEnabled) {
             if (mPlaceholderCircleColor == -1) {
-                iv.setPlaceholder(R.drawable.ic_person_white_24dp);
+                iv.setPlaceholder(R.drawable.ic_person_black_24dp);
             } else {
-                iv.setPlaceholder(R.drawable.ic_person_white_24dp, mPlaceholderCircleColor);
+                iv.setPlaceholder(R.drawable.ic_person_black_24dp, mPlaceholderCircleColor);
             }
         } else {
             if (mPlaceholderCircleColor == -1) {

@@ -137,8 +137,8 @@ public class PickerThemeUtils {
     public static void setNavButtonDrawable(Context context, ImageButton left, ImageButton right,
                                             int monthTextAppearanceResId) {
         // Retrieve the previous and next drawables dependent on layout direction
-        Drawable prevDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_left);
-        Drawable nextDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right);
+        Drawable prevDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_left_black_24dp);
+        Drawable nextDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_black_24dp);
 
         // Proxy the month text color into the previous and next drawables.
         final TypedArray ta = context.obtainStyledAttributes(null,
