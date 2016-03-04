@@ -7,7 +7,7 @@
 
     <!-- Info Dialog -->
     <string name="dialog_title">AppCompat Extension Library</string>
-    <string name="dialog_message">A library that builds on the official AppCompat Design Library and provides additional common components:\n &#8226; AccountHeaderView\n &#8226; FloatingActionMenu\n &#8226; CircleImageView\n &#8226; FlexibleToolbarLayout\n &#8226; Delightful Detail Drawables\n &#8226; TypefaceCompat</string>
+    <string name="dialog_message">A library that builds on the official AppCompat Design Library and provides additional common components:\n &#8226; AccountHeaderView\n &#8226; FloatingActionMenu\n &#8226; CircleImageView\n &#8226; Picker Dialogs\n &#8226; FlexibleToolbarLayout\n &#8226; Delightful Detail Drawables\n &#8226; TypefaceCompat</string>
     <string name="dialog_neutral_button">View on Github</string>
     <string name="dialog_negative_button">Dismiss</string>
 
@@ -24,4 +24,17 @@
     <!-- Floating Action Menu items -->
     <string name="fam_datepicker">Date</string>
     <string name="fam_timepicker">Time</string>
+
+    <!-- External link items -->
+    <string name="link_pickers">Pickers - Google design guidelines</string>
+    <string name="href_pickers">https://www.google.com/design/spec/components/pickers.html</string>
+
+    <!-- Card items -->
+    <string name="card_header_title_date_picker">AppCompatDatePickerDialog</string>
+    <string name="card_header_subtitle_date_picker">used to select a single date</string>
+    <string name="card_header_title_time_picker">AppCompatTimePickerDialog</string>
+    <string name="card_header_subtitle_time_picker">used to select a single time</string>
+    <string name="card_button_light">Light</string>
+    <string name="card_button_dark">Dark</string>
+    <string name="title_activity_picker_dialog">Picker Dialogs</string>
 </resources>

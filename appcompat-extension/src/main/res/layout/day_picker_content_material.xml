@@ -30,7 +30,6 @@
         android:layout_height="wrap_content"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:src="@drawable/ic_chevron_left"
         android:background="@drawable/date_picker_nav_background"
         android:contentDescription="@string/date_picker_prev_month_button"
         android:visibility="invisible" />
@@ -41,7 +40,6 @@
         android:layout_height="wrap_content"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:src="@drawable/ic_chevron_right"
         android:background="@drawable/date_picker_nav_background"
         android:contentDescription="@string/date_picker_next_month_button"
         android:visibility="invisible" />

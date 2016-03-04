@@ -13,7 +13,7 @@ import com.tr4android.support.extension.widget.CircleImageView;
  * Created by ThomasR on 02.09.2015.
  */
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
-    private int[] mIcons = new int[]{R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_folder_white_24dp, R.drawable.ic_insert_chart_white_24dp, R.drawable.ic_grid_on_white_24dp, R.drawable.ic_insert_drive_file_white_24dp};
+    private int[] mIcons = new int[]{R.drawable.ic_folder_black_24dp, R.drawable.ic_folder_black_24dp, R.drawable.ic_folder_black_24dp, R.drawable.ic_folder_black_24dp, R.drawable.ic_insert_chart_black_24dp, R.drawable.ic_grid_on_black_24dp, R.drawable.ic_insert_drive_file_black_24dp};
     private int[] mColors = new int[]{R.color.material_indigo, R.color.material_indigo, R.color.material_indigo, R.color.material_indigo, R.color.material_yellow, R.color.material_green, R.color.material_blue};
     private String[] mFileNames = new String[]{"Big Buck Bunny", "Caminandes", "Sintel", "Trailers", "Movies Presentation", "Movies Expense Summary", "Movie Posters"};
     private String[] mFileInfos = new String[]{"Jan 6, 2015", "Jan 9, 2015", "Jan 17, 2015", "Jan 28, 2015", "Jan 20, 2015", "Jan 20, 2015", "Jan 20, 2015"};

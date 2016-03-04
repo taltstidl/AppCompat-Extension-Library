@@ -28,6 +28,7 @@
         <attr name="placeholderTextSize" format="dimension" />
         <attr name="placeholderTextColor" format="color" />
         <attr name="placeholderIconSize" format="dimension" />
+        <attr name="placeholderIconColor" format="color" />
     </declare-styleable>
 
     <!-- FloatingActionMenu -->
@@ -45,6 +46,7 @@
         <attr name="fabMenuLabelStyle" format="reference" />
         <attr name="fabMenuCloseIconSrc" format="reference" />
         <attr name="fabMenuCloseIconAngle" format="float" />
+        <attr name="fabMenuSpacing" format="dimension" />
     </declare-styleable>
 
     <!-- FlexibleToolbarLayout -->

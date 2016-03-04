@@ -66,7 +66,10 @@ class YearPickerView extends RecyclerView implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        final int year = mAdapter.getYearForPosition(getChildAdapterPosition(view));
+        final int position = getChildAdapterPosition(view);
+        if (position == -1) return; // Ignore invalid positions
+
+        final int year = mAdapter.getYearForPosition(position);
         mAdapter.setSelection(year);
 
         if (mOnYearSelectedListener != null) {

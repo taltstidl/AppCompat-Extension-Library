@@ -70,13 +70,15 @@ public class CircleImageView extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0);
         mIsCircleImageEnabled = a.getBoolean(R.styleable.CircleImageView_circleImageEnabled, true);
         mPlaceholderCircleDefaultColor = a.getColor(R.styleable.CircleImageView_placeholderCircleColor, ThemeUtils.getThemeAttrColor(getContext(), R.attr.colorAccent));
+        int textColorPrimaryInverse = ThemeUtils.getThemeAttrColor(getContext(), android.R.attr.textColorPrimaryInverse);
         int mPlaceholderTextSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderTextSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderTextSize));
-        int mPlaceholderTextColor = a.getColor(R.styleable.CircleImageView_placeholderTextColor, ThemeUtils.getThemeAttrColor(getContext(), android.R.attr.textColorPrimaryInverse));
+        int mPlaceholderTextColor = a.getColor(R.styleable.CircleImageView_placeholderTextColor, textColorPrimaryInverse);
         int mPlaceholderImageSize = a.getDimensionPixelSize(R.styleable.CircleImageView_placeholderIconSize, getResources().getDimensionPixelSize(R.dimen.defaultPlaceholderImageSize));
+        int mPlaceholderImageColor = a.getColor(R.styleable.CircleImageView_placeholderIconColor, textColorPrimaryInverse);
         a.recycle();
 
         mPlaceholderDrawable = new PlaceholderDrawable(
-                mPlaceholderTextSize, mPlaceholderTextColor, mPlaceholderImageSize);
+                mPlaceholderTextSize, mPlaceholderTextColor, mPlaceholderImageSize, mPlaceholderImageColor);
     }
 
     @Override

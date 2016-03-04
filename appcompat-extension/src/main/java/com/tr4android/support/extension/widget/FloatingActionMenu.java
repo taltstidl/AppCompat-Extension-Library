@@ -122,7 +122,7 @@ public class FloatingActionMenu extends ViewGroup {
             mAnimator = new FloatingActionMenuAnimatorHoneycomb();
         }
 
-        mButtonSpacing = (int) getResources().getDimensionPixelSize(R.dimen.fam_spacing);
+        mButtonSpacing = getResources().getDimensionPixelSize(R.dimen.fam_spacing);
         mLabelsMargin = getResources().getDimensionPixelSize(R.dimen.fam_label_spacing);
         mLabelsVerticalOffset = 0;
 
@@ -132,6 +132,7 @@ public class FloatingActionMenu extends ViewGroup {
         mLabelsStyle = attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuLabelStyle, 0);
         mCloseDrawable = attr.getDrawable(R.styleable.FloatingActionMenu_fabMenuCloseIconSrc);
         mCloseAngle = attr.getFloat(R.styleable.FloatingActionMenu_fabMenuCloseIconAngle, 0);
+        mButtonSpacing = attr.getDimensionPixelSize(R.styleable.FloatingActionMenu_fabMenuSpacing, mButtonSpacing);
         attr.recycle();
 
         if (mLabelsStyle != 0 && expandsHorizontally()) {

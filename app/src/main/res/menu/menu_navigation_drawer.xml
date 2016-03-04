@@ -5,19 +5,19 @@
         <item
             android:id="@+id/navigation_item_inbox"
             android:checked="true"
-            android:icon="@drawable/ic_inbox_grey600_24dp"
+            android:icon="@drawable/ic_move_to_inbox_black_24dp"
             android:title="@string/nav_drawer_inbox"/>
         <item
             android:id="@+id/navigation_item_starred"
-            android:icon="@drawable/ic_star_grey600_24dp"
+            android:icon="@drawable/ic_star_black_24dp"
             android:title="@string/nav_drawer_starred"/>
         <item
             android:id="@+id/navigation_item_sent"
-            android:icon="@drawable/ic_send_grey600_24dp"
+            android:icon="@drawable/ic_send_black_24dp"
             android:title="@string/nav_drawer_sent"/>
         <item
             android:id="@+id/navigation_item_drafts"
-            android:icon="@drawable/ic_drafts_grey600_24dp"
+            android:icon="@drawable/ic_drafts_black_24dp"
             android:title="@string/nav_drawer_drafts"/>
         <item
             android:id="@+id/navigation_subheader"
@@ -25,15 +25,15 @@
             <menu>
                 <item
                     android:id="@+id/navigation_sub_item_all"
-                    android:icon="@drawable/ic_mail_grey600_24dp"
+                    android:icon="@drawable/ic_mail_black_24dp"
                     android:title="@string/nav_drawer_all"/>
                 <item
                     android:id="@+id/navigation_sub_item_trash"
-                    android:icon="@drawable/ic_delete_grey600_24dp"
+                    android:icon="@drawable/ic_delete_black_24dp"
                     android:title="@string/nav_drawer_trash"/>
                 <item
                     android:id="@+id/navigation_sub_item_spam"
-                    android:icon="@drawable/ic_report_grey600_24dp"
+                    android:icon="@drawable/ic_report_black_24dp"
                     android:title="@string/nav_drawer_spam"/>
             </menu>
         </item>

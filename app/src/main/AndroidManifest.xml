@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tr4android.appcompatextension" >
+    package="com.tr4android.appcompatextension">
 
     <application
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".SampleActivity"
-            android:label="@string/app_name" >
+            android:name=".activity.SampleActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:parentActivityName=".activity.SampleActivity"
+            android:name=".activity.PickerDialogActivity"
+            android:label="@string/title_activity_picker_dialog"
+            android:theme="@style/AppTheme.Base" />
     </application>
 
 </manifest>
