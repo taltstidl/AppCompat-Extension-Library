@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.tr4android.appcompatextension"
         minSdkVersion 7
         targetSdkVersion 23
@@ -22,5 +23,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':appcompat-extension')
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'com.android.support:cardview-v7:23.2.0'
 }

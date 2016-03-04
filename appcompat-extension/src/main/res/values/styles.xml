@@ -73,4 +73,25 @@
         <item name="android:textSize">@dimen/datepicker_list_year_activated_label_size</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+
+    <!-- default light and dark styles for picker dialogs -->
+    <style name="Theme.AppCompat.Light.DatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#009688</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.TimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#009688</item>
+        <item name="numbersBackgroundColor">#ffeeeeee</item>
+    </style>
+
+    <style name="Theme.AppCompat.DatePickerDialog" parent="Theme.AppCompat.Dialog">
+        <item name="headerBackground">#ff555555</item>
+        <item name="colorAccent">#80CBC4</item>
+    </style>
+
+    <style name="Theme.AppCompat.TimePickerDialog" parent="Theme.AppCompat.Dialog">
+        <item name="headerBackground">#ff555555</item>
+        <item name="colorAccent">#80CBC4</item>
+        <item name="numbersBackgroundColor">#ff555555</item>
+    </style>
 </resources>

@@ -9,16 +9,11 @@
         <item name="colorPrimary">#2196f3</item>
         <item name="colorPrimaryDark">#1976d2</item>
         <item name="colorAccent">#3f51b5</item>
-        <item name="datePickerDialogTheme">@style/DatePickerDialog</item>
-        <item name="timePickerDialogTheme">@style/TimePickerDialog</item>
+        <item name="datePickerDialogTheme">@style/Theme.AppCompat.Light.DatePickerDialog</item>
+        <item name="timePickerDialogTheme">@style/Theme.AppCompat.Light.TimePickerDialog</item>
     </style>
 
-    <style name="DatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">#009688</item>
-    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="TimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">#009688</item>
-        <item name="numbersBackgroundColor">#ffeeeeee</item>
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
