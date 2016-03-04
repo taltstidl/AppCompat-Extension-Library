@@ -1,4 +1,4 @@
-[![Latest Release](https://img.shields.io/github/release/TR4Android/AppCompat-Extension-Library.svg?label=JitPack)](https://jitpack.io/#TR4Android/AppCompat-Extension-Library)
+[![Latest Release](https://img.shields.io/github/release/TR4Android/AppCompat-Extension-Library.svg?label=JitPack)](https://jitpack.io/#TR4Android/AppCompat-Extension-Library) [![API](https://img.shields.io/badge/API-7%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=7) [![License](https://img.shields.io/badge/license-Apache 2.0-brightgreen.svg?style=flat)](https://github.com/TR4Android/AppCompat-Extension-Library/blob/master/LICENSE)
 
 # AppCompat-Extension-Library
 ![Header Graphics for the AppCompat Extension Library](https://raw.githubusercontent.com/TR4Android/AppCompat-Extension-Library/master/promo-images/Header.png)
@@ -8,6 +8,7 @@ Google's AppCompat Design Library provides some awesome components for your deve
 * [AccountHeaderView](https://github.com/TR4Android/AppCompat-Extension-Library#accountheaderview)
 * [FloatingActionMenu](https://github.com/TR4Android/AppCompat-Extension-Library#floatingactionmenu)
 * [CircleImageView](https://github.com/TR4Android/AppCompat-Extension-Library#circleimageview)
+* [Picker Dialogs](https://github.com/TR4Android/AppCompat-Extension-Library#picker-dialogs)
 * [FlexibleToolbarLayout](https://github.com/TR4Android/AppCompat-Extension-Library#flexibletoolbarlayout)
 * [Delightful Detail Drawables](https://github.com/TR4Android/AppCompat-Extension-Library#delightful-detail-drawables)
 * [TypefaceCompat](https://github.com/TR4Android/AppCompat-Extension-Library#typefacecompat)
@@ -99,6 +100,45 @@ Instead of the default `ImageView` use the following in your layouts:
 Then use `setImage...()` to set a circular image or `setPlaceholder()` to set a placeholder.
 
 *For the full documentation and customization options head over to the [CircleImageView wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/CircleImageView).*
+
+## Picker Dialogs
+The `AppCompatDatePickerDialog` and `AppCompatTimePickerDialog` are native Android implementations of the picker dialogs detailed in the official Material Design guidelines.
+
+#### Main features:
+* Uses the design presented in the [Pickers](https://www.google.com/design/spec/components/pickers.html) section of the Material Design guidelines for a fully Material Design compliant user experience!
+* Works all the way back to API level 7 while maintaining important features (such as accessibility and right-to-left support) on API levels that support those.
+
+#### Basic setup:
+Setup your app theme by including the following lines (for dark themes remove the `.Light` part):
+```xml
+<style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- other attributes -->
+    <item name="datePickerDialogTheme">@style/Theme.AppCompat.Light.DatePickerDialog</item>
+    <item name="timePickerDialogTheme">@style/Theme.AppCompat.Light.TimePickerDialog</item>
+</style>
+```
+Then use the `AppCompatDatePickerDialog` or `AppCompatTimePickerDialog` inside a `DialogFragment` (this example shows the `AppCompatDatePickerDialog`, but the process is quite similiar with the `AppCompatTimePickerDialog`):
+```java
+public static class DatePickerFragment extends DialogFragment implements AppCompatDatePickerDialog.OnDateSetListener {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Create a new instance of AppCompatDatePickerDialog and return it
+        return new AppCompatDatePickerDialog(getActivity(), this, 2017, 3, 13);
+    }
+
+    public void onDateSet(AppCompatDatePicker view, int year, int month, int day) {
+        // Do something with the date chosen by the user
+    }
+}
+```
+And later show this `DialogFragment` anywhere you need it:
+```java
+DialogFragment datePicker = new DatePickerFragment();
+datePicker.show(getSupportFragmentManager(), "datePicker");
+```
+
+*For the full documentation and customization options head over to the [Picker Dialogs wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/Picker-Dialogs).*
 
 ## FlexibleToolbarLayout
 The `FlexibleToolbarLayout` is a more advanced alternative to the already powerful `CollapsingToolbarLayout` that excels by also providing a scaled icon and subtitle along with the title.
