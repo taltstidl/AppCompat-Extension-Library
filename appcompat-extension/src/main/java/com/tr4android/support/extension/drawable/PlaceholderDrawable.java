@@ -11,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.utils.ThemeUtils;
@@ -25,6 +26,9 @@ public class PlaceholderDrawable extends Drawable {
     // size of the placeholder icon
     private int mPlaceholderImageSize;
 
+    // color of the placeholder icon
+    private int mPlaceholderImageColor;
+
     // paint used for drawing the placeholder icon
     private Drawable mPlaceholderImage;
 
@@ -33,8 +37,9 @@ public class PlaceholderDrawable extends Drawable {
 
 
     public PlaceholderDrawable(int placeholderTextSize, int placeholderTextColor,
-                               int placeholderImageSize) {
+                               int placeholderImageSize, int placeholerImageColor) {
         mPlaceholderImageSize = placeholderImageSize;
+        mPlaceholderImageColor = placeholerImageColor;
 
         mPlaceholderCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPlaceholderTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -66,7 +71,7 @@ public class PlaceholderDrawable extends Drawable {
      * @param circleColor Color to use for the circle
      */
     public void setPlaceholder(Drawable drawable, @ColorInt int circleColor) {
-        mPlaceholderImage = drawable;
+        mPlaceholderImage = tintDrawable(drawable, mPlaceholderImageColor);
         mPlaceholderText = "";
         mPlaceholderCirclePaint.setColor(circleColor);
     }
@@ -108,11 +113,19 @@ public class PlaceholderDrawable extends Drawable {
         return PixelFormat.TRANSLUCENT;
     }
 
+    // Helper that wraps and tints a drawable
+    private Drawable tintDrawable(Drawable drawable, @ColorInt int color) {
+        final Drawable tintDrawable = DrawableCompat.wrap(drawable.mutate());
+        DrawableCompat.setTint(tintDrawable, color);
+        return tintDrawable;
+    }
+
     public static class Builder {
         Context mContext;
         int mPlaceholderTextSize;
         int mPlaceholderTextColor;
         int mPlaceholderImageSize;
+        int mPlaceholderImageColor;
         int mPlaceholderCircleColor;
         String mPlaceholderString = "";
         Drawable mPlaceholderDrawable = null;
@@ -125,6 +138,8 @@ public class PlaceholderDrawable extends Drawable {
                     android.R.attr.textColorPrimaryInverse);
             mPlaceholderImageSize = context.getResources()
                     .getDimensionPixelSize(R.dimen.defaultPlaceholderImageSize);
+            mPlaceholderImageColor = ThemeUtils.getThemeAttrColor(context,
+                    android.R.attr.textColorPrimaryInverse);
             mPlaceholderCircleColor = ThemeUtils.getThemeAttrColor(context, R.attr.colorAccent);
         }
 
@@ -140,6 +155,11 @@ public class PlaceholderDrawable extends Drawable {
 
         public Builder setPlaceholderImageSize(int imageSize) {
             mPlaceholderImageSize = imageSize;
+            return this;
+        }
+
+        public Builder setPlaceholderImageColor(@ColorInt int color) {
+            mPlaceholderImageColor = color;
             return this;
         }
 
@@ -170,7 +190,7 @@ public class PlaceholderDrawable extends Drawable {
 
         public PlaceholderDrawable build() {
             PlaceholderDrawable drawable = new PlaceholderDrawable(
-                    mPlaceholderTextSize, mPlaceholderTextColor, mPlaceholderImageSize);
+                    mPlaceholderTextSize, mPlaceholderTextColor, mPlaceholderImageSize, mPlaceholderImageColor);
             if (mPlaceholderDrawable == null) {
                 drawable.setPlaceholder(mPlaceholderString, mPlaceholderCircleColor);
             } else {

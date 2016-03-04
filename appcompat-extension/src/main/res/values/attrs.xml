@@ -28,6 +28,7 @@
         <attr name="placeholderTextSize" format="dimension" />
         <attr name="placeholderTextColor" format="color" />
         <attr name="placeholderIconSize" format="dimension" />
+        <attr name="placeholderIconColor" format="color" />
     </declare-styleable>
 
     <!-- FloatingActionMenu -->
