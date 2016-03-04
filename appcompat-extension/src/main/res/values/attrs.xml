@@ -45,6 +45,7 @@
         <attr name="fabMenuLabelStyle" format="reference" />
         <attr name="fabMenuCloseIconSrc" format="reference" />
         <attr name="fabMenuCloseIconAngle" format="float" />
+        <attr name="fabMenuSpacing" format="dimension" />
     </declare-styleable>
 
     <!-- FlexibleToolbarLayout -->
