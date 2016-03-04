@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:parentActivityName=".activity.SampleActivity"
             android:name=".activity.PickerDialogActivity"
             android:label="@string/title_activity_picker_dialog"
             android:theme="@style/AppTheme.Base" />
