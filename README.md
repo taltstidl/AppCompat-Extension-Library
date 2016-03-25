@@ -200,7 +200,7 @@ The `TypefaceCompat` is a utility for supporting the newest [Typography](https:/
 ##### Main features:
 * Easily setup with one line of code in your `Activity`.
 * Use one of the `TextAppearance.AppCompat.xxx` styles or use your own styles!
-* Automatically sets textSize, textColor and lineSpacing for the `TextAppearance.AppCompat.xxx` styles and loads the new Roboto typeface on pre-Lollipop devices using a cache!
+* Automatically sets textSize, textColor and fontFamiliy for the `TextAppearance.AppCompat.xxx` styles and loads the new Roboto typeface on pre-Lollipop devices using a cache!
 
 ##### Basic setup:
 In your `Activity` (for ease of use in your `BaseActivity`, if you have one) add the following line *before* `super.onCreate()`:
