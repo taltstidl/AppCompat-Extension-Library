@@ -217,6 +217,8 @@ public class SampleActivity extends AppCompatActivity {
 ```
 Then use one of the `TextAppearance.AppCompat.xxx` styles via `android:textAppearance="@style/TextAppearance.AppCompat.xxx"` on your `TextView`s.
 
+To achieve the correct line height use one of the predefined `line_spacing_extra_xxx` values via `android:lineSpacingExtra="@dimen/line_spacing_extra_xxx"` on your `TextView`.
+
 *For the full documentation and customization options head over to the [TypefaceCompat wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/TypefaceCompat).*
 
 ## License
