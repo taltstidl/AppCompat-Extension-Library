@@ -31,30 +31,28 @@ public class TypefaceUtils {
      * Returns true if all letters of the English alphabet of the typefaces are the same.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
-    public static boolean sameAs(Typeface typeface1, Typeface typeface2){
-        // Check if one of the typefaces is null
-        if(typeface1 == null){
+    public static boolean sameAs(Typeface typeface1, Typeface typeface2) {
+        // Handle null as param.
+        if (typeface1 == null) {
             return typeface2 == null;
-        } else if(typeface2 == null){
+        } else if (typeface2 == null) {
             return false; //result of typeface1 == null
         }
 
-        // Check if the letters of the English alphabet of the typefaces are the same
-        Paint paint1 = new Paint();
-        paint1.setTypeface(typeface1);
-        Rect bounds1 = new Rect();
-        paint1.getTextBounds(TEXT, 0, TEXT.length(), bounds1);
-        Bitmap bitmap1 = Bitmap.createBitmap(bounds1.width(), bounds1.height(), Bitmap.Config.ALPHA_8);
-        Canvas canvas1 = new Canvas(bitmap1);
-        canvas1.drawText(TEXT, 0, 0, paint1);
+        // Check if the letters of the English alphabet of the typefaces are the same.
+        Paint paint = new Paint();
+        paint.setTypeface(typeface1);
+        Rect bounds = new Rect();
+        paint.getTextBounds(TEXT, 0, TEXT.length(), bounds);
+        Bitmap bitmap1 = Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ALPHA_8);
+        Canvas canvas = new Canvas(bitmap1);
+        canvas.drawText(TEXT, 0, 0, paint);
 
-        Paint paint2 = new Paint();
-        paint2.setTypeface(typeface2);
-        Rect bounds2 = new Rect();
-        paint2.getTextBounds(TEXT, 0, TEXT.length(), bounds2);
-        Bitmap bitmap2 = Bitmap.createBitmap(bounds2.width(), bounds2.height(), Bitmap.Config.ALPHA_8);
-        Canvas canvas2 = new Canvas(bitmap2);
-        canvas2.drawText(TEXT, 0, 0, paint2);
+        paint.setTypeface(typeface2);
+        paint.getTextBounds(TEXT, 0, TEXT.length(), bounds);
+        Bitmap bitmap2 = Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ALPHA_8);
+        canvas.setBitmap(bitmap2);
+        canvas.drawText(TEXT, 0, 0, paint);
 
         return bitmap1.sameAs(bitmap2);
     }
