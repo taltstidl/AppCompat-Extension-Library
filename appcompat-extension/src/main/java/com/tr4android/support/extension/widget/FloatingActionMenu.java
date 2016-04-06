@@ -22,21 +22,22 @@ package com.tr4android.support.extension.widget;
  */
 
 import android.annotation.SuppressLint;
-import android.os.Build;
-import android.os.Parcel;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -433,6 +434,7 @@ public class FloatingActionMenu extends ViewGroup {
 
             TextView label = new TextView(context);
             label.setTextAppearance(getContext(), mLabelsStyle);
+            label.setVisibility(INVISIBLE);
             label.setText(title);
             addView(label);
 
@@ -521,6 +523,21 @@ public class FloatingActionMenu extends ViewGroup {
             if (mDimmingView != null) {
                 mDimmingView.setClickable(false);
             }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < mButtonsCount; i++) {
+                        View child = getChildAt(i);
+                        if (child == mMainButton)
+                            continue;
+
+                        View label = (View) child.getTag(R.id.fab_label);
+                        if (label != null)
+                            label.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }, animate ? FloatingActionMenuAnimator.ANIMATION_DURATION : 0);
         }
     }
 
@@ -544,6 +561,16 @@ public class FloatingActionMenu extends ViewGroup {
      */
     public void expand(boolean animate) {
         if (!mExpanded) {
+            for (int i = 0; i < mButtonsCount; i++) {
+                View child = getChildAt(i);
+                if (child == mMainButton)
+                    continue;
+
+                View label = (View) child.getTag(R.id.fab_label);
+                if (label != null)
+                    label.setVisibility(View.VISIBLE);
+            }
+
             mExpanded = true;
             mAnimator.startExpandAnimation(animate);
 
