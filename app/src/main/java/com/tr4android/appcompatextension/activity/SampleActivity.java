@@ -3,6 +3,7 @@ package com.tr4android.appcompatextension.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.tr4android.appcompatextension.FileAdapter;
 import com.tr4android.appcompatextension.R;
@@ -83,6 +85,16 @@ public class SampleActivity extends BaseActivity {
         // Setup the dimming of FloatingActionMenu
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
         floatingActionMenu.setupWithDimmingView(findViewById(R.id.dimming_view), Color.parseColor("#42000000"));
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FloatingActionButton button = (FloatingActionButton) view;
+                Toast.makeText(SampleActivity.this, "Creating " + button.getContentDescription(), Toast.LENGTH_LONG).show();
+            }
+        };
+        findViewById(R.id.fab_document).setOnClickListener(listener);
+        findViewById(R.id.fab_spreadsheet).setOnClickListener(listener);
+        findViewById(R.id.fab_presentation).setOnClickListener(listener);
 
         // Setup the icon of the FlexibleToolbarLayout
         FlexibleToolbarLayout flexibleToolbarLayout = (FlexibleToolbarLayout) findViewById(R.id.toolbar_layout);

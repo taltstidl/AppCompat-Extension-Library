@@ -119,6 +119,7 @@
                 app:srcCompat="@drawable/ic_add_black_24dp" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_document"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/fam_document"
@@ -128,6 +129,7 @@
                 app:srcCompat="@drawable/ic_insert_drive_file_black_24dp" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_spreadsheet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/fam_spreadsheet"
@@ -137,6 +139,7 @@
                 app:srcCompat="@drawable/ic_grid_on_black_24dp" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_presentation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/fam_presentation"
