@@ -39,20 +39,16 @@ public class PickerDialogActivity extends BaseActivity {
         float dp = getResources().getDisplayMetrics().density;
 
         // Setup DatePickerDialog CardView header
-        final Drawable tintedDatePickerDrawable = DrawableCompat.wrap(
-                ContextCompat.getDrawable(this, R.drawable.ic_event_black_24dp));
-        DrawableCompat.setTint(tintedDatePickerDrawable, Color.WHITE);
         PlaceholderDrawable placeholderDatePicker = new PlaceholderDrawable.Builder(this)
-                .setPlaceholderImage(tintedDatePickerDrawable)
+                .setPlaceholderImage(R.drawable.ic_event_black_24dp)
+                .setPlaceholderImageColor(Color.WHITE)
                 .setPlaceholderImageSize(Math.round(24 * dp)).build();
         ((ImageView) findViewById(R.id.header_image_date)).setImageDrawable(placeholderDatePicker);
 
         // Setup TimePickerDialog CardView header
-        final Drawable tintedTimePickerDrawable = DrawableCompat.wrap(
-                ContextCompat.getDrawable(this, R.drawable.ic_schedule_black_24dp));
-        DrawableCompat.setTint(tintedTimePickerDrawable, Color.WHITE);
         PlaceholderDrawable placeholderTimePicker = new PlaceholderDrawable.Builder(this)
-                .setPlaceholderImage(tintedTimePickerDrawable)
+                .setPlaceholderImage(R.drawable.ic_schedule_black_24dp)
+                .setPlaceholderImageColor(Color.WHITE)
                 .setPlaceholderImageSize(Math.round(24 * dp)).build();
         ((ImageView) findViewById(R.id.header_image_time)).setImageDrawable(placeholderTimePicker);
 

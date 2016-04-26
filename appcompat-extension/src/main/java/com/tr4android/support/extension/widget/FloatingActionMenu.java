@@ -37,6 +37,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -130,7 +131,8 @@ public class FloatingActionMenu extends ViewGroup {
         mExpandDirection = attr.getInt(R.styleable.FloatingActionMenu_fabMenuExpandDirection, EXPAND_UP);
         mLabelsPosition = attr.getInt(R.styleable.FloatingActionMenu_fabMenuLabelPosition, LABELS_ON_LEFT_SIDE);
         mLabelsStyle = attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuLabelStyle, 0);
-        mCloseDrawable = attr.getDrawable(R.styleable.FloatingActionMenu_fabMenuCloseIconSrc);
+        mCloseDrawable = AppCompatDrawableManager.get().getDrawable(getContext(),
+                attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuCloseIconSrc, 0));
         mCloseAngle = attr.getFloat(R.styleable.FloatingActionMenu_fabMenuCloseIconAngle, 0);
         mButtonSpacing = attr.getDimensionPixelSize(R.styleable.FloatingActionMenu_fabMenuSpacing, mButtonSpacing);
         attr.recycle();

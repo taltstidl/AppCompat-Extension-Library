@@ -30,6 +30,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
@@ -174,7 +175,7 @@ public class CircleImageView extends ImageView {
      * @param resId The resource id of the placeholder drawable
      */
     public void setPlaceholder(@DrawableRes int resId) {
-        setPlaceholder(ContextCompat.getDrawable(getContext(), resId), mPlaceholderCircleDefaultColor);
+        setPlaceholder(AppCompatDrawableManager.get().getDrawable(getContext(), resId), mPlaceholderCircleDefaultColor);
     }
 
     /**
@@ -193,7 +194,7 @@ public class CircleImageView extends ImageView {
      * @param circleColor Color to use for the circle
      */
     public void setPlaceholder(@DrawableRes int resId, @ColorInt int circleColor) {
-        setPlaceholder(ContextCompat.getDrawable(getContext(), resId), circleColor);
+        setPlaceholder(AppCompatDrawableManager.get().getDrawable(getContext(), resId), circleColor);
     }
 
     /**

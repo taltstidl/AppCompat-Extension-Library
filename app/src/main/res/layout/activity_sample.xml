@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             app:fabMenuCloseIconAngle="135"
-            app:fabMenuCloseIconSrc="@drawable/ic_fab_edit_black_24dp"
+            app:fabMenuCloseIconSrc="@drawable/ic_edit_black_24dp"
             app:fabMenuLabelStyle="@style/label_style_dark">
 
             <android.support.design.widget.FloatingActionButton

@@ -28,6 +28,7 @@ import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.TypedValue;
 import android.widget.ImageButton;
 
@@ -136,9 +137,10 @@ public class PickerThemeUtils {
 
     public static void setNavButtonDrawable(Context context, ImageButton left, ImageButton right,
                                             int monthTextAppearanceResId) {
-        // Retrieve the previous and next drawables dependent on layout direction
-        Drawable prevDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_left_black_24dp);
-        Drawable nextDrawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_black_24dp);
+        // Retrieve the previous and next drawables
+        AppCompatDrawableManager dm = AppCompatDrawableManager.get();
+        Drawable prevDrawable = dm.getDrawable(context, R.drawable.ic_chevron_left_black_24dp);
+        Drawable nextDrawable = dm.getDrawable(context, R.drawable.ic_chevron_right_black_24dp);
 
         // Proxy the month text color into the previous and next drawables.
         final TypedArray ta = context.obtainStyledAttributes(null,

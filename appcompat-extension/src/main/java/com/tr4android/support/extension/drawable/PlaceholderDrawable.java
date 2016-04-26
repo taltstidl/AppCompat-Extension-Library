@@ -12,6 +12,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.AppCompatDrawableManager;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.utils.ThemeUtils;
@@ -179,7 +180,7 @@ public class PlaceholderDrawable extends Drawable {
         }
 
         public Builder setPlaceholderImage(@DrawableRes int resId) {
-            return setPlaceholderImage(ContextCompat.getDrawable(mContext, resId));
+            return setPlaceholderImage(AppCompatDrawableManager.get().getDrawable(mContext, resId));
         }
 
         public Builder setPlaceholderImage(Drawable drawable) {
