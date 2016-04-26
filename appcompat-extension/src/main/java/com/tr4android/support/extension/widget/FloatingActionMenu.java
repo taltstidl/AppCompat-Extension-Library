@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 Jerzy Chalupski
- * Copyright (C) 2015 Thomas Robert Altstidl
+ * Copyright (C) 2016 Thomas Robert Altstidl
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,9 @@ package com.tr4android.support.extension.widget;
  */
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Parcel;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -47,9 +49,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
-import com.tr4android.support.extension.internal.FloatingActionMenuAnimator;
-import com.tr4android.support.extension.internal.FloatingActionMenuAnimatorEclair;
-import com.tr4android.support.extension.internal.FloatingActionMenuAnimatorHoneycomb;
+import com.tr4android.support.extension.drawable.ColorTransitionDrawable;
+import com.tr4android.support.extension.drawable.RotationTransitionDrawable;
 import com.tr4android.support.extension.internal.PairedTouchListener;
 
 @SuppressLint("NewApi")
@@ -63,8 +64,12 @@ public class FloatingActionMenu extends ViewGroup {
     public static final int LABELS_ON_LEFT_SIDE = 0;
     public static final int LABELS_ON_RIGHT_SIDE = 1;
 
-    // Platform dependent animator for menu animations
-    private FloatingActionMenuAnimator mAnimator;
+    // Animation stuff
+    private RotationTransitionDrawable mToggleDrawable;
+    private ColorTransitionDrawable mDimDrawable;
+    private Handler mAnimationHandler = new Handler();
+    private int mAnimationDuration = 300;
+    private int mAnimationDelay = 50;
 
     // Preallocated Rect for retrieving child background padding
     private Rect childBackgroundPadding = new Rect();
@@ -90,9 +95,8 @@ public class FloatingActionMenu extends ViewGroup {
     private Drawable mCloseDrawable;
     private float mCloseAngle;
 
-    // View and color used for dimming
+    // View for dimming
     private View mDimmingView;
-    private int mDimmingColor;
 
     private OnFloatingActionsMenuUpdateListener mListener;
 
@@ -117,12 +121,6 @@ public class FloatingActionMenu extends ViewGroup {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            mAnimator = new FloatingActionMenuAnimatorEclair();
-        } else {
-            mAnimator = new FloatingActionMenuAnimatorHoneycomb();
-        }
-
         mButtonSpacing = getResources().getDimensionPixelSize(R.dimen.fam_spacing);
         mLabelsMargin = getResources().getDimensionPixelSize(R.dimen.fam_label_spacing);
         mLabelsVerticalOffset = 0;
@@ -160,7 +158,10 @@ public class FloatingActionMenu extends ViewGroup {
                 toggle();
             }
         });
-        mAnimator.buildAnimationForDrawable(mMainButton, mCloseAngle, mCloseDrawable);
+        // setup button drawable
+        mToggleDrawable = new RotationTransitionDrawable(mMainButton.getDrawable(), mCloseDrawable);
+        mToggleDrawable.setMaxRotation(mCloseAngle);
+        mMainButton.setImageDrawable(mToggleDrawable);
     }
 
     private int getColor(@ColorRes int id) {
@@ -267,14 +268,16 @@ public class FloatingActionMenu extends ViewGroup {
                     child.layout(childX - childBackgroundPadding.left, childY - childBackgroundPadding.top, childX - childBackgroundPadding.left + child.getMeasuredWidth(), childY - childBackgroundPadding.top + child.getMeasuredHeight());
                     childY -= childBackgroundPadding.top;
 
-                    float collapsedTranslation = addButtonY - childY;
-                    float expandedTranslation = 0f;
-
-                    mAnimator.prepareView(child, expandedTranslation, collapsedTranslation, mExpanded, false);
+                    // TODO: mAnimator.prepareView(child, expandedTranslation, collapsedTranslation, mExpanded, false);
+                    if (mExpanded) {
+                        ((FloatingActionButton) child).show();
+                    } else {
+                        ((FloatingActionButton) child).hide();
+                    }
 
                     LayoutParams params = (LayoutParams) child.getLayoutParams();
                     if (!params.isAnimated()) {
-                        mAnimator.buildAnimationForView(child, mExpandDirection, expandedTranslation, collapsedTranslation);
+                        // TODO: mAnimator.buildAnimationForView(child, visualYIndex, mExpandDirection, expandedTranslation, collapsedTranslation);
                         params.setAnimated(true);
                     }
 
@@ -299,11 +302,16 @@ public class FloatingActionMenu extends ViewGroup {
                         label.setOnTouchListener(new PairedTouchListener(child));
                         child.setOnTouchListener(new PairedTouchListener(label));
 
-                        mAnimator.prepareView(label, expandedTranslation, collapsedTranslation, mExpanded, false);
+                        // TODO: mAnimator.prepareView(label, expandedTranslation, collapsedTranslation, mExpanded, false);
+                        if (mExpanded) {
+                            label.setVisibility(VISIBLE);
+                        } else {
+                            label.setVisibility(GONE);
+                        }
 
                         LayoutParams labelParams = (LayoutParams) label.getLayoutParams();
                         if (!labelParams.isAnimated()) {
-                            mAnimator.buildAnimationForView(label, mExpandDirection, expandedTranslation, collapsedTranslation);
+                            // TODO: mAnimator.buildAnimationForView(label, visualYIndex, mExpandDirection, expandedTranslation, collapsedTranslation);
                             labelParams.setAnimated(true);
                         }
                     }
@@ -342,14 +350,16 @@ public class FloatingActionMenu extends ViewGroup {
                     int childY = addButtonTop + (mMainButton.getMeasuredHeight() - child.getMeasuredHeight()) / 2;
                     child.layout(childX, childY, childX + child.getMeasuredWidth(), childY + child.getMeasuredHeight());
 
-                    float collapsedTranslation = addButtonX - childX;
-                    float expandedTranslation = 0f;
-
-                    mAnimator.prepareView(child, expandedTranslation, collapsedTranslation, mExpanded, true);
+                    // TODO: mAnimator.prepareView(child, expandedTranslation, collapsedTranslation, mExpanded, true);
+                    if (mExpanded) {
+                        ((FloatingActionButton) child).show();
+                    } else {
+                        ((FloatingActionButton) child).hide();
+                    }
 
                     LayoutParams params = (LayoutParams) child.getLayoutParams();
                     if (!params.isAnimated()) {
-                        mAnimator.buildAnimationForView(child, mExpandDirection, expandedTranslation, collapsedTranslation);
+                        // TODO: mAnimator.buildAnimationForView(child, visualXIndex, mExpandDirection, expandedTranslation, collapsedTranslation);
                         params.setAnimated(true);
                     }
 
@@ -357,7 +367,6 @@ public class FloatingActionMenu extends ViewGroup {
                             childX + childBackgroundPadding.left - mButtonSpacing :
                             childX + child.getMeasuredWidth() - childBackgroundPadding.left - childBackgroundPadding.right + mButtonSpacing;
                 }
-
                 break;
         }
     }
@@ -467,6 +476,60 @@ public class FloatingActionMenu extends ViewGroup {
         return false;
     }
 
+    private void startExpandAnimation(boolean animate) {
+        int delay = animate ? mAnimationDelay : 0;
+        mToggleDrawable.startTransition(animate ? mAnimationDuration : 0);
+        if (mDimDrawable != null)
+            mDimDrawable.startTransition(animate ? mAnimationDuration : 0);
+
+        int childIndex = 0;
+        for (int i = mButtonsCount - 1; i >= 0; i--) {
+            final View child = getChildAt(i);
+            // Main button doesn't have any animation
+            if (child == mMainButton) continue;
+
+            mAnimationHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((FloatingActionButton) child).show();
+
+                    View label = (View) child.getTag(R.id.fab_label);
+                    if (label != null) {
+                        // TODO: animate label
+                    }
+                }
+            }, delay * childIndex);
+            childIndex++;
+        }
+    }
+
+    private void startCollapseAnimation(boolean animate) {
+        int delay = animate ? mAnimationDelay : 0;
+        mToggleDrawable.reverseTransition(animate ? mAnimationDuration : 0);
+        if (mDimDrawable != null)
+            mDimDrawable.reverseTransition(animate ? mAnimationDuration : 0);
+
+        int childIndex = 0;
+        for (int i = 0; i < mButtonsCount; i++) {
+            final View child = getChildAt(i);
+            // Main button doesn't have any animation
+            if (child == mMainButton) continue;
+
+            mAnimationHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ((FloatingActionButton) child).hide();
+
+                    View label = (View) child.getTag(R.id.fab_label);
+                    if (label != null) {
+                        // TODO: animate label
+                    }
+                }
+            }, delay * childIndex);
+            childIndex++;
+        }
+    }
+
     /* Start Public API methods */
 
     /**
@@ -476,8 +539,8 @@ public class FloatingActionMenu extends ViewGroup {
      */
     public void setupWithDimmingView(View dimmingView, @ColorInt int dimmingColor) {
         mDimmingView = dimmingView;
-        mDimmingColor = dimmingColor;
-        mAnimator.buildAnimationForDimming(mDimmingView, mDimmingColor);
+        mDimDrawable = new ColorTransitionDrawable(Color.TRANSPARENT, dimmingColor);
+        mDimmingView.setBackground(mDimDrawable);
         // apply the appbar elevation so the dim gets rendered over it
         ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.design_fab_elevation));
         ViewCompat.setElevation(mDimmingView, getContext().getResources().getDimensionPixelSize(R.dimen.dim_elevation));
@@ -512,7 +575,7 @@ public class FloatingActionMenu extends ViewGroup {
     public void collapse(boolean animate) {
         if (mExpanded) {
             mExpanded = false;
-            mAnimator.startCollapseAnimation(animate);
+            startCollapseAnimation(animate);
 
             if (mListener != null) {
                 mListener.onMenuCollapsed();
@@ -547,7 +610,7 @@ public class FloatingActionMenu extends ViewGroup {
     public void expand(boolean animate) {
         if (!mExpanded) {
             mExpanded = true;
-            mAnimator.startExpandAnimation(animate);
+            startExpandAnimation(animate);
 
             if (mListener != null) {
                 mListener.onMenuExpanded();
@@ -622,8 +685,8 @@ public class FloatingActionMenu extends ViewGroup {
             SavedState savedState = (SavedState) state;
             mExpanded = savedState.mExpanded;
 
-            mAnimator.prepareDrawable(mMainButton, mCloseAngle, mExpanded);
-            mAnimator.prepareDimming(mDimmingView, mDimmingColor, mExpanded);
+            mToggleDrawable.setRotation(mExpanded ? mCloseAngle : 0f);
+            mDimDrawable.setColorRatio(mExpanded ? 1f : 0f);
 
             super.onRestoreInstanceState(savedState.getSuperState());
         } else {

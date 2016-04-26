@@ -73,7 +73,7 @@ public class ValueAnimatorCompat {
         void onAnimationRepeat(ValueAnimatorCompat animator);
     }
 
-    static class AnimatorListenerAdapter implements AnimatorListener {
+    public static class AnimatorListenerAdapter implements AnimatorListener {
         @Override
         public void onAnimationStart(ValueAnimatorCompat animator) {
         }
