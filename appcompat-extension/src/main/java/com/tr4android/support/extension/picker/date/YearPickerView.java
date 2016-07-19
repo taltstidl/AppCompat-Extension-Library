@@ -190,7 +190,8 @@ class YearPickerView extends RecyclerView implements View.OnClickListener {
             final int year = getYearForPosition(position);
             final boolean selected = mSelectedYear == year;
 
-            if (holder.mYearView.getTag(ITEM_IS_SELECTED) != selected) {
+            Object tag = holder.mYearView.getTag(ITEM_IS_SELECTED);
+            if (tag == null || (boolean) tag != selected) {
                 final int textAppearanceResId;
                 if (selected && ITEM_TEXT_SELECTED_APPEARANCE != 0) {
                     textAppearanceResId = ITEM_TEXT_SELECTED_APPEARANCE;
