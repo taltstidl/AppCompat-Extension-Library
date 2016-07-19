@@ -195,12 +195,12 @@ final IndeterminateProgressDrawable drawable = new IndeterminateProgressDrawable
 *For the full documentation and customization options head over to the [Delightful Detail Drawables wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/Delightful-Detail-Drawables).*
 
 ## TypefaceCompat
-The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color, line spacing *and typeface* for the styles specified in the guidelines.
+The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color *and typeface* for the styles specified in the guidelines.
 
 ##### Main features:
 * Easily setup with one line of code in your `Activity`.
 * Use one of the `TextAppearance.AppCompat.xxx` styles or use your own styles!
-* Automatically sets textSize, textColor and lineSpacing for the `TextAppearance.AppCompat.xxx` styles and loads the new Roboto typeface on pre-Lollipop devices using a cache!
+* Automatically sets textSize, textColor and fontFamiliy for the `TextAppearance.AppCompat.xxx` styles and loads the new Roboto typeface on pre-Lollipop devices using a cache!
 
 ##### Basic setup:
 In your `Activity` (for ease of use in your `BaseActivity`, if you have one) add the following line *before* `super.onCreate()`:
@@ -216,6 +216,8 @@ public class SampleActivity extends AppCompatActivity {
 }
 ```
 Then use one of the `TextAppearance.AppCompat.xxx` styles via `android:textAppearance="@style/TextAppearance.AppCompat.xxx"` on your `TextView`s.
+
+To achieve the correct line height use one of the predefined `line_spacing_extra_xxx` values via `android:lineSpacingExtra="@dimen/line_spacing_extra_xxx"` on your `TextView`.
 
 *For the full documentation and customization options head over to the [TypefaceCompat wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/TypefaceCompat).*
 
