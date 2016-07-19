@@ -52,7 +52,7 @@ import android.view.accessibility.AccessibilityEvent;
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.picker.MathUtils;
 import com.tr4android.support.extension.picker.PickerThemeUtils;
-import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;

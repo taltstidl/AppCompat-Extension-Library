@@ -17,7 +17,9 @@
 package com.tr4android.support.extension.animation;
 
 import android.os.Build;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -28,6 +30,8 @@ public class AnimationUtils {
 
     public static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     public static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
+    public static final Interpolator FAST_OUT_LINEAR_IN_INTERPOLATOR = new FastOutLinearInInterpolator();
+    public static final Interpolator LINEAR_OUT_SLOW_IN_INTERPOLATOR = new LinearOutSlowInInterpolator();
     public static final Interpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
     public static final Interpolator ACCELERATE_DECELERATE_INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
@@ -42,7 +46,7 @@ public class AnimationUtils {
         return startValue + Math.round(fraction * (endValue - startValue));
     }
 
-    static class AnimationListenerAdapter implements Animation.AnimationListener {
+    public static class AnimationListenerAdapter implements Animation.AnimationListener {
         @Override
         public void onAnimationStart(Animation animation) {
         }

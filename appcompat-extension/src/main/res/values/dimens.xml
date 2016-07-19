@@ -43,6 +43,9 @@
     <dimen name="fam_label_spacing">16dp</dimen>
     <dimen name="dim_elevation">5dp</dimen>
 
+    <!-- LabelView -->
+    <dimen name="label_inset_shadow">1dp</dimen>
+
     <!-- FlexibleToolbarLayout -->
     <dimen name="toolbar_layout_height">128dp</dimen>
 

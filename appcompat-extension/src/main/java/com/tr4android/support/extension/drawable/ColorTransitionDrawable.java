@@ -83,7 +83,7 @@ public class ColorTransitionDrawable extends Drawable {
     }
 
     public void setColorRatio(float ratio) {
-        mColorRatio = ratio;
+        mColorRatio = Math.max(0f, Math.min(ratio, 1f));
         mColor = ColorUtils.blendARGB(mColorStart, mColorEnd, mColorRatio);
         invalidateSelf();
     }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="label_shadow_start_color">#37000000</color>
+    <color name="label_shadow_end_color">#03000000</color>
+    <color name="label_text_color_light">#de000000</color>
+    <color name="label_background_color_light">#ffffff</color>
+    <color name="label_ripple_color_light">#1f000000</color>
+    <color name="label_text_color_dark">#ffffffff</color>
+    <color name="label_background_color_dark">#424242</color>
+    <color name="label_ripple_color_dark">#33ffffff</color>
+</resources>

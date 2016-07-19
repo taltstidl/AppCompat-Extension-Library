@@ -41,17 +41,16 @@ import android.support.v4.view.ViewCompat;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatDrawableManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.drawable.ColorTransitionDrawable;
 import com.tr4android.support.extension.drawable.RotationTransitionDrawable;
 import com.tr4android.support.extension.internal.PairedTouchListener;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 
 @SuppressLint("NewApi")
 @CoordinatorLayout.DefaultBehavior(FloatingActionMenu.Behavior.class)
@@ -192,7 +191,7 @@ public class FloatingActionMenu extends ViewGroup {
             if (!expandsHorizontally()) {
                 mMaxButtonWidth = Math.max(mMaxButtonWidth, child.getMeasuredWidth() - childBackgroundPadding.left - childBackgroundPadding.right);
                 height += child.getMeasuredHeight() - childBackgroundPadding.top - childBackgroundPadding.bottom;
-                TextView label = (TextView) child.getTag(R.id.fab_label);
+                LabelView label = (LabelView) child.getTag(R.id.fab_label);
                 if (label != null) {
                     maxLabelWidth = Math.max(maxLabelWidth, label.getMeasuredWidth());
                 }
@@ -203,7 +202,6 @@ public class FloatingActionMenu extends ViewGroup {
         }
 
         LayoutParams mainButtonParams = (LayoutParams) mMainButton.getLayoutParams();
-        Log.i("FAB Menu", "Main Button Params: " + mainButtonParams.topMargin);
         if (!expandsHorizontally()) {
             width = mMaxButtonWidth + (maxLabelWidth > 0 ? maxLabelWidth + mLabelsMargin : 0);
             width += mainButtonParams.leftMargin + mainButtonParams.rightMargin;
@@ -281,7 +279,7 @@ public class FloatingActionMenu extends ViewGroup {
                         params.setAnimated(true);
                     }
 
-                    View label = (View) child.getTag(R.id.fab_label);
+                    LabelView label = (LabelView) child.getTag(R.id.fab_label);
                     if (label != null) {
                         int labelXAwayFromButton = mLabelsPosition == LABELS_ON_LEFT_SIDE
                                 ? labelsXNearButton - label.getMeasuredWidth()
@@ -442,7 +440,8 @@ public class FloatingActionMenu extends ViewGroup {
             if (button == mMainButton || title == null ||
                     button.getTag(R.id.fab_label) != null) continue;
 
-            TextView label = new TextView(context);
+            LabelView label = new LabelView(context);
+            label.setAnimationOffset(mMaxButtonWidth / 2f + mLabelsMargin);
             label.setTextAppearance(getContext(), mLabelsStyle);
             label.setText(title);
             addView(label);
@@ -493,9 +492,9 @@ public class FloatingActionMenu extends ViewGroup {
                 public void run() {
                     ((FloatingActionButton) child).show();
 
-                    View label = (View) child.getTag(R.id.fab_label);
+                    LabelView label = (LabelView) child.getTag(R.id.fab_label);
                     if (label != null) {
-                        // TODO: animate label
+                        label.show();
                     }
                 }
             }, delay * childIndex);
@@ -520,9 +519,9 @@ public class FloatingActionMenu extends ViewGroup {
                 public void run() {
                     ((FloatingActionButton) child).hide();
 
-                    View label = (View) child.getTag(R.id.fab_label);
+                    LabelView label = (LabelView) child.getTag(R.id.fab_label);
                     if (label != null) {
-                        // TODO: animate label
+                        label.hide();
                     }
                 }
             }, delay * childIndex);
@@ -540,7 +539,7 @@ public class FloatingActionMenu extends ViewGroup {
     public void setupWithDimmingView(View dimmingView, @ColorInt int dimmingColor) {
         mDimmingView = dimmingView;
         mDimDrawable = new ColorTransitionDrawable(Color.TRANSPARENT, dimmingColor);
-        mDimmingView.setBackground(mDimDrawable);
+        ViewCompatUtils.setBackground(mDimmingView, mDimDrawable);
         // apply the appbar elevation so the dim gets rendered over it
         ViewCompat.setElevation(this, getContext().getResources().getDimensionPixelSize(R.dimen.design_fab_elevation));
         ViewCompat.setElevation(mDimmingView, getContext().getResources().getDimensionPixelSize(R.dimen.dim_elevation));

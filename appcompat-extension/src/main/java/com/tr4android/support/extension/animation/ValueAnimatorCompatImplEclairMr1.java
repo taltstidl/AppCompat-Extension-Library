@@ -188,6 +188,12 @@ class ValueAnimatorCompatImplEclairMr1 extends ValueAnimatorCompat.Impl {
                 } else {
                     // Animation ends
                     mIsRunning = false;
+                    mAnimatedFraction = 1f;
+
+                    // Make sure onAnimationUpdate is called at least once with the final value
+                    if (mUpdateListener != null) {
+                        mUpdateListener.onAnimationUpdate();
+                    }
 
                     if (mListener != null) {
                         mListener.onAnimationEnd();

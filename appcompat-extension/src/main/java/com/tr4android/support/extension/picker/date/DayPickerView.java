@@ -30,7 +30,7 @@ import android.widget.ImageButton;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.picker.MathUtils;
-import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 import com.tr4android.support.extension.picker.PickerThemeUtils;
 import com.tr4android.support.extension.widget.ViewPager;
 import com.tr4android.support.extension.widget.ViewPager.OnPageChangeListener;

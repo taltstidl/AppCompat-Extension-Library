@@ -28,7 +28,6 @@ import android.support.v4.view.AccessibilityDelegateCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.text.SpannableStringBuilder;
-import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.text.style.TtsSpan;
 import android.util.AttributeSet;
@@ -38,9 +37,7 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.AccessibilityDelegate;
 import android.view.accessibility.AccessibilityEvent;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
 import android.widget.CheckedTextView;
 import android.widget.RelativeLayout;
@@ -48,7 +45,7 @@ import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.picker.PickerThemeUtils;
-import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 import com.tr4android.support.extension.picker.DateFormatUtils;
 import com.tr4android.support.extension.utils.ThemeUtils;
 

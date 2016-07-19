@@ -28,13 +28,23 @@
     </style>
 
     <style name="label_style_dark">
-        <item name="android:background">@drawable/fab_label_background_dark</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/label_text_color_dark</item>
+        <item name="labelBackgroundColor">@color/label_background_color_dark</item>
+        <item name="labelRippleColor">@color/label_ripple_color_dark</item>
+        <item name="labelCornerRadius">2dp</item>
+        <item name="labelElevation">6dp</item>
+        <item name="labelPaddingHorizontal">16dp</item>
+        <item name="labelPaddingVertical">4dp</item>
     </style>
 
     <style name="label_style_light">
-        <item name="android:background">@drawable/fab_label_background_light</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/label_text_color_light</item>
+        <item name="labelBackgroundColor">@color/label_background_color_light</item>
+        <item name="labelRippleColor">@color/label_ripple_color_light</item>
+        <item name="labelCornerRadius">2dp</item>
+        <item name="labelElevation">6dp</item>
+        <item name="labelPaddingHorizontal">16dp</item>
+        <item name="labelPaddingVertical">4dp</item>
     </style>
 
     <style name="TextAppearance.Material.TimePicker.TimeLabel" parent="Base.TextAppearance.AppCompat">

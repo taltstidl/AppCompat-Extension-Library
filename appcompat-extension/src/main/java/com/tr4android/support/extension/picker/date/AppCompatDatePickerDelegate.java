@@ -36,7 +36,7 @@ import android.widget.ViewAnimator;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.picker.DateFormatUtils;
-import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 import com.tr4android.support.extension.picker.PickerThemeUtils;
 import com.tr4android.support.extension.picker.date.DayPickerView.OnDaySelectedListener;
 import com.tr4android.support.extension.picker.date.YearPickerView.OnYearSelectedListener;

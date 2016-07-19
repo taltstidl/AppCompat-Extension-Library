@@ -49,6 +49,15 @@
         <attr name="fabMenuSpacing" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="LabelView">
+        <attr name="labelBackgroundColor" format="color" />
+        <attr name="labelRippleColor" format="color" />
+        <attr name="labelCornerRadius" format="dimension" />
+        <attr name="labelElevation" format="dimension" />
+        <attr name="labelPaddingHorizontal" format="dimension" />
+        <attr name="labelPaddingVertical" format="dimension" />
+    </declare-styleable>
+
     <!-- FlexibleToolbarLayout -->
     <declare-styleable name="FlexibleToolbarLayout">
         <attr name="expandedMargin" format="dimension" />

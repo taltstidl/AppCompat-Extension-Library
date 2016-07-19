@@ -59,7 +59,7 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 import com.tr4android.support.extension.picker.MathUtils;
-import com.tr4android.support.extension.picker.ViewCompatUtils;
+import com.tr4android.support.extension.utils.ViewCompatUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
