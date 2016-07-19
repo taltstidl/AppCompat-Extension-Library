@@ -43,11 +43,15 @@ public class TypefaceCompat {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-medium", "Roboto-Medium");
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-black", "Roboto-Black");
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-condensed-light", "RobotoCondensed-Light");
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
-            if (roboto != null) {
-                isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
+    public static void initialize(boolean typefaceDetectionEnabled) {
+        if (typefaceDetectionEnabled) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
+                if (roboto != null) {
+                    isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
+                }
             }
         }
     }

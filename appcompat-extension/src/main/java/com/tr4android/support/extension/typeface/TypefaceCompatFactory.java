@@ -35,7 +35,8 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
 
     private LayoutInflaterFactory mBaseFactory;
 
-    private TypefaceCompatFactory(Context context) {
+    private TypefaceCompatFactory(Context context, boolean typefaceDetectionEnabled) {
+        TypefaceCompat.initialize(typefaceDetectionEnabled);
         try {
             this.mBaseFactory = (LayoutInflaterFactory) ((AppCompatActivity) context).getDelegate();
         } catch (ClassCastException e) {
@@ -45,7 +46,15 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
 
     public static void installViewFactory(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            LayoutInflaterCompat.setFactory(LayoutInflater.from(context), new TypefaceCompatFactory(context));
+            LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
+                    new TypefaceCompatFactory(context, false));
+        }
+    }
+
+    public static void installViewFactory(Context context, boolean typefaceDetectionEnabled) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
+                    new TypefaceCompatFactory(context, typefaceDetectionEnabled));
         }
     }
 
