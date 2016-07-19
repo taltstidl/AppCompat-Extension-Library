@@ -19,6 +19,7 @@ package com.tr4android.support.extension.typeface;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.util.LruCache;
 
 import java.util.HashMap;
@@ -31,6 +32,9 @@ public class TypefaceCompat {
     private static final int TYPEFACE_CACHE_MAX_SIZE = 8;
     private static final LruCache<String, Typeface> TYPEFACE_CACHE = new LruCache<>(TYPEFACE_CACHE_MAX_SIZE);
 
+    private static final String SYSTEM_ROBOTO_REGULAR_FILE_PATH = Environment.getRootDirectory() + "/fonts/Roboto-Regular.ttf";
+    private static boolean isUsingDefaultFont = true; // boolean indicating whether user wants the device to use its default font or not
+
     static {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif", "Roboto-");
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-light", "Roboto-Light");
@@ -39,6 +43,13 @@ public class TypefaceCompat {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-medium", "Roboto-Medium");
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-black", "Roboto-Black");
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-condensed-light", "RobotoCondensed-Light");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
+            if (roboto != null) {
+                isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
+            }
+        }
     }
 
     public static Typeface create(Context ctx, String familyName, int style) {
@@ -82,6 +93,6 @@ public class TypefaceCompat {
     }
 
     public static boolean isSupported(String familyName) {
-        return FONT_FAMILY_FILE_PREFIX.containsKey(familyName) && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
+        return FONT_FAMILY_FILE_PREFIX.containsKey(familyName) && isUsingDefaultFont && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
     }
 }
