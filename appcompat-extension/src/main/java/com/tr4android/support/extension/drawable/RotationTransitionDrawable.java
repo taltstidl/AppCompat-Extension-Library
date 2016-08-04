@@ -20,7 +20,6 @@ package com.tr4android.support.extension.drawable;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
-import android.util.Log;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
@@ -72,7 +71,6 @@ public class RotationTransitionDrawable extends LayerDrawable {
             getDrawable(1).setAlpha(alpha);
             getDrawable(1).draw(canvas);
         } else {
-            Log.i("Rotation", String.valueOf(mRotation));
             canvas.rotate(mRotation, getBounds().centerX(), getBounds().centerY());
             super.draw(canvas);
         }
@@ -113,7 +111,6 @@ public class RotationTransitionDrawable extends LayerDrawable {
     }
 
     public void startTransition(int duration) {
-        Log.i("MaxRotation", String.valueOf(mMaxRotation));
         mAnimator.cancel();
         mAnimator.setFloatValues(mRotation, mMaxRotation);
         mAnimator.setDuration(duration);

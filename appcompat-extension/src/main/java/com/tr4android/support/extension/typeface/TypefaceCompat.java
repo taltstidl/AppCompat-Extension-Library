@@ -46,12 +46,10 @@ public class TypefaceCompat {
     }
 
     public static void initialize(boolean typefaceDetectionEnabled) {
-        if (typefaceDetectionEnabled) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
-                if (roboto != null) {
-                    isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
-                }
+        if (typefaceDetectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
+            if (roboto != null) {
+                isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
             }
         }
     }
