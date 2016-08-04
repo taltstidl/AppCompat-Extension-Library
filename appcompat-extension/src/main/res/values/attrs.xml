@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2015 Thomas Robert Altstidl
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 Thomas Robert Altstidl
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@
     <declare-styleable name="AccountHeaderView">
         <attr name="accountHeaderAddEnabled" format="boolean" />
         <attr name="accountHeaderManageEnabled" format="boolean" />
+        <attr name="accountHeaderCheckableAccountsEnabled" format="boolean" />
     </declare-styleable>
 
     <!-- CircleImageView -->

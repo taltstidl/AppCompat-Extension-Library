@@ -17,23 +17,20 @@
 package com.tr4android.support.extension.widget;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.AppCompatDrawableManager;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.drawable.PlaceholderDrawable;
@@ -42,7 +39,7 @@ import com.tr4android.support.extension.utils.ThemeUtils;
 /**
  * A supercharged ImageView that displays images as circles and creates placeholder images
  */
-public class CircleImageView extends ImageView {
+public class CircleImageView extends AppCompatImageView {
     private static final String LOG_TAG = "CircleImageView";
 
     // whether the image should be clipped to a circle

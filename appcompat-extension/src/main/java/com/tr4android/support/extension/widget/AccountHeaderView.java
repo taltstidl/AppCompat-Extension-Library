@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Thomas Robert Altstidl
+ * Copyright (C) 2016 Thomas Robert Altstidl
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tr4android.support.extension.animation.AnimationUtils;
+import com.tr4android.support.extension.drawable.RotationTransitionDrawable;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.internal.AccountAdapter;
 
@@ -64,17 +67,10 @@ public class AccountHeaderView extends RelativeLayout {
         @Override
         public void onClick(View v) {
             if (mIsShowingAccountList) {
-                // reset previously cached menu adapter
-                mNavigationMenuView.setAdapter(mMenuAdapter);
-                mMenuAdapter = null;
-                addViewToParent();
+                hideAccountList();
             } else {
-                // cache menu adapter for later
-                removeViewFromParent();
-                mMenuAdapter = mNavigationMenuView.getAdapter();
-                mNavigationMenuView.setAdapter(mAccountListAdapter);
+                showAccountList();
             }
-            mIsShowingAccountList = !mIsShowingAccountList;
         }
     };
 
@@ -89,6 +85,10 @@ public class AccountHeaderView extends RelativeLayout {
     // The TextVies used
     private TextView mNameView;
     private TextView mEmailView;
+
+    // The ImageView used for toggling the account list
+    private ImageView mDropdownView;
+    private final RotationTransitionDrawable mDropdownDrawable;
 
     public AccountHeaderView(Context context) {
         this(context, null);
@@ -110,13 +110,15 @@ public class AccountHeaderView extends RelativeLayout {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AccountHeaderView, defStyleAttr, 0);
         boolean mAddAccountEnabled = a.getBoolean(R.styleable.AccountHeaderView_accountHeaderAddEnabled, true);
         boolean mManageAccountEnabled = a.getBoolean(R.styleable.AccountHeaderView_accountHeaderManageEnabled, true);
+        boolean mCheckableAccountsEnabled = a.getBoolean(R.styleable.AccountHeaderView_accountHeaderCheckableAccountsEnabled, false);
         a.recycle();
 
         // Inflate the layout
         LayoutInflater.from(context).inflate(R.layout.appcompat_extension_account_header, this, true);
 
         // Create an empty adapter (for "Add account" and "Manage accounts" entries)
-        mAccountListAdapter = new AccountAdapter(new ArrayList<Account>(), this, mAddAccountEnabled, mManageAccountEnabled);
+        mAccountListAdapter = new AccountAdapter(new ArrayList<Account>(), this,
+                mAddAccountEnabled, mManageAccountEnabled, mCheckableAccountsEnabled);
 
         // Retrieve and setup the CircleImageViews used
         mPrimaryIconView = (CircleImageView) findViewById(R.id.account_header_icon_primary);
@@ -124,18 +126,14 @@ public class AccountHeaderView extends RelativeLayout {
         mSecondaryFirstIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account selectedAccount = mAccountListAdapter.get(1);
-                switchPrimaryAccount(selectedAccount);
-                if (mListener != null) mListener.onAccountSelected(selectedAccount);
+                handleAccountClick(1);
             }
         });
         mSecondarySecondIconView = (CircleImageView) findViewById(R.id.account_header_icon_secondary_second);
         mSecondarySecondIconView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Account selectedAccount = mAccountListAdapter.get(2);
-                switchPrimaryAccount(selectedAccount);
-                if (mListener != null) mListener.onAccountSelected(selectedAccount);
+                handleAccountClick(2);
             }
         });
 
@@ -143,22 +141,36 @@ public class AccountHeaderView extends RelativeLayout {
         mNameView = (TextView) findViewById(R.id.account_header_text_name);
         mEmailView = (TextView) findViewById(R.id.account_header_text_email);
 
-        findViewById(R.id.account_header_dropdown).setOnClickListener(mShowAccountClickListener);
+        // Retrieve and setup the ImageView
+        mDropdownView = (ImageView) findViewById(R.id.account_header_dropdown);
+        mDropdownDrawable = new RotationTransitionDrawable(mDropdownView.getDrawable());
+        mDropdownDrawable.setMaxRotation(-180f);
+        mDropdownDrawable.setStartInterpolator(AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR);
+        mDropdownDrawable.setReverseInterpolator(AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR);
+        mDropdownView.setImageDrawable(mDropdownDrawable);
+        mDropdownView.setOnClickListener(mShowAccountClickListener);
     }
 
-    // Handles a click passed on by the account list adapter
+    // Handles an account click passed on by the account list adapter
     public void handleAccountClick(int position) {
         hideAccountList();
         int count = mAccountListAdapter.getItemCount();
         if (position < mAccountListAdapter.getAccountCount()) {
             Account selectedAccount = mAccountListAdapter.get(position);
-            switchPrimaryAccount(selectedAccount);
-            if (mListener != null) mListener.onAccountSelected(selectedAccount);
+            boolean makePrimary = true;
+            if (mListener != null) makePrimary = mListener.onAccountSelected(selectedAccount);
+            if (makePrimary) switchPrimaryAccount(selectedAccount);
         } else if (position == count - 1 && mAccountListAdapter.isAccountManageEnabled()) {
             if (mListener != null) mListener.onAccountManageSelected();
         } else {
             if (mListener != null) mListener.onAccountAddSelected();
         }
+    }
+
+    // Handles an account check passed on by the account list adapter
+    public void handleAccountCheck(int position, boolean isChecked) {
+        Account checkedAccount = mAccountListAdapter.get(position);
+        if (mListener != null) mListener.onAccountChecked(checkedAccount, isChecked);
     }
 
     public void addAccounts(Account... accounts) {
@@ -196,6 +208,14 @@ public class AccountHeaderView extends RelativeLayout {
         return mAccountListAdapter.getAll();
     }
 
+    public void checkAccount(Account account, boolean checked) {
+        mAccountListAdapter.setChecked(mAccountListAdapter.indexOf(account), checked);
+    }
+
+    public ArrayList<Account> getCheckedAccounts() {
+        return mAccountListAdapter.getChecked();
+    }
+
     public void setAccountSelectedListener(OnAccountSelectedListener listener) {
         mListener = listener;
     }
@@ -206,22 +226,24 @@ public class AccountHeaderView extends RelativeLayout {
 
     public void showAccountList() {
         if (!mIsShowingAccountList) {
+            mDropdownDrawable.startTransition(200);
             // cache menu adapter for later
             removeViewFromParent();
             mMenuAdapter = mNavigationMenuView.getAdapter();
             mNavigationMenuView.setAdapter(mAccountListAdapter);
         }
-        mIsShowingAccountList = !mIsShowingAccountList;
+        mIsShowingAccountList = true;
     }
 
     public void hideAccountList() {
         if (mIsShowingAccountList) {
+            mDropdownDrawable.reverseTransition(200);
             // reset previously cached menu adapter
             mNavigationMenuView.setAdapter(mMenuAdapter);
             mMenuAdapter = null;
             addViewToParent();
         }
-        mIsShowingAccountList = !mIsShowingAccountList;
+        mIsShowingAccountList = false;
     }
 
     @Override
@@ -232,8 +254,7 @@ public class AccountHeaderView extends RelativeLayout {
     }
 
     private void switchPrimaryAccount(Account newPrimaryAccount) {
-        mAccountListAdapter.remove(newPrimaryAccount);
-        mAccountListAdapter.insert(newPrimaryAccount, 0);
+        mAccountListAdapter.move(newPrimaryAccount, 0);
         updateAccountHeader();
     }
 
@@ -292,9 +313,19 @@ public class AccountHeaderView extends RelativeLayout {
         /**
          * Called when an account in the account header is selected.
          *
-         * @param account The selected item
+         * @param account The selected account
+         *
+         * @return true to display the selected account as the primary account
          */
-        void onAccountSelected(Account account);
+        boolean onAccountSelected(Account account);
+
+        /**
+         * Called when an account in the account header is checked
+         *
+         * @param account The checked account
+         * @param isChecked True if the account is now checked
+         */
+        void onAccountChecked(Account account, boolean isChecked);
 
         /**
          * Called when the "Add account" item is selected.
@@ -305,5 +336,27 @@ public class AccountHeaderView extends RelativeLayout {
          * Called when the "Manage accounts" item is selected.
          */
         void onAccountManageSelected();
+    }
+
+    /**
+     * Adapter class for listener
+     */
+    public static class OnAccountSelectedListenerAdapter implements OnAccountSelectedListener {
+        @Override
+        public boolean onAccountSelected(Account account) {
+            return true;
+        }
+
+        @Override
+        public void onAccountChecked(Account account, boolean isChecked) {
+        }
+
+        @Override
+        public void onAccountAddSelected() {
+        }
+
+        @Override
+        public void onAccountManageSelected() {
+        }
     }
 }

@@ -20,6 +20,7 @@ package com.tr4android.support.extension.drawable;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.util.Log;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
@@ -40,6 +41,10 @@ public class RotationTransitionDrawable extends LayerDrawable {
     private ValueAnimatorCompat mAnimator;
     private Interpolator mStartInterpolator = new OvershootInterpolator();
     private Interpolator mReverseInterpolator = new AnticipateInterpolator();
+
+    public RotationTransitionDrawable(Drawable drawable) {
+        this(drawable, null);
+    }
 
     public RotationTransitionDrawable(Drawable drawable, Drawable closeDrawable) {
         super(closeDrawable == null ? new Drawable[]{drawable} : new Drawable[]{drawable, closeDrawable});
@@ -67,10 +72,27 @@ public class RotationTransitionDrawable extends LayerDrawable {
             getDrawable(1).setAlpha(alpha);
             getDrawable(1).draw(canvas);
         } else {
+            Log.i("Rotation", String.valueOf(mRotation));
             canvas.rotate(mRotation, getBounds().centerX(), getBounds().centerY());
             super.draw(canvas);
         }
         canvas.restore();
+    }
+
+    public Interpolator getStartInterpolator() {
+        return mStartInterpolator;
+    }
+
+    public void setStartInterpolator(Interpolator interpolator) {
+        mStartInterpolator = interpolator;
+    }
+
+    public Interpolator getReverseInterpolator() {
+        return mReverseInterpolator;
+    }
+
+    public void setReverseInterpolator(Interpolator interpolator) {
+        mReverseInterpolator = interpolator;
     }
 
     public float getRotation() {
@@ -91,6 +113,7 @@ public class RotationTransitionDrawable extends LayerDrawable {
     }
 
     public void startTransition(int duration) {
+        Log.i("MaxRotation", String.valueOf(mMaxRotation));
         mAnimator.cancel();
         mAnimator.setFloatValues(mRotation, mMaxRotation);
         mAnimator.setDuration(duration);

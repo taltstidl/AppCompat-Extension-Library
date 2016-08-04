@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2016 Thomas Robert Altstidl
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/account_list_item_height"
@@ -13,22 +29,68 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/account_list_item_margin"
         android:layout_marginStart="@dimen/account_list_item_margin"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"/>
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignLeft="@id/icon"
+        android:layout_alignStart="@id/icon"
+        android:layout_alignTop="@id/icon"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/info_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/info_icon"
+            android:layout_width="@dimen/account_list_item_info_icon_size"
+            android:layout_height="@dimen/account_list_item_info_icon_size"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id="@+id/info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+            android:textSize="@dimen/account_list_item_text_size"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/account_list_item_margin"
         android:layout_marginLeft="@dimen/account_list_item_margin"
         android:layout_marginRight="@dimen/account_list_item_margin"
         android:layout_marginStart="@dimen/account_list_item_margin"
-        android:layout_toEndOf="@+id/icon"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toEndOf="@id/icon"
+        android:layout_toLeftOf="@id/info_layout"
+        android:layout_toRightOf="@id/icon"
+        android:layout_toStartOf="@id/info_layout"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        android:textSize="@dimen/account_list_item_text_size" />
+        android:textSize="@dimen/account_list_item_text_size"/>
 </RelativeLayout>

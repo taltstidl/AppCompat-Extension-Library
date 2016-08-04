@@ -60,13 +60,19 @@ public class SampleActivity extends BaseActivity {
         AccountHeaderView accountHeaderView = (AccountHeaderView) navigationView.inflateHeaderView(R.layout.account_header);
         accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android),
                 new Account().setName("Fountain Geyser").setEmail("fountaingeyser@example.com").setIconResource(R.drawable.account_drawer_profile_image_fountaingeyser),
-                new Account().setName("Alpha Account").setEmail("alpha.account@example.de"),
+                new Account().setName("Alpha Account").setEmail("alpha.account@example.de").setInfoIconResource(R.drawable.ic_mail_black_24dp).setInfoText("2"),
                 new Account().setName("Beta Account").setEmail("beta.account@example.de").setPlaceholderIconEnabled(true).setPlaceholderCircleColor(Color.parseColor("#2196f3")));
-        accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListener() {
+        accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListenerAdapter() {
             @Override
-            public void onAccountSelected(Account account) {
+            public boolean onAccountSelected(Account account) {
                 Snackbar.make(findViewById(R.id.main_layout), account.getEmail(), Snackbar.LENGTH_LONG).show();
                 drawerLayout.closeDrawers();
+                return true;
+            }
+
+            @Override
+            public void onAccountChecked(Account account, boolean isChecked) {
+                Toast.makeText(SampleActivity.this, (isChecked ? "Selected: " : "Unselected: ") + account.getEmail(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

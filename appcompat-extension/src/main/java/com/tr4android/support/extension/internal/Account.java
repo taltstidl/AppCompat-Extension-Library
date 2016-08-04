@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Thomas Robert Altstidl
+ * Copyright (C) 2016 Thomas Robert Altstidl
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
@@ -42,6 +45,11 @@ public class Account {
     
     // Email address
     private String mEmail;
+
+    // Extra info
+    private Drawable mInfoIconDrawable;
+    private int mInfoIconResource;
+    private String mInfoText;
 
     // Placeholder
     private boolean mPlaceholderIconEnabled;
@@ -79,6 +87,21 @@ public class Account {
         return this;
     }
 
+    public Account setInfoIconDrawable(Drawable mInfoIconDrawable) {
+        this.mInfoIconDrawable = mInfoIconDrawable;
+        return this;
+    }
+
+    public Account setInfoIconResource(@DrawableRes int mInfoIconResource) {
+        this.mInfoIconResource = mInfoIconResource;
+        return this;
+    }
+
+    public Account setInfoText(String mInfoText) {
+        this.mInfoText = mInfoText;
+        return this;
+    }
+
     public Account setPlaceholderIconEnabled(boolean mPlaceholderIconEnabled) {
         this.mPlaceholderIconEnabled = mPlaceholderIconEnabled;
         return this;
@@ -111,6 +134,18 @@ public class Account {
 
     public String getEmail() {
         return mEmail;
+    }
+
+    public Drawable getInfoIconDrawable() {
+        return mInfoIconDrawable;
+    }
+
+    public int getInfoIconResource() {
+        return mInfoIconResource;
+    }
+
+    public String getInfoText() {
+        return mInfoText;
     }
 
     public boolean getPlaceholderIconEnabled() {
@@ -151,6 +186,24 @@ public class Account {
             } else {
                 iv.setPlaceholder(CircleImageView.retrieveLetter(mName), mPlaceholderCircleColor);
             }
+        }
+    }
+
+    public void applyAccountInfo(ViewGroup layout, ImageView iv, TextView tv) {
+        boolean hasIcon = mInfoIconResource != 0 || mInfoIconDrawable != null;
+        boolean hasText = mInfoText != null;
+        layout.setVisibility((hasIcon || hasText) ? View.VISIBLE : View.GONE);
+        iv.setVisibility(hasIcon ? View.VISIBLE : View.GONE);
+        tv.setVisibility(hasText ? View.VISIBLE : View.GONE);
+        if (hasIcon) {
+            if (mInfoIconResource != 0) {
+                iv.setImageResource(mInfoIconResource);
+            } else if (mInfoIconDrawable != null) {
+                iv.setImageDrawable(mInfoIconDrawable);
+            }
+        }
+        if (hasText) {
+            tv.setText(mInfoText);
         }
     }
 }

@@ -34,6 +34,7 @@
 
     <!-- Account list -->
     <dimen name="account_list_item_icon_size">40dp</dimen>
+    <dimen name="account_list_item_info_icon_size">16dp</dimen>
     <dimen name="account_list_item_height">64dp</dimen>
     <dimen name="account_list_item_margin">16dp</dimen>
     <dimen name="account_list_item_text_size">14sp</dimen>

@@ -6,4 +6,5 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/account_header_height"
     app:accountHeaderManageEnabled="true"
-    app:accountHeaderAddEnabled="true" />
+    app:accountHeaderAddEnabled="true"
+    app:accountHeaderCheckableAccountsEnabled="true"/>
