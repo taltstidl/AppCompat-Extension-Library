@@ -103,6 +103,11 @@
         <attr name="toolbarRefId" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="FlexibleToolbarLayout_LayoutParams">
+        <attr name="layout_collapseMode" />
+        <attr name="layout_collapseParallaxMultiplier"/>
+    </declare-styleable>
+
     <!-- Common PickerDialog attributes-->
     <attr name="headerBackground" format="color" />
     <attr name="headerTextColor" format="color" />
