@@ -21,6 +21,7 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:stateListAnimator="@animator/appbar_elevation"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.tr4android.support.extension.widget.FlexibleToolbarLayout

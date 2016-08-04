@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <!-- CardView with Material Design guidelines link -->
-            <com.tr4android.appcompatextension.widget.MarginCardView
+            <com.tr4android.appcompatextension.widget.MarginAdjustingCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
@@ -68,10 +68,10 @@
                     </LinearLayout>
                 </LinearLayout>
 
-            </com.tr4android.appcompatextension.widget.MarginCardView>
+            </com.tr4android.appcompatextension.widget.MarginAdjustingCardView>
 
             <!-- CardView with DatePickerDialog -->
-            <com.tr4android.appcompatextension.widget.MarginCardView
+            <com.tr4android.appcompatextension.widget.MarginAdjustingCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
@@ -156,10 +156,10 @@
                     </android.support.v7.widget.ButtonBarLayout>
                 </LinearLayout>
 
-            </com.tr4android.appcompatextension.widget.MarginCardView>
+            </com.tr4android.appcompatextension.widget.MarginAdjustingCardView>
 
             <!-- CardView with TimePickerDialog -->
-            <com.tr4android.appcompatextension.widget.MarginCardView
+            <com.tr4android.appcompatextension.widget.MarginAdjustingCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -244,7 +244,7 @@
                     </android.support.v7.widget.ButtonBarLayout>
                 </LinearLayout>
 
-            </com.tr4android.appcompatextension.widget.MarginCardView>
+            </com.tr4android.appcompatextension.widget.MarginAdjustingCardView>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

@@ -1111,15 +1111,10 @@ public class FlexibleToolbarLayout extends FrameLayout {
             final int insetTop = mLastInsets != null ? mLastInsets.getSystemWindowInsetTop() : 0;
             final int scrollRange = layout.getTotalScrollRange();
 
-            boolean hasImmersiveImage = false;
-
             for (int i = 0, z = getChildCount(); i < z; i++) {
                 final View child = getChildAt(i);
                 final LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 final ViewOffsetHelper offsetHelper = getViewOffsetHelper(child);
-
-                if (child instanceof ImageView && lp.width == LayoutParams.MATCH_PARENT)
-                    hasImmersiveImage = true;
 
                 switch (lp.mCollapseMode) {
                     case LayoutParams.COLLAPSE_MODE_PIN:
@@ -1150,16 +1145,6 @@ public class FlexibleToolbarLayout extends FrameLayout {
             mTitleCollapsingTextHelper.setExpansionFraction(fraction);
             mSubtitleCollapsingTextHelper.setExpansionFraction(fraction);
             mIconCollapsingHelper.setExpansionFraction(fraction);
-
-            // TODO: Better handling of elevation here (only set it to 0 if image is used)
-            if (Math.abs(verticalOffset) == scrollRange) {
-                // If we have some pinned children, and we're offset to only show those views,
-                // we want to be elevate
-                ViewCompat.setElevation(layout, layout.getTargetElevation());
-            } else if (hasImmersiveImage) {
-                // Otherwise, we're inline with the content
-                ViewCompat.setElevation(layout, 0f);
-            }
         }
     }
 }
