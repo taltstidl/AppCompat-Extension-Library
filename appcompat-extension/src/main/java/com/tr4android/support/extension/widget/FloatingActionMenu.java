@@ -128,8 +128,8 @@ public class FloatingActionMenu extends ViewGroup {
         mExpandDirection = attr.getInt(R.styleable.FloatingActionMenu_fabMenuExpandDirection, EXPAND_UP);
         mLabelsPosition = attr.getInt(R.styleable.FloatingActionMenu_fabMenuLabelPosition, LABELS_ON_LEFT_SIDE);
         mLabelsStyle = attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuLabelStyle, 0);
-        mCloseDrawable = AppCompatDrawableManager.get().getDrawable(getContext(),
-                attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuCloseIconSrc, 0));
+        int mCloseDrawableResourceId = attr.getResourceId(R.styleable.FloatingActionMenu_fabMenuCloseIconSrc, 0);
+        mCloseDrawable = mCloseDrawableResourceId == 0 ? null : AppCompatDrawableManager.get().getDrawable(getContext(), mCloseDrawableResourceId);
         mCloseAngle = attr.getFloat(R.styleable.FloatingActionMenu_fabMenuCloseIconAngle, 0);
         mButtonSpacing = attr.getDimensionPixelSize(R.styleable.FloatingActionMenu_fabMenuSpacing, mButtonSpacing);
         attr.recycle();
