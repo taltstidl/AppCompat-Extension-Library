@@ -28,7 +28,16 @@ public class TypefaceUtils {
     private static final String TEXT = "abcdefghijklmnopqrstuvwxyz";
 
     /**
-     * Returns true if all letters of the English alphabet of the typefaces are the same.
+     * Compares two typefaces and returns true if all letters of the English alphabet of the typefaces are the same.
+     * If the method returns false it is likely that the typefaces are not the same, yet not certain.
+     * <p>
+     * NOTE: This only works starting with API level 14 and comes with a small performance penalty.
+     * Only use if you have to and cache the result if you need it later.
+     *
+     * @param typeface1 The first typeface to be compared.
+     * @param typeface2 The second typeface to be compared.
+     * @return True if the typefaces are the same. False otherwise.
+     * @since 0.1.1
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static boolean sameAs(Typeface typeface1, Typeface typeface2) {
