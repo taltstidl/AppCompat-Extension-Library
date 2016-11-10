@@ -36,7 +36,7 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
     private LayoutInflaterFactory mBaseFactory;
 
     private TypefaceCompatFactory(Context context, boolean typefaceDetectionEnabled) {
-        TypefaceCompat.initialize(typefaceDetectionEnabled);
+        TypefaceCompat.setTypefaceDetectionEnabled(typefaceDetectionEnabled);
         try {
             this.mBaseFactory = (LayoutInflaterFactory) ((AppCompatActivity) context).getDelegate();
         } catch (ClassCastException e) {
@@ -44,6 +44,17 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
         }
     }
 
+    /**
+     * Installs the factory to the given context prior to API level 21.
+     * It will use AppCompat's layout inflater to inflate views and
+     * set a proper Roboto typeface to the view. Roboto fonts are also used
+     * when user is using a custom font.
+     *
+     *
+     * @param context A context.
+     * @since 0.1.1
+     * @see #installViewFactory(Context, boolean)
+     */
     public static void installViewFactory(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
@@ -51,6 +62,21 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
         }
     }
 
+    /**
+     * Installs the factory to the given context prior to API level 21.
+     * It will use AppCompat's layout inflater to inflate views and
+     * set a proper typeface to the view if needed.
+     * If typeface detection is enabled the factory automatically detects the used system typeface
+     * and adjust its behavior properly.
+     * This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
+     * <p>
+     * NOTE: Typeface detection only works starting with API level 14 and comes with a small performance penalty.
+     *
+     * @param context                  A context.
+     * @param typefaceDetectionEnabled True if the factory should automatically detect the used system typeface and adjust its behavior properly.
+     *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
+     * @since 0.1.1
+     */
     public static void installViewFactory(Context context, boolean typefaceDetectionEnabled) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
@@ -58,6 +84,17 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
         }
     }
 
+    /**
+     * This method is responsible for creating the correct subclass of View given the xml element name
+     * via AppCompat's layout inflater and afterwards sets the correct typeface if needed.
+     *
+     * @param parent  The future parent of the returned view. Note that this may be null.
+     * @param name    The fully qualified class name of the View to be create.
+     * @param context The context the view is being created in.
+     * @param attrs   An AttributeSet of attributes to apply to the View.
+     * @return The newly created view.
+     * @since 0.1.1
+     */
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         View result = null;
