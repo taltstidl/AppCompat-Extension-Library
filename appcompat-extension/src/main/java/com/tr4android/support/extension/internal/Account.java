@@ -21,28 +21,26 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tr4android.appcompat.extension.R;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.CircleImageView;
 
 /**
  * Class representing an account for displaying in the {@link AccountHeaderView}
  */
-public class Account {
+public class Account implements IAccount {
     // Icon
     private Bitmap mIconBitmap;
     private Drawable mIconDrawable;
     private int mIconResource;
     private Uri mIconUri;
-    
+
     // Full name
     private String mName;
-    
+
     // Email address
     private String mEmail;
 
@@ -55,7 +53,11 @@ public class Account {
     private boolean mPlaceholderIconEnabled;
     private int mPlaceholderCircleColor = -1;
 
-    public Account() {}
+    // Checked
+    private boolean mChecked;
+
+    public Account() {
+    }
 
     public Account setIconBitmap(Bitmap mIconBitmap) {
         this.mIconBitmap = mIconBitmap;
@@ -112,14 +114,21 @@ public class Account {
         return this;
     }
 
+    @Override
+    public void setChecked(boolean checked) {
+        mChecked = checked;
+    }
+
     public Bitmap getIconBitmap() {
         return mIconBitmap;
     }
 
+    @Override
     public Drawable getIconDrawable() {
         return mIconDrawable;
     }
 
+    @DrawableRes
     public int getIconResource() {
         return mIconResource;
     }
@@ -128,22 +137,27 @@ public class Account {
         return mIconUri;
     }
 
+    @Override
     public String getName() {
         return mName;
     }
 
+    @Override
     public String getEmail() {
         return mEmail;
     }
 
+    @Override
     public Drawable getInfoIconDrawable() {
         return mInfoIconDrawable;
     }
 
+    @DrawableRes
     public int getInfoIconResource() {
         return mInfoIconResource;
     }
 
+    @Override
     public String getInfoText() {
         return mInfoText;
     }
@@ -156,54 +170,24 @@ public class Account {
         return mPlaceholderCircleColor;
     }
 
+    @Override
+    public boolean isChecked() {
+        return mChecked;
+    }
+
     public void applyAccountName(TextView tv) {
-        tv.setText(mName);
+        AccountUtils.applyAccountName(this, tv);
     }
 
     public void applyAccountEmail(TextView tv) {
-        tv.setText(mEmail);
+        AccountUtils.applyAccountEmail(this, tv);
     }
 
     public void applyAccountIcon(CircleImageView iv) {
-        iv.setCircleImageEnabled(true);
-        if (mIconBitmap != null) {
-            iv.setImageBitmap(mIconBitmap);
-        } else if (mIconResource != 0) {
-            iv.setImageResource(mIconResource);
-        } else if (mIconDrawable != null) {
-            iv.setImageDrawable(mIconDrawable);
-        } else if (mIconUri != null) {
-            iv.setImageURI(mIconUri);
-        } else if (mPlaceholderIconEnabled) {
-            if (mPlaceholderCircleColor == -1) {
-                iv.setPlaceholder(R.drawable.ic_person_black_24dp);
-            } else {
-                iv.setPlaceholder(R.drawable.ic_person_black_24dp, mPlaceholderCircleColor);
-            }
-        } else {
-            if (mPlaceholderCircleColor == -1) {
-                iv.setPlaceholder(CircleImageView.retrieveLetter(mName));
-            } else {
-                iv.setPlaceholder(CircleImageView.retrieveLetter(mName), mPlaceholderCircleColor);
-            }
-        }
+        AccountUtils.applyAccountIcon(this, iv);
     }
 
     public void applyAccountInfo(ViewGroup layout, ImageView iv, TextView tv) {
-        boolean hasIcon = mInfoIconResource != 0 || mInfoIconDrawable != null;
-        boolean hasText = mInfoText != null;
-        layout.setVisibility((hasIcon || hasText) ? View.VISIBLE : View.GONE);
-        iv.setVisibility(hasIcon ? View.VISIBLE : View.GONE);
-        tv.setVisibility(hasText ? View.VISIBLE : View.GONE);
-        if (hasIcon) {
-            if (mInfoIconResource != 0) {
-                iv.setImageResource(mInfoIconResource);
-            } else if (mInfoIconDrawable != null) {
-                iv.setImageDrawable(mInfoIconDrawable);
-            }
-        }
-        if (hasText) {
-            tv.setText(mInfoText);
-        }
+        AccountUtils.applyAccountInfo(this, layout, iv, tv);
     }
 }
