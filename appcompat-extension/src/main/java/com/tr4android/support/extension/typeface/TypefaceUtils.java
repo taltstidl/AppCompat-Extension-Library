@@ -24,6 +24,12 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 
+
+/**
+ * A helper class for {@link TypefaceCompat}
+ *
+ * @since 0.1.1
+ */
 public class TypefaceUtils {
     private static final String TEXT = "abcdefghijklmnopqrstuvwxyz";
 

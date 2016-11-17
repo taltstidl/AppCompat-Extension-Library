@@ -24,6 +24,14 @@ import android.support.v4.util.LruCache;
 
 import java.util.HashMap;
 
+/**
+ * Compatibility class that implements backwards support for the text styles recommended
+ * in the Typography section of the Material Design guidelines on all devices back to API level 7.
+ * If Typeface detection is enabled TypefaceCompat will respect custom system typefaces while still maintaining
+ * the newest default typeface (Roboto) on all devices back to API level 14.
+ *
+ * @since 0.1.1
+ */
 public class TypefaceCompat {
     private static final HashMap<String, String> FONT_FAMILY_FILE_PREFIX = new HashMap<>();
     private static final String[] STYLE_SUFFIX = new String[]{"Regular", "Bold", "Italic", "BoldItalic"};
@@ -56,6 +64,7 @@ public class TypefaceCompat {
                 mIsUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
             }
         }
+        mInitialized = true;
     }
 
     /**
@@ -76,7 +85,7 @@ public class TypefaceCompat {
      * Set whether the typeface detection should be enabled. By default typeface detection is enabled.
      * If typeface detection is enabled it will respect custom system typefaces.
      * <p>
-     * NOTE: This only works starting with API level 14 and comes with a small performance penalty.
+     * <b>Note:</b> This only works starting with API level 14 and comes with a small performance penalty.
      *
      * @param typefaceDetectionEnabled True if the used system typeface should be automatically detected and behavior properly adjusted.
      *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.

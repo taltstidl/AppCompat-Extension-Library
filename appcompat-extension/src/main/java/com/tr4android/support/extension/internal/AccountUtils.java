@@ -30,6 +30,8 @@ import com.tr4android.support.extension.widget.CircleImageView;
 /**
  * A helper class for {@link AccountAdapter} and {@link com.tr4android.support.extension.widget.AccountHeaderView}.
  * It contains methods that apply data of an {@link IAccount} or {@link Account} on views.
+ *
+ * @since 0.4.1
  */
 
 public class AccountUtils {
@@ -39,6 +41,7 @@ public class AccountUtils {
      *
      * @param account The account that should be used.
      * @param tv      The TextView the account's name should be applied on.
+     * @since 0.4.1
      */
     public static void applyAccountName(IAccount account, TextView tv) {
         tv.setText(account.getName());
@@ -49,6 +52,7 @@ public class AccountUtils {
      *
      * @param account The account that should be used.
      * @param tv      The TextView the account' email address should be applied on.
+     * @since 0.4.1
      */
     public static void applyAccountEmail(IAccount account, TextView tv) {
         tv.setText(account.getEmail());
@@ -59,6 +63,7 @@ public class AccountUtils {
      *
      * @param account The account that should be used.
      * @param iv      The CircleImageView the account' icon should be applied on.
+     * @since 0.4.1
      */
     public static void applyAccountIcon(IAccount account, CircleImageView iv) {
         iv.setCircleImageEnabled(true);
@@ -104,6 +109,7 @@ public class AccountUtils {
      * @param layout  The layout containing the ImageView {@param iv} and the TextView {@param tv}.
      * @param iv      The ImageView the account's info icon should be applied on.
      * @param tv      The TextView the account's info text should be applied on.
+     * @since 0.4.1
      */
     public static void applyAccountInfo(IAccount account, ViewGroup layout, ImageView iv, TextView tv) {
         Drawable infoIconDrawable = account.getInfoIconDrawable();

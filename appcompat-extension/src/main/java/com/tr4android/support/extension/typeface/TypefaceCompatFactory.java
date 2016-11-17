@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.view.LayoutInflaterFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,14 @@ import android.widget.TextView;
 
 import com.tr4android.appcompat.extension.R;
 
+/**
+ * This Class is a custom {@link LayoutInflaterFactory} that catches all (sub)classes of TextView
+ * during inflation and then takes care of reading the fontFamily and style attribute
+ * and loading the associated typeface. This needs to be installed in your
+ * {@link android.app.Activity#onCreate(Bundle) onCreate()} method <b>before</b> the call to super.onCreate().
+ *
+ * @since 0.1.1
+ */
 public class TypefaceCompatFactory implements LayoutInflaterFactory {
 
     private LayoutInflaterFactory mBaseFactory;
@@ -50,10 +59,9 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
      * set a proper Roboto typeface to the view. Roboto fonts are also used
      * when user is using a custom font.
      *
-     *
      * @param context A context.
-     * @since 0.1.1
      * @see #installViewFactory(Context, boolean)
+     * @since 0.1.1
      */
     public static void installViewFactory(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -70,7 +78,7 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
      * and adjust its behavior properly.
      * This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
      * <p>
-     * NOTE: Typeface detection only works starting with API level 14 and comes with a small performance penalty.
+     * <b>Note:</b> Typeface detection only works starting with API level 14 and comes with a small performance penalty.
      *
      * @param context                  A context.
      * @param typefaceDetectionEnabled True if the factory should automatically detect the used system typeface and adjust its behavior properly.
