@@ -59,6 +59,21 @@ public class AccountUtils {
     }
 
     /**
+     * Applies the best available list title for the provided account to the given TextView.
+     * This will be the account's email address (or subheader) or the account's name if the
+     * provided account does not have an email address (or subheader).
+     *
+     * @param account The account that should be used.
+     * @param tv      The TextView the title should be applied on.
+     * @since 0.4.1
+     */
+    public static void applyAccountListTitle(IAccount account, TextView tv) {
+        String title = account.getEmail();
+        if(title == null) title = account.getName();
+        tv.setText(title);
+    }
+
+    /**
      * Applies the account's icon to the given ImageView.
      *
      * @param account The account that should be used.

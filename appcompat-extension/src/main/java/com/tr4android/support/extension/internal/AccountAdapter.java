@@ -118,7 +118,7 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
                 // apply the account to the list item
                 AccountUtils.applyAccountIcon(account, accountViewHolder.iconView);
-                AccountUtils.applyAccountEmail(account, accountViewHolder.nameView);
+                AccountUtils.applyAccountListTitle(account, accountViewHolder.nameView);
                 AccountUtils.applyAccountInfo(account, accountViewHolder.infoLayout,
                         accountViewHolder.infoIconView, accountViewHolder.infoTextView);
             } else if (position == getItemCount() - 1 && mShowAccountManage) {
