@@ -39,11 +39,15 @@ import com.tr4android.appcompat.extension.R;
  * {@link android.app.Activity#onCreate(Bundle) onCreate()} method <b>before</b> the call to super.onCreate().
  *
  * @since 0.1.1
+ * @deprecated Use <a href="https://developer.android.com/guide/topics/ui/look-and-feel/downloadable-fonts.html">downloadable fonts</a>
+ * instead.
  */
+@Deprecated
 public class TypefaceCompatFactory implements LayoutInflaterFactory {
 
     private LayoutInflaterFactory mBaseFactory;
 
+    @Deprecated
     private TypefaceCompatFactory(Context context, boolean typefaceDetectionEnabled) {
         TypefaceCompat.setTypefaceDetectionEnabled(typefaceDetectionEnabled);
         try {
@@ -62,7 +66,9 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
      * @param context A context.
      * @see #installViewFactory(Context, boolean)
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     public static void installViewFactory(Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
@@ -84,7 +90,9 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
      * @param typefaceDetectionEnabled True if the factory should automatically detect the used system typeface and adjust its behavior properly.
      *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     public static void installViewFactory(Context context, boolean typefaceDetectionEnabled) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             LayoutInflaterCompat.setFactory(LayoutInflater.from(context),
@@ -102,7 +110,9 @@ public class TypefaceCompatFactory implements LayoutInflaterFactory {
      * @param attrs   An AttributeSet of attributes to apply to the View.
      * @return The newly created view.
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         View result = null;

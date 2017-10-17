@@ -21,6 +21,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -31,7 +32,11 @@ import java.util.HashMap;
  * the newest default typeface (Roboto) on all devices back to API level 14.
  *
  * @since 0.1.1
+ * @deprecated Use <a href="https://developer.android.com/guide/topics/ui/look-and-feel/downloadable-fonts.html">downloadable fonts</a>
+ * or <a href="https://developer.android.com/reference/android/support/v4/provider/FontsContractCompat.html">FontsContractCompat</a>
+ * instead.
  */
+@Deprecated
 public class TypefaceCompat {
     private static final HashMap<String, String> FONT_FAMILY_FILE_PREFIX = new HashMap<>();
     private static final String[] STYLE_SUFFIX = new String[]{"Regular", "Bold", "Italic", "BoldItalic"};
@@ -57,7 +62,9 @@ public class TypefaceCompat {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-condensed-light", "RobotoCondensed-Light");
     }
 
+    @Deprecated
     private static void initialize() {
+        Log.w("TypefaceCompat", "TypefaceCompat is deprecated. Use downloadable fonts or FontsContractCompat instead.");
         if (mTypefaceDetectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
             if (roboto != null) {
@@ -74,7 +81,7 @@ public class TypefaceCompat {
      *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
      * @see #setTypefaceDetectionEnabled(boolean)
      * @since 0.1.1
-     * @deprecated
+     * @deprecated Use {@link #setTypefaceDetectionEnabled(boolean)} instead.
      */
     @Deprecated
     public static void initialize(boolean typefaceDetectionEnabled) {
@@ -90,7 +97,9 @@ public class TypefaceCompat {
      * @param typefaceDetectionEnabled True if the used system typeface should be automatically detected and behavior properly adjusted.
      *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
      * @since 0.4.1
+     * @deprecated
      */
+    @Deprecated
     public static void setTypefaceDetectionEnabled(boolean typefaceDetectionEnabled) {
         mTypefaceDetectionEnabled = typefaceDetectionEnabled;
         initialize();
@@ -106,7 +115,9 @@ public class TypefaceCompat {
      * @param style      The style (normal, bold, italic) of the typeface, e.g. NORMAL, BOLD, ITALIC, BOLD_ITALIC.
      * @return The best matching typeface.
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     public static Typeface create(Context ctx, String familyName, int style) {
         if (!mInitialized) initialize();
         if (isSupported(familyName) || familyName == null) {
@@ -154,7 +165,9 @@ public class TypefaceCompat {
      * @param familyName The name of the font family.
      * @return True if the font family is supported. False otherwise.
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     public static boolean isSupported(String familyName) {
         if (!mInitialized) initialize();
         return FONT_FAMILY_FILE_PREFIX.containsKey(familyName) && mIsUsingDefaultFont && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;

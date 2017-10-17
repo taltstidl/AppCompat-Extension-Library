@@ -29,7 +29,9 @@ import android.os.Build;
  * A helper class for {@link TypefaceCompat}
  *
  * @since 0.1.1
+ * @deprecated
  */
+@Deprecated
 public class TypefaceUtils {
     private static final String TEXT = "abcdefghijklmnopqrstuvwxyz";
 
@@ -44,7 +46,9 @@ public class TypefaceUtils {
      * @param typeface2 The second typeface to be compared.
      * @return True if the typefaces are the same. False otherwise.
      * @since 0.1.1
+     * @deprecated
      */
+    @Deprecated
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
     public static boolean sameAs(Typeface typeface1, Typeface typeface2) {
         // Handle null as param.

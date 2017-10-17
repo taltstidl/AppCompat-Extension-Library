@@ -24,7 +24,6 @@ import com.tr4android.support.extension.drawable.MediaControlDrawable;
 import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.internal.Account;
 import com.tr4android.support.extension.internal.IAccount;
-import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.FlexibleToolbarLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
@@ -35,9 +34,6 @@ public class SampleActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // install typeface factory before(!) onCreate()
-        TypefaceCompatFactory.installViewFactory(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
