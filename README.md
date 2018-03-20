@@ -22,10 +22,10 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 dependencies {
-    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.4.0'
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.5.0'
 }
 ```
-The latest Release is [Release 0.4.0](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.4.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.4.0/sample.apk) with this release.
+The latest Release is [Release 0.5.0](https://github.com/TR4Android/AppCompat-Extension-Library/releases/tag/v0.5.0). You can download a [sample.apk](https://github.com/TR4Android/AppCompat-Extension-Library/releases/download/v0.5.0/sample.apk) with this release.
 
 ## AccountHeaderView
 The `AccountHeaderView` is a component that allows easy switching between accounts in the navigation drawer by clicking on the avatars on the header or by choosing from the dropdown list.
@@ -195,6 +195,8 @@ final IndeterminateProgressDrawable drawable = new IndeterminateProgressDrawable
 *For the full documentation and customization options head over to the [Delightful Detail Drawables wiki](https://github.com/TR4Android/AppCompat-Extension-Library/wiki/Delightful-Detail-Drawables).*
 
 ## TypefaceCompat
+> The `TypefaceCompat` utility has been removed in version `0.5.0` of this library. The official [downloadable fonts](https://developer.android.com/guide/topics/ui/look-and-feel/downloadable-fonts.html) or [FontsContractCompat](https://developer.android.com/reference/android/support/v4/provider/FontsContractCompat.html) should be used instead. While apps will continue to compile, the Roboto typeface will no longer be applied on pre-Lollipop devices as the associated resources have been removed to conserve space.
+
 The `TypefaceCompat` is a utility for supporting the newest [Typography](https://www.google.com/design/spec/style/typography.html). It automatically sets the text size, color *and typeface* for the styles specified in the guidelines.
 
 ##### Main features:
