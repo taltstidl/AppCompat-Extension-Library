@@ -21,9 +21,22 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 
 import java.util.HashMap;
 
+/**
+ * Compatibility class that implements backwards support for the text styles recommended
+ * in the Typography section of the Material Design guidelines on all devices back to API level 7.
+ * If Typeface detection is enabled TypefaceCompat will respect custom system typefaces while still maintaining
+ * the newest default typeface (Roboto) on all devices back to API level 14.
+ *
+ * @since 0.1.1
+ * @deprecated Use <a href="https://developer.android.com/guide/topics/ui/look-and-feel/downloadable-fonts.html">downloadable fonts</a>
+ * or <a href="https://developer.android.com/reference/android/support/v4/provider/FontsContractCompat.html">FontsContractCompat</a>
+ * instead.
+ */
+@Deprecated
 public class TypefaceCompat {
     private static final HashMap<String, String> FONT_FAMILY_FILE_PREFIX = new HashMap<>();
     private static final String[] STYLE_SUFFIX = new String[]{"Regular", "Bold", "Italic", "BoldItalic"};
@@ -33,7 +46,11 @@ public class TypefaceCompat {
     private static final LruCache<String, Typeface> TYPEFACE_CACHE = new LruCache<>(TYPEFACE_CACHE_MAX_SIZE);
 
     private static final String SYSTEM_ROBOTO_REGULAR_FILE_PATH = Environment.getRootDirectory() + "/fonts/Roboto-Regular.ttf";
-    private static boolean isUsingDefaultFont = true; // boolean indicating whether user wants the device to use its default font or not
+
+    private static boolean mIsUsingDefaultFont = true; // boolean indicating whether user wants the device to use its default font or not
+    private static boolean mTypefaceDetectionEnabled = true;
+
+    private static boolean mInitialized;
 
     static {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif", "Roboto-");
@@ -45,19 +62,67 @@ public class TypefaceCompat {
         FONT_FAMILY_FILE_PREFIX.put("sans-serif-condensed-light", "RobotoCondensed-Light");
     }
 
-    public static void initialize(boolean typefaceDetectionEnabled) {
-        if (typefaceDetectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+    @Deprecated
+    private static void initialize() {
+        Log.w("TypefaceCompat", "TypefaceCompat is deprecated. Use downloadable fonts or FontsContractCompat instead.");
+        if (mTypefaceDetectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             Typeface roboto = Typeface.createFromFile(SYSTEM_ROBOTO_REGULAR_FILE_PATH);
             if (roboto != null) {
-                isUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
+                mIsUsingDefaultFont = TypefaceUtils.sameAs(roboto, Typeface.SANS_SERIF);
             }
         }
+        mInitialized = true;
     }
 
+    /**
+     * Use {@link #setTypefaceDetectionEnabled(boolean)} instead.
+     *
+     * @param typefaceDetectionEnabled True if the used system typeface should be automatically detected and behavior properly adjusted.
+     *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
+     * @see #setTypefaceDetectionEnabled(boolean)
+     * @since 0.1.1
+     * @deprecated Use {@link #setTypefaceDetectionEnabled(boolean)} instead.
+     */
+    @Deprecated
+    public static void initialize(boolean typefaceDetectionEnabled) {
+        setTypefaceDetectionEnabled(typefaceDetectionEnabled);
+    }
+
+    /**
+     * Set whether the typeface detection should be enabled. By default typeface detection is enabled.
+     * If typeface detection is enabled it will respect custom system typefaces.
+     * <p>
+     * <b>Note:</b> This only works starting with API level 14 and comes with a small performance penalty.
+     *
+     * @param typefaceDetectionEnabled True if the used system typeface should be automatically detected and behavior properly adjusted.
+     *                                 This makes sure that the newer Roboto typefaces are only used if no custom typefaces are applied by the system.
+     * @since 0.4.1
+     * @deprecated
+     */
+    @Deprecated
+    public static void setTypefaceDetectionEnabled(boolean typefaceDetectionEnabled) {
+        mTypefaceDetectionEnabled = typefaceDetectionEnabled;
+        initialize();
+    }
+
+    /**
+     * Creates a typeface object that best matches the specified typeface and the specified style.
+     * Use this call if you want to pick a new style from the same family of an typeface object.
+     * If family is null, this selects from the default font's family.
+     *
+     * @param ctx        A context.
+     * @param familyName May be null. The name of the font family.
+     * @param style      The style (normal, bold, italic) of the typeface, e.g. NORMAL, BOLD, ITALIC, BOLD_ITALIC.
+     * @return The best matching typeface.
+     * @since 0.1.1
+     * @deprecated
+     */
+    @Deprecated
     public static Typeface create(Context ctx, String familyName, int style) {
-        if (isSupported(familyName)) {
+        if (!mInitialized) initialize();
+        if (isSupported(familyName) || familyName == null) {
             boolean styleAfterwards = false;
-            String fileName = FONT_FAMILY_FILE_PREFIX.get(familyName);
+            String fileName = FONT_FAMILY_FILE_PREFIX.get(familyName == null ? "sans-serif" : familyName);
             if (fileName.endsWith("-")) {
                 // All styles are supported.
                 fileName += STYLE_SUFFIX[style];
@@ -94,7 +159,17 @@ public class TypefaceCompat {
         return Typeface.create(familyName, style);
     }
 
+    /**
+     * Checks if a certain font family is supported.
+     *
+     * @param familyName The name of the font family.
+     * @return True if the font family is supported. False otherwise.
+     * @since 0.1.1
+     * @deprecated
+     */
+    @Deprecated
     public static boolean isSupported(String familyName) {
-        return FONT_FAMILY_FILE_PREFIX.containsKey(familyName) && isUsingDefaultFont && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
+        if (!mInitialized) initialize();
+        return FONT_FAMILY_FILE_PREFIX.containsKey(familyName) && mIsUsingDefaultFont && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP;
     }
 }

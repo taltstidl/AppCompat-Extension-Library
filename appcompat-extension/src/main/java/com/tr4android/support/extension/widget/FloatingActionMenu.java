@@ -36,7 +36,6 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatDrawableManager;
@@ -460,7 +459,7 @@ public class FloatingActionMenu extends ViewGroup {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && mExpanded) {
-            KeyEventCompat.startTracking(event);
+            event.startTracking();
             return true;
         }
         return super.onKeyDown(keyCode, event);

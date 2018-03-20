@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
         applicationId "com.tr4android.appcompatextension"
-        minSdkVersion 9
-        targetSdkVersion 24
+        minSdkVersion 14
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -23,5 +23,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':appcompat-extension')
-    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:cardview-v7:27.+'
 }

@@ -22,9 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatDrawableManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +43,7 @@ import com.tr4android.support.extension.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Adapter for accounts
@@ -53,8 +52,7 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_ACCOUNT = 0;
     private static final int VIEW_TYPE_HEADER = 1;
 
-    private ArrayList<Account> mAccounts;
-    private ArrayList<Boolean> mChecked;
+    private List<IAccount> mAccounts;
     private AccountHeaderView mHeader;
 
     private boolean mShowAccountAdd;
@@ -72,14 +70,13 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         public void onCheckedChanged(CompoundButton view, boolean isChecked) {
             int position = (Integer) ((View) view.getParent()).getTag();
-            mChecked.set(position, isChecked);
+            mAccounts.get(position).setChecked(isChecked);
             mHeader.handleAccountCheck(position, isChecked);
         }
     };
 
-    public AccountAdapter(ArrayList<Account> accounts, AccountHeaderView header, boolean showAccountAdd, boolean showAccountManage, boolean showCheckBoxes) {
+    public AccountAdapter(ArrayList<IAccount> accounts, AccountHeaderView header, boolean showAccountAdd, boolean showAccountManage, boolean showCheckBoxes) {
         mAccounts = accounts;
-        mChecked = new ArrayList<>();
         mHeader = header;
         mShowAccountAdd = showAccountAdd;
         mShowAccountManage = showAccountManage;
@@ -106,9 +103,10 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             final AccountViewHolder accountViewHolder = (AccountViewHolder) holder;
             holder.itemView.setTag(position);
             if (position < getAccountCount()) {
+                IAccount account = mAccounts.get(position);
                 if (mShowCheckBoxes) {
                     accountViewHolder.checkView.setOnCheckedChangeListener(null);
-                    accountViewHolder.checkView.setChecked(mChecked.get(position));
+                    accountViewHolder.checkView.setChecked(account.isChecked());
                     accountViewHolder.checkView.setOnCheckedChangeListener(mAccountCheckListener);
                     accountViewHolder.checkView.setVisibility(View.VISIBLE);
                     accountViewHolder.iconView.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +116,10 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         }
                     });
                 }
-                Account account = mAccounts.get(position);
                 // apply the account to the list item
-                account.applyAccountIcon(accountViewHolder.iconView);
-                account.applyAccountEmail(accountViewHolder.nameView);
-                account.applyAccountInfo(accountViewHolder.infoLayout,
+                AccountUtils.applyAccountIcon(account, accountViewHolder.iconView);
+                AccountUtils.applyAccountListTitle(account, accountViewHolder.nameView);
+                AccountUtils.applyAccountInfo(account, accountViewHolder.infoLayout,
                         accountViewHolder.infoIconView, accountViewHolder.infoTextView);
             } else if (position == getItemCount() - 1 && mShowAccountManage) {
                 // Manage accounts item
@@ -225,65 +222,65 @@ public class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     // Functions for managing the accounts
-    public void add(Account account) {
+    public void add(IAccount account) {
         mAccounts.add(account);
-        mChecked.add(false);
     }
 
-    public void addAll(Account... accounts) {
+    public void addAll(IAccount... accounts) {
         mAccounts.addAll(Arrays.asList(accounts));
-        Boolean[] checked = new Boolean[accounts.length];
-        Arrays.fill(checked, false);
-        mChecked.addAll(Arrays.asList(checked));
     }
 
-    public void remove(Account account) {
+    public void remove(IAccount account) {
         int index = indexOf(account);
         mAccounts.remove(index);
-        mChecked.remove(index);
     }
 
-    public void insert(Account account, int position) {
+    public void insert(IAccount account, int position) {
         mAccounts.add(position, account);
-        mChecked.add(position, false);
     }
 
     public void clear() {
         mAccounts.clear();
-        mChecked.clear();
     }
 
-    public void move(Account account, int position) {
+    public void move(IAccount account, int position) {
         int index = indexOf(account);
         mAccounts.remove(index);
-        boolean checked = mChecked.remove(index);
         mAccounts.add(position, account);
-        mChecked.add(position, checked);
     }
 
-    public int indexOf(Account account) {
+    public int indexOf(IAccount account) {
         return mAccounts.indexOf(account);
     }
 
-    public Account get(int position) {
+    public IAccount get(int position) {
         return mAccounts.get(position);
     }
 
-    public ArrayList<Account> getAll() {
+    @Deprecated
+    public List<IAccount> getAll() {
+        return getAccounts();
+    }
+
+    public List<IAccount> getAccounts() {
         return mAccounts;
     }
 
+    public void setAccounts(List<IAccount> accounts) {
+        mAccounts = accounts;
+    }
+
     public void setChecked(int position, boolean checked) {
-        mChecked.set(position, checked);
+        mAccounts.get(position).setChecked(checked);
     }
 
     public boolean isChecked(int position) {
-        return position == 0 || mChecked.get(position);
+        return position == 0 || mAccounts.get(position).isChecked();
     }
 
-    public ArrayList<Account> getChecked() {
+    public ArrayList<IAccount> getChecked() {
         int size = mAccounts.size();
-        ArrayList<Account> checked = new ArrayList<>(size);
+        ArrayList<IAccount> checked = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             if (isChecked(i)) checked.add(mAccounts.get(i));
         }

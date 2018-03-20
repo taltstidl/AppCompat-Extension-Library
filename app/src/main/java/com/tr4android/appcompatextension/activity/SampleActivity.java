@@ -23,7 +23,7 @@ import com.tr4android.support.extension.drawable.IndeterminateProgressDrawable;
 import com.tr4android.support.extension.drawable.MediaControlDrawable;
 import com.tr4android.support.extension.drawable.PlaceholderDrawable;
 import com.tr4android.support.extension.internal.Account;
-import com.tr4android.support.extension.typeface.TypefaceCompatFactory;
+import com.tr4android.support.extension.internal.IAccount;
 import com.tr4android.support.extension.widget.AccountHeaderView;
 import com.tr4android.support.extension.widget.FlexibleToolbarLayout;
 import com.tr4android.support.extension.widget.FloatingActionMenu;
@@ -34,9 +34,6 @@ public class SampleActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // install typeface factory before(!) onCreate()
-        TypefaceCompatFactory.installViewFactory(this);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -61,17 +58,20 @@ public class SampleActivity extends BaseActivity {
         accountHeaderView.addAccounts(new Account().setName("TR4Android").setEmail("tr4android@example.com").setIconResource(R.drawable.account_drawer_profile_image_tr4android),
                 new Account().setName("Fountain Geyser").setEmail("fountaingeyser@example.com").setIconResource(R.drawable.account_drawer_profile_image_fountaingeyser),
                 new Account().setName("Alpha Account").setEmail("alpha.account@example.de").setInfoIconResource(R.drawable.ic_mail_black_24dp).setInfoText("2"),
-                new Account().setName("Beta Account").setEmail("beta.account@example.de").setPlaceholderIconEnabled(true).setPlaceholderCircleColor(Color.parseColor("#2196f3")));
+                new Account().setName("Beta Account").setEmail("beta.account@example.de").setPlaceholderIconEnabled(true).setPlaceholderCircleColor(Color.parseColor("#2196f3")),
+                new Account().setName("SnailMail").setEmail(null).setPlaceholderIconEnabled(true).setPlaceholderCircleColor(Color.parseColor("#e51c23")))
+        ;
+
         accountHeaderView.setAccountSelectedListener(new AccountHeaderView.OnAccountSelectedListenerAdapter() {
             @Override
-            public boolean onAccountSelected(Account account) {
+            public boolean onAccountSelected(IAccount account) {
                 Snackbar.make(findViewById(R.id.main_layout), account.getEmail(), Snackbar.LENGTH_LONG).show();
                 drawerLayout.closeDrawers();
                 return true;
             }
 
             @Override
-            public void onAccountChecked(Account account, boolean isChecked) {
+            public void onAccountChecked(IAccount account, boolean isChecked) {
                 Toast.makeText(SampleActivity.this, (isChecked ? "Selected: " : "Unselected: ") + account.getEmail(), Toast.LENGTH_SHORT).show();
             }
 
@@ -119,19 +119,19 @@ public class SampleActivity extends BaseActivity {
         ProgressBar artImageView = (ProgressBar) findViewById(R.id.art_imageview);
         IndeterminateProgressDrawable progressDrawable =
                 new IndeterminateProgressDrawable.Builder(this)
-                .setColor(Color.WHITE)
-                .setPadding(16 * dp)
-                .setStrokeWidth(4 * dp)
-                .build();
+                        .setColor(Color.WHITE)
+                        .setPadding(16 * dp)
+                        .setStrokeWidth(4 * dp)
+                        .build();
         artImageView.setIndeterminateDrawable(progressDrawable);
 
         ImageView controlsImageView = (ImageView) findViewById(R.id.controls_imageview);
         final MediaControlDrawable controlDrawable =
                 new MediaControlDrawable.Builder(this)
-                .setColor(Color.WHITE)
-                .setPadding(8 * dp)
-                .setInitialState(MediaControlDrawable.State.PLAY)
-                .build();
+                        .setColor(Color.WHITE)
+                        .setPadding(8 * dp)
+                        .setInitialState(MediaControlDrawable.State.PLAY)
+                        .build();
         controlsImageView.setImageDrawable(controlDrawable);
         controlsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +166,7 @@ public class SampleActivity extends BaseActivity {
     }
 
     private boolean mReverse = true;
+
     /**
      * Helper for cycling through the {@link MediaControlDrawable} states
      */
